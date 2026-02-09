@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 /// API Interceptor for handling requests, responses, and errors
@@ -6,12 +8,12 @@ class ApiInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // Log request details
-    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    print('📤 REQUEST[${options.method}] => PATH: ${options.path}');
-    print('Headers: ${options.headers}');
-    print('Query Parameters: ${options.queryParameters}');
-    print('Body: ${options.data}');
-    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    log('📤 REQUEST[${options.method}] => PATH: ${options.path}');
+    log('Headers: ${options.headers}');
+    log('Query Parameters: ${options.queryParameters}');
+    log('Body: ${options.data}');
+    log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
     super.onRequest(options, handler);
   }
@@ -19,12 +21,12 @@ class ApiInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     // Log response details
-    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    print(
+    log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    log(
       '📥 RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}',
     );
-    print('Data: ${response.data}');
-    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    log('Data: ${response.data}');
+    log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
     super.onResponse(response, handler);
   }
@@ -32,13 +34,13 @@ class ApiInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     // Log error details
-    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    print(
+    log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    log(
       '❌ ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}',
     );
-    print('Message: ${err.message}');
-    print('Response: ${err.response?.data}');
-    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    log('Message: ${err.message}');
+    log('Response: ${err.response?.data}');
+    log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
     super.onError(err, handler);
   }
