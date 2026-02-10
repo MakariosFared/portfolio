@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../widgets/hero_section.dart';
@@ -55,6 +56,8 @@ class HomeMobile extends StatelessWidget {
             const SizedBox(height: 60),
             const TechnicalExpertise(),
             const SizedBox(height: 60),
+            ProfessionalJourney(),
+            const SizedBox(height: 60),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -70,7 +73,6 @@ class HomeMobile extends StatelessWidget {
                   Container(
                     height: 300,
                     width: double.infinity,
-                    color: AppColors.surface,
                     child: Center(
                       child: Text(
                         'Mobile Projects Grid',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../widgets/hero_section.dart';
@@ -41,6 +42,8 @@ class HomeTablet extends StatelessWidget {
             const HomeHero(),
             const SizedBox(height: 80),
             const TechnicalExpertise(),
+            const SizedBox(height: 80),
+            ProfessionalJourney(),
             const SizedBox(height: 80),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),

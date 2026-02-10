@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../widgets/desktop_app_bar.dart';
@@ -24,7 +25,8 @@ class HomeDesktop extends StatelessWidget {
             const SizedBox(height: 100),
             const TechnicalExpertise(),
             const SizedBox(height: 100),
-            // Featured Projects Placeholder
+            const ProfessionalJourney(),
+            const SizedBox(height: 100),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Column(
