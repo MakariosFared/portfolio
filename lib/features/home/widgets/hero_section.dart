@@ -22,13 +22,11 @@ class HomeHero extends StatelessWidget {
             horizontal: horizontalPadding,
           ),
           decoration: BoxDecoration(
-            color: AppColors.backgroundDark,
-            // Placeholder for background image
-            // image: const DecorationImage(
-            //   image: AssetImage('assets/images/hero_bg.png'),
-            //   fit: BoxFit.cover,
-            //   opacity: 0.1,
-            // ),
+            image: const DecorationImage(
+              image: AssetImage('assets/images/5809368.jpg'),
+              fit: BoxFit.cover,
+              opacity: 0.1,
+            ),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -88,7 +86,7 @@ class HomeHero extends StatelessWidget {
                     vertical: 10,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceDark,
+                    color: AppColors.backgroundDark,
                     borderRadius: BorderRadius.circular(120),
                   ),
                   child: Row(
@@ -98,7 +96,7 @@ class HomeHero extends StatelessWidget {
                         '•',
                         style: AppTypography.h2.copyWith(
                           color: AppColors.primary,
-                          fontSize: isMobile ? 16 : 18,
+                          fontSize: 18,
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -131,7 +129,7 @@ class HomeHero extends StatelessWidget {
                   ? Column(
                       children: [
                         _Button(
-                          text: 'My Work',
+                          text: 'View My Work',
                           onPressed: () {},
                           isPrimary: true,
                         ),
@@ -149,7 +147,7 @@ class HomeHero extends StatelessWidget {
                         FadeInLeft(
                           delay: const Duration(milliseconds: 600),
                           child: _Button(
-                            text: 'My Work',
+                            text: 'View My Work',
                             onPressed: () {},
                             isPrimary: true,
                           ),
@@ -191,14 +189,14 @@ class _Button extends StatelessWidget {
             backgroundColor: AppColors.primary,
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(12),
             ),
           )
         : OutlinedButton.styleFrom(
             side: const BorderSide(color: AppColors.primary),
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(12),
             ),
           );
 

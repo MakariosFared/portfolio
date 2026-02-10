@@ -11,8 +11,8 @@ class DesktopNavBar extends StatelessWidget {
     SizeConfig.init(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-      color: AppColors.backgroundDark.withValues(
-        alpha: 0.9,
+      decoration: BoxDecoration(
+        color: AppColors.backgroundDark.withValues(alpha: 0.5),
       ), // Glassmorphism base
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,7 +99,7 @@ class _NavBarItem extends StatelessWidget {
       child: Text(
         title,
         style: AppTypography.bodyMedium.copyWith(
-          color: AppColors.textLight,
+          color: AppColors.textOnPrimary,
           fontWeight: FontWeight.w500,
         ),
       ),
