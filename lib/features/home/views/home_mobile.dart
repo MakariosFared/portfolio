@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../widgets/hero_section.dart';
+import '../widgets/technical_expertise.dart';
 
 class HomeMobile extends StatelessWidget {
   const HomeMobile({super.key});
@@ -51,6 +52,8 @@ class HomeMobile extends StatelessWidget {
         child: Column(
           children: [
             const HomeHero(),
+            const SizedBox(height: 60),
+            const TechnicalExpertise(),
             const SizedBox(height: 60),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),

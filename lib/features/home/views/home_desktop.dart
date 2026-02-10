@@ -4,6 +4,8 @@ import '../../../../core/theme/typography.dart';
 import '../widgets/desktop_app_bar.dart';
 import '../widgets/hero_section.dart';
 
+import '../widgets/technical_expertise.dart';
+
 class HomeDesktop extends StatelessWidget {
   const HomeDesktop({super.key});
 
@@ -20,6 +22,8 @@ class HomeDesktop extends StatelessWidget {
           children: [
             const HomeHero(),
             const SizedBox(height: 100),
+            const TechnicalExpertise(),
+            const SizedBox(height: 100),
             // Featured Projects Placeholder
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -34,10 +38,10 @@ class HomeDesktop extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
                   // Grid of projects would go here
-                  Container(
+                  SizedBox(
                     height: 400,
                     width: double.infinity,
-                    color: AppColors.surface, // Placeholder
+                    // color: AppColors.surface, // Placeholder
                     child: Center(
                       child: Text(
                         'Projects Grid Here',
