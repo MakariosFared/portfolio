@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
-import 'package:animate_do/animate_do.dart';
+import '../../../../core/widgets/scroll_reveal.dart';
 
 class HomeHero extends StatelessWidget {
   final VoidCallback? onWorkTap;
@@ -27,7 +27,8 @@ class HomeHero extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              FadeInDown(
+              ScrollReveal(
+                type: ScrollRevealType.fadeSlideUp,
                 duration: const Duration(milliseconds: 800),
                 child: Text(
                   'Crafting Mobile Experiences',
@@ -41,7 +42,8 @@ class HomeHero extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              FadeInUp(
+              ScrollReveal(
+                type: ScrollRevealType.fadeSlideUp,
                 delay: const Duration(milliseconds: 300),
                 child: RichText(
                   textAlign: TextAlign.center,
@@ -75,7 +77,8 @@ class HomeHero extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 40),
-              FadeInUp(
+              ScrollReveal(
+                type: ScrollRevealType.fadeSlideUp,
                 delay: const Duration(milliseconds: 600),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
@@ -113,7 +116,8 @@ class HomeHero extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 40),
-              FadeInUp(
+              ScrollReveal(
+                type: ScrollRevealType.fadeSlideUp,
                 delay: const Duration(milliseconds: 800),
                 child: Text(
                   'Expert in building high-performance, beautiful mobile and\n web applications using Flutter framework and modern tech stack.',
@@ -128,23 +132,32 @@ class HomeHero extends StatelessWidget {
               isMobile
                   ? Column(
                       children: [
-                        _Button(
-                          text: 'View My Work',
-                          onPressed: onWorkTap ?? () {},
-                          isPrimary: true,
+                        ScrollReveal(
+                          type: ScrollRevealType.zoomFade,
+                          delay: const Duration(milliseconds: 1000),
+                          child: _Button(
+                            text: 'View My Work',
+                            onPressed: onWorkTap ?? () {},
+                            isPrimary: true,
+                          ),
                         ),
                         const SizedBox(height: 16),
-                        _Button(
-                          text: 'Contact Me',
-                          onPressed: onContactTap ?? () {},
-                          isPrimary: false,
+                        ScrollReveal(
+                          type: ScrollRevealType.zoomFade,
+                          delay: const Duration(milliseconds: 1100),
+                          child: _Button(
+                            text: 'Contact Me',
+                            onPressed: onContactTap ?? () {},
+                            isPrimary: false,
+                          ),
                         ),
                       ],
                     )
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        FadeInLeft(
+                        ScrollReveal(
+                          type: ScrollRevealType.zoomFade,
                           delay: const Duration(milliseconds: 1000),
                           child: _Button(
                             text: 'View My Work',
@@ -153,7 +166,8 @@ class HomeHero extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 25),
-                        FadeInRight(
+                        ScrollReveal(
+                          type: ScrollRevealType.zoomFade,
                           delay: const Duration(milliseconds: 1000),
                           child: _Button(
                             text: 'Contact Me',

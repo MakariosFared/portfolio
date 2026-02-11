@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
+import '../../../../core/widgets/scroll_reveal.dart';
+import '../../../../core/widgets/section_header.dart';
 
 class ConnectWithMe extends StatelessWidget {
   const ConnectWithMe({super.key});
@@ -19,17 +20,11 @@ class ConnectWithMe extends StatelessWidget {
       color: AppColors.surfaceDark.withValues(alpha: 0.3),
       child: Column(
         children: [
-          FadeInDown(
-            child: Text(
-              'Get In Touch',
-              style: AppTypography.h2.copyWith(
-                color: AppColors.textLight,
-                fontSize: isMobile ? 28 : 40,
-              ),
-            ),
-          ),
+          SectionHeader(title: 'Get In Touch', isMobile: isMobile),
           const SizedBox(height: 15),
-          FadeInUp(
+          ScrollReveal(
+            type: ScrollRevealType.fadeSlideUp,
+            delay: const Duration(milliseconds: 200),
             child: Text(
               "Let's build something amazing together.",
               style: AppTypography.bodyLarge.copyWith(
@@ -42,16 +37,36 @@ class ConnectWithMe extends StatelessWidget {
           isMobile
               ? Column(
                   children: [
-                    _buildContactInfo(),
+                    ScrollReveal(
+                      type: ScrollRevealType.fadeSlideUp,
+                      delay: const Duration(milliseconds: 300),
+                      child: _buildContactInfo(),
+                    ),
                     const SizedBox(height: 40),
-                    _buildSocialLinks(),
+                    ScrollReveal(
+                      type: ScrollRevealType.zoomFade,
+                      delay: const Duration(milliseconds: 400),
+                      child: _buildSocialLinks(),
+                    ),
                   ],
                 )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Expanded(child: _buildContactInfo()),
-                    Expanded(child: _buildSocialLinks()),
+                    Expanded(
+                      child: ScrollReveal(
+                        type: ScrollRevealType.fadeSlideUp,
+                        delay: const Duration(milliseconds: 300),
+                        child: _buildContactInfo(),
+                      ),
+                    ),
+                    Expanded(
+                      child: ScrollReveal(
+                        type: ScrollRevealType.zoomFade,
+                        delay: const Duration(milliseconds: 400),
+                        child: _buildSocialLinks(),
+                      ),
+                    ),
                   ],
                 ),
         ],

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
+import '../../../../core/widgets/scroll_reveal.dart';
+import '../../../../core/widgets/section_header.dart';
 
 class FeaturedProjects extends StatelessWidget {
   const FeaturedProjects({super.key});
@@ -18,22 +19,7 @@ class FeaturedProjects extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FadeInDown(
-            duration: const Duration(milliseconds: 800),
-            child: Row(
-              children: [
-                Container(width: 50, height: 2, color: AppColors.primary),
-                const SizedBox(width: 15),
-                Text(
-                  'Featured Projects',
-                  style: AppTypography.h2.copyWith(
-                    color: AppColors.textLight,
-                    fontSize: isMobile ? 28 : 36,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          SectionHeader(title: 'Featured Projects', isMobile: isMobile),
           const SizedBox(height: 50),
           GridView.builder(
             shrinkWrap: true,
@@ -46,7 +32,8 @@ class FeaturedProjects extends StatelessWidget {
             ),
             itemCount: 4,
             itemBuilder: (context, index) {
-              return FadeInUp(
+              return ScrollReveal(
+                type: ScrollRevealType.fadeSlideUp,
                 delay: Duration(milliseconds: 200 * index),
                 child: _ProjectCard(
                   title: _fakeProjects[index]['title']!,
@@ -110,16 +97,20 @@ class _ProjectCardState extends State<_ProjectCard> {
             children: [
               // Project Image Placeholder with Gradient
               Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        AppColors.backgroundDark.withValues(alpha: 0.8),
-                        AppColors.backgroundDark,
-                      ],
+                child: ScrollReveal(
+                  type: ScrollRevealType.zoomFade,
+                  delay: const Duration(milliseconds: 300),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          AppColors.backgroundDark.withValues(alpha: 0.8),
+                          AppColors.backgroundDark,
+                        ],
+                      ),
                     ),
                   ),
                 ),

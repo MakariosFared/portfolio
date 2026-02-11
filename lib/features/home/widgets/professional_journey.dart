@@ -1,9 +1,11 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
+import '../../../../core/widgets/scroll_reveal.dart';
+import '../../../../core/widgets/section_header.dart';
 
 class JourneyItem {
+  // ... existing JourneyItem (kept for brevity)
   final String role;
   final String company;
   final String period;
@@ -29,6 +31,7 @@ class ProfessionalJourney extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final journeyItems = <JourneyItem>[
+      // ... existing items
       JourneyItem(
         role: 'Flutter Developer',
         company: 'Flieger Tech',
@@ -70,37 +73,15 @@ class ProfessionalJourney extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FadeInLeft(
-                duration: const Duration(milliseconds: 800),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 5,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        gradient: AppColors.primaryGradient,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                    Text(
-                      'Professional Journey',
-                      style: AppTypography.h2.copyWith(
-                        color: AppColors.textLight,
-                        fontSize: isMobile ? 24 : 32,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              SectionHeader(title: 'Professional Journey', isMobile: isMobile),
               const SizedBox(height: 60),
 
               // Timeline and Cards
               isMobile
                   ? Column(
                       children: journeyItems.asMap().entries.map((entry) {
-                        return FadeInUp(
+                        return ScrollReveal(
+                          type: ScrollRevealType.fadeSlideUp,
                           delay: Duration(milliseconds: 100 * entry.key),
                           child: _JourneyCard(
                             item: entry.value,
@@ -118,24 +99,28 @@ class ProfessionalJourney extends StatelessWidget {
                           left: 20,
                           top: 0,
                           bottom: 0,
-                          child: Container(
-                            width: 2,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  AppColors.primary,
-                                  AppColors.secondary.withValues(alpha: 0.5),
-                                  Colors.transparent,
-                                ],
+                          child: ScrollReveal(
+                            type: ScrollRevealType.fadeSlideUp,
+                            child: Container(
+                              width: 2,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    AppColors.primary,
+                                    AppColors.secondary.withValues(alpha: 0.5),
+                                    Colors.transparent,
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                         Column(
                           children: journeyItems.asMap().entries.map((entry) {
-                            return FadeInUp(
+                            return ScrollReveal(
+                              type: ScrollRevealType.fadeSlideUp,
                               delay: Duration(milliseconds: 200 * entry.key),
                               child: _JourneyCard(
                                 item: entry.value,

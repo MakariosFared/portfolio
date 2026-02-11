@@ -1,7 +1,8 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
+import '../../../../core/widgets/scroll_reveal.dart';
+import '../../../../core/widgets/section_header.dart';
 
 class ExpertiseItem {
   final String title;
@@ -24,6 +25,7 @@ class TechnicalExpertise extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categories = <ExpertiseCategory>[
+      // ... existing categories (kept for brevity in replacement)
       ExpertiseCategory(
         title: 'Mobile Development',
         items: [
@@ -117,30 +119,7 @@ class TechnicalExpertise extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FadeInLeft(
-                duration: const Duration(milliseconds: 800),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 5,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        gradient: AppColors.primaryGradient,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                    Text(
-                      'Technical Expertise',
-                      style: AppTypography.h2.copyWith(
-                        color: AppColors.textLight,
-                        fontSize: isMobile ? 24 : 32,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              SectionHeader(title: 'Technical Expertise', isMobile: isMobile),
               const SizedBox(height: 50),
 
               ...categories.map(
@@ -177,15 +156,27 @@ class _ExpertiseSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: AppTypography.h4.copyWith(
-            color: AppColors.textLight,
-            fontWeight: FontWeight.w600,
+        ScrollReveal(
+          type: ScrollRevealType.fadeSlideUp,
+          offset: 20,
+          child: Text(
+            title,
+            style: AppTypography.h4.copyWith(
+              color: AppColors.textLight.withValues(alpha: 0.7),
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
         const SizedBox(height: 10),
-        Divider(color: AppColors.border.withValues(alpha: 0.2), thickness: 1),
+        ScrollReveal(
+          type: ScrollRevealType.fadeSlideUp,
+          offset: 10,
+          delay: const Duration(milliseconds: 100),
+          child: Divider(
+            color: AppColors.border.withValues(alpha: 0.1),
+            thickness: 1,
+          ),
+        ),
         const SizedBox(height: 25),
         GridView.builder(
           shrinkWrap: true,
@@ -199,9 +190,10 @@ class _ExpertiseSection extends StatelessWidget {
           itemCount: items.length,
           itemBuilder: (context, index) {
             final item = items[index];
-            return FadeInUp(
+            return ScrollReveal(
+              type: ScrollRevealType.fadeSlideUp,
               delay: Duration(milliseconds: 100 * index),
-              duration: const Duration(milliseconds: 500),
+              offset: 30,
               child: _ExpertiseCard(item: item),
             );
           },

@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
@@ -107,29 +106,31 @@ class _HomeMobileState extends State<HomeMobile> {
               onContactTap: () => _scrollToSection(_contactKey),
             ),
             const SizedBox(height: 60),
-            FadeInUp(key: _skillsKey, child: const TechnicalExpertise()),
+            TechnicalExpertise(key: _skillsKey),
             const SizedBox(height: 60),
-            FadeInUp(key: _journeyKey, child: const ProfessionalJourney()),
+            ProfessionalJourney(key: _journeyKey),
             const SizedBox(height: 60),
             FeaturedProjects(key: _projectsKey),
             const SizedBox(height: 60),
             ConnectWithMe(key: _contactKey),
             const SizedBox(height: 60),
             // Footer
-            Container(
-              padding: const EdgeInsets.all(20),
-              width: double.infinity,
-              color: AppColors.surfaceDark.withValues(alpha: 0.5),
-              child: Center(
-                child: Text(
-                  '© 2026 Makarios Fared Naeem',
-                  style: AppTypography.caption.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ),
-            ),
+            _buildFooter(),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFooter() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      width: double.infinity,
+      color: AppColors.surfaceDark.withValues(alpha: 0.5),
+      child: Center(
+        child: Text(
+          '© 2026 Makarios Fared Naeem',
+          style: AppTypography.caption.copyWith(color: AppColors.textSecondary),
         ),
       ),
     );

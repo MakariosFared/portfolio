@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
@@ -7,7 +6,6 @@ import '../widgets/connect_with_me.dart';
 import '../widgets/desktop_app_bar.dart';
 import '../widgets/featured_projects.dart';
 import '../widgets/hero_section.dart';
-
 import '../widgets/technical_expertise.dart';
 
 class HomeDesktop extends StatefulWidget {
@@ -63,37 +61,41 @@ class _HomeDesktopState extends State<HomeDesktop> {
               onContactTap: () => _scrollToSection(_contactKey),
             ),
             const SizedBox(height: 100),
-            FadeInUp(key: _skillsKey, child: const TechnicalExpertise()),
+            TechnicalExpertise(key: _skillsKey),
             const SizedBox(height: 100),
-            FadeInUp(key: _journeyKey, child: const ProfessionalJourney()),
+            ProfessionalJourney(key: _journeyKey),
             const SizedBox(height: 100),
             FeaturedProjects(key: _projectsKey),
             const SizedBox(height: 100),
             ConnectWithMe(key: _contactKey),
             const SizedBox(height: 60),
             // Footer
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 40),
-              width: double.infinity,
-              color: AppColors.surfaceDark.withValues(alpha: 0.5),
-              child: Center(
-                child: Column(
-                  children: [
-                    Text(
-                      '© 2026 Makarios Fared Naeem. All rights reserved.',
-                      style: AppTypography.caption.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Built with Flutter for Web',
-                      style: AppTypography.overline.copyWith(
-                        color: AppColors.primaryLight.withValues(alpha: 0.5),
-                      ),
-                    ),
-                  ],
-                ),
+            _buildFooter(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFooter() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 40),
+      width: double.infinity,
+      color: AppColors.surfaceDark.withValues(alpha: 0.5),
+      child: Center(
+        child: Column(
+          children: [
+            Text(
+              '© 2026 Makarios Fared Naeem. All rights reserved.',
+              style: AppTypography.caption.copyWith(
+                color: AppColors.textSecondary,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Built with Flutter for Web',
+              style: AppTypography.overline.copyWith(
+                color: AppColors.primaryLight.withValues(alpha: 0.5),
               ),
             ),
           ],
