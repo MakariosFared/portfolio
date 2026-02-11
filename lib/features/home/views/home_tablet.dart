@@ -15,19 +15,25 @@ class HomeTablet extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.backgroundDark,
         elevation: 0,
-        title: Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            gradient: AppColors.primaryGradient,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Center(
-            child: Text(
-              'M',
-              style: AppTypography.h3.copyWith(color: Colors.white),
+        title: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                gradient: AppColors.primaryGradient,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text(
+                  'M',
+                  style: AppTypography.h3.copyWith(color: Colors.white),
+                ),
+              ),
             ),
-          ),
+            const SizedBox(width: 10),
+            const Text('Makarios Fared', style: TextStyle(color: Colors.white)),
+          ],
         ),
         actions: [
           TextButton(onPressed: () {}, child: const Text('Home')),

@@ -12,36 +12,60 @@ class HomeMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
-      drawer: const Drawer(
+      drawer: Drawer(
         backgroundColor: AppColors.surfaceDark,
-        child: Center(
-          child: Text('Mobile Menu', style: TextStyle(color: Colors.white)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 12,
+          children: [
+            TextButton(
+              onPressed: () {},
+              child: const Text(
+                'Home',
+                style: TextStyle(color: AppColors.textLight),
+              ),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: const Text(
+                'Projects',
+                style: TextStyle(color: AppColors.textLight),
+              ),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: const Text(
+                'Contact',
+                style: TextStyle(color: AppColors.textLight),
+              ),
+            ),
+          ],
         ),
       ),
       appBar: AppBar(
         backgroundColor: AppColors.backgroundDark,
         elevation: 0,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: AppColors.textLight),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-        title: Container(
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            gradient: AppColors.primaryGradient,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Center(
-            child: Text(
-              'M',
-              style: AppTypography.h4.copyWith(color: Colors.white),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                gradient: AppColors.primaryGradient,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Center(
+                child: Text(
+                  'M',
+                  style: AppTypography.h4.copyWith(color: Colors.white),
+                ),
+              ),
             ),
-          ),
+            const SizedBox(width: 10),
+            const Text('Makarios Fared', style: TextStyle(color: Colors.white)),
+          ],
         ),
-        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.download, color: AppColors.textLight),
@@ -70,7 +94,7 @@ class HomeMobile extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Container(
+                  SizedBox(
                     height: 300,
                     width: double.infinity,
                     child: Center(
