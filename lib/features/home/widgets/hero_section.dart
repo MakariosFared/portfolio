@@ -4,7 +4,10 @@ import '../../../../core/theme/typography.dart';
 import 'package:animate_do/animate_do.dart';
 
 class HomeHero extends StatelessWidget {
-  const HomeHero({super.key});
+  final VoidCallback? onWorkTap;
+  final VoidCallback? onContactTap;
+
+  const HomeHero({super.key, this.onWorkTap, this.onContactTap});
 
   @override
   Widget build(BuildContext context) {
@@ -12,21 +15,14 @@ class HomeHero extends StatelessWidget {
       builder: (context, constraints) {
         final bool isMobile = constraints.maxWidth < 600;
         final double horizontalPadding = isMobile ? 20 : 40;
-        final double verticalPadding = isMobile ? 40 : 80;
-        final double titleFontSize = isMobile ? 32 : 48;
+        final double verticalPadding = isMobile ? 60 : 120;
+        final double titleFontSize = isMobile ? 36 : 64;
 
         return Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(
             vertical: verticalPadding,
             horizontal: horizontalPadding,
-          ),
-          decoration: BoxDecoration(
-            image: const DecorationImage(
-              image: AssetImage('assets/images/5809368.jpg'),
-              fit: BoxFit.cover,
-              opacity: 0.1,
-            ),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -39,11 +35,12 @@ class HomeHero extends StatelessWidget {
                   style: AppTypography.h1.copyWith(
                     color: AppColors.textOnPrimary,
                     fontSize: titleFontSize,
-                    letterSpacing: -1.0,
+                    letterSpacing: -1.5,
+                    height: 1.1,
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               FadeInUp(
                 delay: const Duration(milliseconds: 300),
                 child: RichText(
@@ -53,7 +50,7 @@ class HomeHero extends StatelessWidget {
                     style: AppTypography.h1.copyWith(
                       color: AppColors.textOnPrimary,
                       fontSize: titleFontSize,
-                      letterSpacing: -1.0,
+                      letterSpacing: -1.5,
                     ),
                     children: [
                       TextSpan(
@@ -61,7 +58,7 @@ class HomeHero extends StatelessWidget {
                         style: AppTypography.h1.copyWith(
                           color: AppColors.primary,
                           fontSize: titleFontSize,
-                          letterSpacing: -1.0,
+                          letterSpacing: -1.5,
                         ),
                       ),
                       const TextSpan(text: ' & '),
@@ -70,7 +67,7 @@ class HomeHero extends StatelessWidget {
                         style: AppTypography.h1.copyWith(
                           color: AppColors.secondary,
                           fontSize: titleFontSize,
-                          letterSpacing: -1.0,
+                          letterSpacing: -1.5,
                         ),
                       ),
                     ],
@@ -82,30 +79,33 @@ class HomeHero extends StatelessWidget {
                 delay: const Duration(milliseconds: 600),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 18,
-                    vertical: 10,
+                    horizontal: 20,
+                    vertical: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.backgroundDark,
+                    color: AppColors.surfaceDark.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(120),
+                    border: Border.all(
+                      color: AppColors.primary.withValues(alpha: 0.2),
+                    ),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        '•',
-                        style: AppTypography.h2.copyWith(
-                          color: AppColors.primary,
-                          fontSize: 18,
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          color: AppColors.success,
+                          shape: BoxShape.circle,
                         ),
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        'Expert in Cross-Platform App Development',
-                        textAlign: TextAlign.center,
-                        style: AppTypography.h2.copyWith(
-                          color: AppColors.textOnPrimary,
-                          fontSize: isMobile ? 14 : 16,
+                        'Available for new projects',
+                        style: AppTypography.bodySmall.copyWith(
+                          color: AppColors.textLight,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ],
@@ -114,29 +114,29 @@ class HomeHero extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               FadeInUp(
-                delay: const Duration(milliseconds: 600),
+                delay: const Duration(milliseconds: 800),
                 child: Text(
-                  'I build high-performance mobile applications with beautiful\n UI and seamless user experience using Flutter framework.',
+                  'Expert in building high-performance, beautiful mobile and\n web applications using Flutter framework and modern tech stack.',
                   textAlign: TextAlign.center,
-                  style: AppTypography.h1.copyWith(
-                    color: AppColors.textOnPrimary,
-                    fontSize: isMobile ? 18 : 20,
+                  style: AppTypography.bodyLarge.copyWith(
+                    color: AppColors.textSecondary,
+                    fontSize: isMobile ? 16 : 18,
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 50),
               isMobile
                   ? Column(
                       children: [
                         _Button(
                           text: 'View My Work',
-                          onPressed: () {},
+                          onPressed: onWorkTap ?? () {},
                           isPrimary: true,
                         ),
                         const SizedBox(height: 16),
                         _Button(
                           text: 'Contact Me',
-                          onPressed: () {},
+                          onPressed: onContactTap ?? () {},
                           isPrimary: false,
                         ),
                       ],
@@ -145,19 +145,19 @@ class HomeHero extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         FadeInLeft(
-                          delay: const Duration(milliseconds: 600),
+                          delay: const Duration(milliseconds: 1000),
                           child: _Button(
                             text: 'View My Work',
-                            onPressed: () {},
+                            onPressed: onWorkTap ?? () {},
                             isPrimary: true,
                           ),
                         ),
-                        const SizedBox(width: 20),
+                        const SizedBox(width: 25),
                         FadeInRight(
-                          delay: const Duration(milliseconds: 600),
+                          delay: const Duration(milliseconds: 1000),
                           child: _Button(
                             text: 'Contact Me',
-                            onPressed: () {},
+                            onPressed: onContactTap ?? () {},
                             isPrimary: false,
                           ),
                         ),
@@ -171,7 +171,7 @@ class HomeHero extends StatelessWidget {
   }
 }
 
-class _Button extends StatelessWidget {
+class _Button extends StatefulWidget {
   final String text;
   final VoidCallback onPressed;
   final bool isPrimary;
@@ -183,42 +183,56 @@ class _Button extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final style = isPrimary
-        ? ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primary,
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          )
-        : OutlinedButton.styleFrom(
-            side: const BorderSide(color: AppColors.primary),
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          );
+  State<_Button> createState() => _ButtonState();
+}
 
-    return isPrimary
-        ? ElevatedButton(
-            onPressed: onPressed,
-            style: style,
-            child: Text(
-              text,
-              style: AppTypography.button.copyWith(fontSize: 16),
+class _ButtonState extends State<_Button> {
+  bool isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => isHovered = true),
+      onExit: (_) => setState(() => isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        transform: isHovered
+            ? (Matrix4.identity()..scale(1.05))
+            : Matrix4.identity(),
+        child: InkWell(
+          onTap: widget.onPressed,
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+            decoration: BoxDecoration(
+              gradient: widget.isPrimary ? AppColors.primaryGradient : null,
+              color: widget.isPrimary ? null : Colors.transparent,
+              borderRadius: BorderRadius.circular(15),
+              border: widget.isPrimary
+                  ? null
+                  : Border.all(color: AppColors.primary, width: 2),
+              boxShadow: [
+                if (widget.isPrimary && isHovered)
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.4),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
+              ],
             ),
-          )
-        : OutlinedButton(
-            onPressed: onPressed,
-            style: style,
             child: Text(
-              text,
+              widget.text,
               style: AppTypography.button.copyWith(
-                color: AppColors.primary,
+                color: widget.isPrimary || isHovered
+                    ? Colors.white
+                    : AppColors.primary,
                 fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          );
+          ),
+        ),
+      ),
+    );
   }
 }

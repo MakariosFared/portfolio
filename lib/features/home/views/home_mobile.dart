@@ -1,12 +1,42 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
+import '../widgets/connect_with_me.dart';
+import '../widgets/featured_projects.dart';
 import '../widgets/hero_section.dart';
 import '../widgets/technical_expertise.dart';
 
-class HomeMobile extends StatelessWidget {
+class HomeMobile extends StatefulWidget {
   const HomeMobile({super.key});
+
+  @override
+  State<HomeMobile> createState() => _HomeMobileState();
+}
+
+class _HomeMobileState extends State<HomeMobile> {
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _homeKey = GlobalKey();
+  final GlobalKey _skillsKey = GlobalKey();
+  final GlobalKey _journeyKey = GlobalKey();
+  final GlobalKey _projectsKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
+
+  void _scrollToSection(GlobalKey key) {
+    Navigator.pop(context); // Close drawer
+    Scrollable.ensureVisible(
+      key.currentContext!,
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,26 +48,22 @@ class HomeMobile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 12,
           children: [
-            TextButton(
-              onPressed: () {},
-              child: const Text(
-                'Home',
-                style: TextStyle(color: AppColors.textLight),
-              ),
+            _DrawerItem(title: 'Home', onTap: () => _scrollToSection(_homeKey)),
+            _DrawerItem(
+              title: 'Skills',
+              onTap: () => _scrollToSection(_skillsKey),
             ),
-            TextButton(
-              onPressed: () {},
-              child: const Text(
-                'Projects',
-                style: TextStyle(color: AppColors.textLight),
-              ),
+            _DrawerItem(
+              title: 'Experience',
+              onTap: () => _scrollToSection(_journeyKey),
             ),
-            TextButton(
-              onPressed: () {},
-              child: const Text(
-                'Contact',
-                style: TextStyle(color: AppColors.textLight),
-              ),
+            _DrawerItem(
+              title: 'Projects',
+              onTap: () => _scrollToSection(_projectsKey),
+            ),
+            _DrawerItem(
+              title: 'Contact',
+              onTap: () => _scrollToSection(_contactKey),
             ),
           ],
         ),
@@ -45,8 +71,9 @@ class HomeMobile extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.backgroundDark,
         elevation: 0,
+        centerTitle: true,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               width: 32,
@@ -63,55 +90,36 @@ class HomeMobile extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            const Text('Makarios Fared', style: TextStyle(color: Colors.white)),
+            Text(
+              'Makarios',
+              style: AppTypography.h4.copyWith(color: Colors.white),
+            ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.download, color: AppColors.textLight),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
-            const HomeHero(),
-            const SizedBox(height: 60),
-            const TechnicalExpertise(),
-            const SizedBox(height: 60),
-            ProfessionalJourney(),
-            const SizedBox(height: 60),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Featured Projects',
-                    style: AppTypography.h3.copyWith(
-                      color: AppColors.textLight,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    height: 300,
-                    width: double.infinity,
-                    child: Center(
-                      child: Text(
-                        'Mobile Projects Grid',
-                        style: AppTypography.bodyLarge,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            HomeHero(
+              key: _homeKey,
+              onWorkTap: () => _scrollToSection(_projectsKey),
+              onContactTap: () => _scrollToSection(_contactKey),
             ),
+            const SizedBox(height: 60),
+            FadeInUp(key: _skillsKey, child: const TechnicalExpertise()),
+            const SizedBox(height: 60),
+            FadeInUp(key: _journeyKey, child: const ProfessionalJourney()),
+            const SizedBox(height: 60),
+            FeaturedProjects(key: _projectsKey),
+            const SizedBox(height: 60),
+            ConnectWithMe(key: _contactKey),
             const SizedBox(height: 60),
             // Footer
             Container(
               padding: const EdgeInsets.all(20),
-              color: AppColors.surfaceDark,
+              width: double.infinity,
+              color: AppColors.surfaceDark.withValues(alpha: 0.5),
               child: Center(
                 child: Text(
                   '© 2026 Makarios Fared Naeem',
@@ -123,6 +131,24 @@ class HomeMobile extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _DrawerItem extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+
+  const _DrawerItem({required this.title, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onTap,
+      child: Text(
+        title,
+        style: AppTypography.h4.copyWith(color: AppColors.textLight),
       ),
     );
   }

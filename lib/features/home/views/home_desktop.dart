@@ -1,70 +1,98 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
+import '../widgets/connect_with_me.dart';
 import '../widgets/desktop_app_bar.dart';
+import '../widgets/featured_projects.dart';
 import '../widgets/hero_section.dart';
 
 import '../widgets/technical_expertise.dart';
 
-class HomeDesktop extends StatelessWidget {
+class HomeDesktop extends StatefulWidget {
   const HomeDesktop({super.key});
+
+  @override
+  State<HomeDesktop> createState() => _HomeDesktopState();
+}
+
+class _HomeDesktopState extends State<HomeDesktop> {
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _homeKey = GlobalKey();
+  final GlobalKey _skillsKey = GlobalKey();
+  final GlobalKey _journeyKey = GlobalKey();
+  final GlobalKey _projectsKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
+
+  void _scrollToSection(GlobalKey key) {
+    Scrollable.ensureVisible(
+      key.currentContext!,
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(80),
-        child: DesktopNavBar(),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(80),
+        child: DesktopNavBar(
+          onHomeTap: () => _scrollToSection(_homeKey),
+          onSkillsTap: () => _scrollToSection(_skillsKey),
+          onJourneyTap: () => _scrollToSection(_journeyKey),
+          onProjectsTap: () => _scrollToSection(_projectsKey),
+          onContactTap: () => _scrollToSection(_contactKey),
+        ),
       ),
       backgroundColor: AppColors.backgroundDark,
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
-            const HomeHero(),
-            const SizedBox(height: 100),
-            const TechnicalExpertise(),
-            const SizedBox(height: 100),
-            const ProfessionalJourney(),
-            const SizedBox(height: 100),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Featured Projects',
-                    style: AppTypography.h2.copyWith(
-                      color: AppColors.textLight,
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  // Grid of projects would go here
-                  SizedBox(
-                    height: 400,
-                    width: double.infinity,
-                    // color: AppColors.surface, // Placeholder
-                    child: Center(
-                      child: Text(
-                        'Projects Grid Here',
-                        style: AppTypography.h3,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            HomeHero(
+              key: _homeKey,
+              onWorkTap: () => _scrollToSection(_projectsKey),
+              onContactTap: () => _scrollToSection(_contactKey),
             ),
             const SizedBox(height: 100),
+            FadeInUp(key: _skillsKey, child: const TechnicalExpertise()),
+            const SizedBox(height: 100),
+            FadeInUp(key: _journeyKey, child: const ProfessionalJourney()),
+            const SizedBox(height: 100),
+            FeaturedProjects(key: _projectsKey),
+            const SizedBox(height: 100),
+            ConnectWithMe(key: _contactKey),
+            const SizedBox(height: 60),
             // Footer
             Container(
-              padding: const EdgeInsets.all(40),
-              color: AppColors.surfaceDark,
+              padding: const EdgeInsets.symmetric(vertical: 40),
+              width: double.infinity,
+              color: AppColors.surfaceDark.withValues(alpha: 0.5),
               child: Center(
-                child: Text(
-                  '© 2026 Makarios Fared Naeem. All rights reserved.',
-                  style: AppTypography.caption.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
+                child: Column(
+                  children: [
+                    Text(
+                      '© 2026 Makarios Fared Naeem. All rights reserved.',
+                      style: AppTypography.caption.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Built with Flutter for Web',
+                      style: AppTypography.overline.copyWith(
+                        color: AppColors.primaryLight.withValues(alpha: 0.5),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

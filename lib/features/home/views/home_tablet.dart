@@ -1,12 +1,41 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
+import '../widgets/connect_with_me.dart';
+import '../widgets/featured_projects.dart';
 import '../widgets/hero_section.dart';
 import '../widgets/technical_expertise.dart';
 
-class HomeTablet extends StatelessWidget {
+class HomeTablet extends StatefulWidget {
   const HomeTablet({super.key});
+
+  @override
+  State<HomeTablet> createState() => _HomeTabletState();
+}
+
+class _HomeTabletState extends State<HomeTablet> {
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _homeKey = GlobalKey();
+  final GlobalKey _skillsKey = GlobalKey();
+  final GlobalKey _journeyKey = GlobalKey();
+  final GlobalKey _projectsKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
+
+  void _scrollToSection(GlobalKey key) {
+    Scrollable.ensureVisible(
+      key.currentContext!,
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,56 +61,51 @@ class HomeTablet extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            const Text('Makarios Fared', style: TextStyle(color: Colors.white)),
+            Text(
+              'Makarios Fared',
+              style: AppTypography.h4.copyWith(color: Colors.white),
+            ),
           ],
         ),
         actions: [
-          TextButton(onPressed: () {}, child: const Text('Home')),
-          TextButton(onPressed: () {}, child: const Text('Projects')),
-          TextButton(onPressed: () {}, child: const Text('Contact')),
+          _NavButton(title: 'Home', onTap: () => _scrollToSection(_homeKey)),
+          _NavButton(
+            title: 'Skills',
+            onTap: () => _scrollToSection(_skillsKey),
+          ),
+          _NavButton(
+            title: 'Projects',
+            onTap: () => _scrollToSection(_projectsKey),
+          ),
+          _NavButton(
+            title: 'Contact',
+            onTap: () => _scrollToSection(_contactKey),
+          ),
           const SizedBox(width: 20),
         ],
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
-            const HomeHero(),
-            const SizedBox(height: 80),
-            const TechnicalExpertise(),
-            const SizedBox(height: 80),
-            ProfessionalJourney(),
-            const SizedBox(height: 80),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Featured Projects',
-                    style: AppTypography.h2.copyWith(
-                      color: AppColors.textLight,
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  // Grid of projects would go here
-                  Container(
-                    height: 400,
-                    width: double.infinity,
-                    color: AppColors.surface, // Placeholder
-                    child: Center(
-                      child: Text(
-                        'Tablet Projects Grid',
-                        style: AppTypography.h3,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            HomeHero(
+              key: _homeKey,
+              onWorkTap: () => _scrollToSection(_projectsKey),
+              onContactTap: () => _scrollToSection(_contactKey),
             ),
             const SizedBox(height: 80),
+            FadeInUp(key: _skillsKey, child: const TechnicalExpertise()),
+            const SizedBox(height: 80),
+            FadeInUp(key: _journeyKey, child: const ProfessionalJourney()),
+            const SizedBox(height: 80),
+            FeaturedProjects(key: _projectsKey),
+            const SizedBox(height: 80),
+            ConnectWithMe(key: _contactKey),
+            const SizedBox(height: 80),
             Container(
-              padding: const EdgeInsets.all(30),
-              color: AppColors.surfaceDark,
+              padding: const EdgeInsets.symmetric(vertical: 40),
+              width: double.infinity,
+              color: AppColors.surfaceDark.withValues(alpha: 0.5),
               child: Center(
                 child: Text(
                   '© 2026 Makarios Fared Naeem',
@@ -93,6 +117,24 @@ class HomeTablet extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _NavButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+
+  const _NavButton({required this.title, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onTap,
+      child: Text(
+        title,
+        style: AppTypography.bodyMedium.copyWith(color: AppColors.textLight),
       ),
     );
   }
