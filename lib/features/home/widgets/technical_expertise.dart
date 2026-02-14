@@ -3,6 +3,7 @@ import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../../../../core/widgets/scroll_reveal.dart';
 import '../../../../core/widgets/section_header.dart';
+import '../../../../core/utils/responsive/size_config.dart';
 
 class ExpertiseItem {
   final String title;
@@ -108,32 +109,23 @@ class TechnicalExpertise extends StatelessWidget {
       ),
     ];
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final bool isMobile = constraints.maxWidth < 600;
-        final bool isTablet = constraints.maxWidth < 1025;
-        final double horizontalPadding = isMobile ? 20 : 40;
+    SizeConfig.init(context);
+    final bool isMobile = SizeConfig.isMobile;
+    final double horizontalPadding = isMobile ? 20 : 40;
 
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SectionHeader(title: 'Technical Expertise', isMobile: isMobile),
-              const SizedBox(height: 50),
-
-              ...categories.map(
-                (category) => _ExpertiseSection(
-                  title: category.title,
-                  items: category.items,
-                  isMobile: isMobile,
-                  isTablet: isTablet,
-                ),
-              ),
-            ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionHeader(title: 'Technical Expertise'),
+          const SizedBox(height: 50),
+          ...categories.map(
+            (category) =>
+                _ExpertiseSection(title: category.title, items: category.items),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }
@@ -141,18 +133,13 @@ class TechnicalExpertise extends StatelessWidget {
 class _ExpertiseSection extends StatelessWidget {
   final String title;
   final List<ExpertiseItem> items;
-  final bool isMobile;
-  final bool isTablet;
 
-  const _ExpertiseSection({
-    required this.title,
-    required this.items,
-    required this.isMobile,
-    required this.isTablet,
-  });
+  const _ExpertiseSection({required this.title, required this.items});
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = SizeConfig.isMobile;
+    final bool isTablet = SizeConfig.isTablet;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -194,7 +181,7 @@ class _ExpertiseSection extends StatelessWidget {
               type: ScrollRevealType.fadeSlideUp,
               delay: Duration(milliseconds: 100 * index),
               offset: 30,
-              child: _ExpertiseCard(item: item, isMobile: isMobile, isTablet: isTablet),
+              child: _ExpertiseCard(item: item),
             );
           },
         ),
@@ -206,10 +193,8 @@ class _ExpertiseSection extends StatelessWidget {
 
 class _ExpertiseCard extends StatefulWidget {
   final ExpertiseItem item;
-  final bool isMobile;
-  final bool isTablet;
 
-  const _ExpertiseCard({required this.item, required this.isMobile, required this.isTablet});
+  const _ExpertiseCard({required this.item});
 
   @override
   State<_ExpertiseCard> createState() => _ExpertiseCardState();
@@ -255,7 +240,7 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
         scale: _scaleAnimation,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          decoration: widget.isMobile || widget.isTablet
+          decoration: SizeConfig.isMobile || SizeConfig.isTablet
               ? BoxDecoration(
                   color: widget.item.color.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(24),
@@ -304,7 +289,7 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                     height: 100,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: widget.isMobile || widget.isTablet
+                      color: SizeConfig.isMobile || SizeConfig.isTablet
                           ? widget.item.color.withValues(alpha: 0.2)
                           : isHovered
                           ? widget.item.color.withValues(alpha: 0.2)

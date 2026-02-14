@@ -3,13 +3,15 @@ import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../../../../core/widgets/scroll_reveal.dart';
 import '../../../../core/widgets/section_header.dart';
+import '../../../../core/utils/responsive/size_config.dart';
 
 class FeaturedProjects extends StatelessWidget {
   const FeaturedProjects({super.key});
 
   @override
   Widget build(BuildContext context) {
-    bool isMobile = MediaQuery.of(context).size.width < 700;
+    SizeConfig.init(context);
+    bool isMobile = SizeConfig.isMobile;
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -19,7 +21,7 @@ class FeaturedProjects extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SectionHeader(title: 'Featured Projects', isMobile: isMobile),
+          SectionHeader(title: 'Featured Projects'),
           const SizedBox(height: 50),
           GridView.builder(
             shrinkWrap: true,
@@ -40,7 +42,6 @@ class FeaturedProjects extends StatelessWidget {
                   description: _fakeProjects[index]['description']!,
                   tags: _fakeProjects[index]['tags'] as List<String>,
                   imageUrl: _fakeProjects[index]['image']!,
-                  isMobile: isMobile,
                 ),
               );
             },
@@ -56,14 +57,12 @@ class _ProjectCard extends StatefulWidget {
   final String description;
   final List<String> tags;
   final String imageUrl;
-  final bool isMobile;
 
   const _ProjectCard({
     required this.title,
     required this.description,
     required this.tags,
     required this.imageUrl,
-    required this.isMobile,
   });
 
   @override
@@ -88,8 +87,14 @@ class _ProjectCardState extends State<_ProjectCard> {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: widget.isMobile ? AppColors.primary.withValues(alpha: 0.15) : AppColors.primary.withValues(alpha: isHovered ? 0.3 : 0.1),
-              blurRadius: widget.isMobile ? 15 : isHovered ? 30 : 20,
+              color: SizeConfig.isMobile
+                  ? AppColors.primary.withValues(alpha: 0.15)
+                  : AppColors.primary.withValues(alpha: isHovered ? 0.3 : 0.1),
+              blurRadius: SizeConfig.isMobile
+                  ? 15
+                  : isHovered
+                  ? 30
+                  : 20,
               offset: const Offset(0, 10),
             ),
           ],
@@ -171,7 +176,11 @@ class _ProjectCardState extends State<_ProjectCard> {
                     const SizedBox(height: 16),
                     AnimatedOpacity(
                       duration: const Duration(milliseconds: 300),
-                      opacity: widget.isMobile ? 1.0 : isHovered ? 1.0 : 0.0,
+                      opacity: SizeConfig.isMobile
+                          ? 1.0
+                          : isHovered
+                          ? 1.0
+                          : 0.0,
                       child: Row(
                         children: [
                           Text(

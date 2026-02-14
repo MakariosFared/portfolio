@@ -4,13 +4,15 @@ import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../../../../core/widgets/scroll_reveal.dart';
 import '../../../../core/widgets/section_header.dart';
+import '../../../../core/utils/responsive/size_config.dart';
 
 class ConnectWithMe extends StatelessWidget {
   const ConnectWithMe({super.key});
 
   @override
   Widget build(BuildContext context) {
-    bool isMobile = MediaQuery.of(context).size.width < 700;
+    SizeConfig.init(context);
+    bool isMobile = SizeConfig.isMobile;
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -20,7 +22,7 @@ class ConnectWithMe extends StatelessWidget {
       color: AppColors.surfaceDark.withValues(alpha: 0.3),
       child: Column(
         children: [
-          SectionHeader(title: 'Get In Touch', isMobile: isMobile),
+          SectionHeader(title: 'Get In Touch'),
           const SizedBox(height: 15),
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,

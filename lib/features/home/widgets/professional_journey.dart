@@ -3,6 +3,7 @@ import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../../../../core/widgets/scroll_reveal.dart';
 import '../../../../core/widgets/section_header.dart';
+import '../../../../core/utils/responsive/size_config.dart';
 
 class JourneyItem {
   // ... existing JourneyItem (kept for brevity)
@@ -63,80 +64,75 @@ class ProfessionalJourney extends StatelessWidget {
       ),
     ];
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final bool isMobile = constraints.maxWidth < 600;
-        final double horizontalPadding = isMobile ? 20 : 40;
+    SizeConfig.init(context);
+    final bool isMobile = SizeConfig.isMobile;
+    final double horizontalPadding = isMobile ? 20 : 40;
 
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SectionHeader(title: 'Professional Journey', isMobile: isMobile),
-              const SizedBox(height: 60),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionHeader(title: 'Professional Journey'),
+          const SizedBox(height: 60),
 
-              // Timeline and Cards
-              isMobile
-                  ? Column(
+          // Timeline and Cards
+          isMobile
+              ? Column(
+                  children: journeyItems.asMap().entries.map((entry) {
+                    return ScrollReveal(
+                      type: ScrollRevealType.fadeSlideUp,
+                      delay: Duration(milliseconds: 100 * entry.key),
+                      child: _JourneyCard(
+                        item: entry.value,
+                        isFirst: entry.key == 0,
+                        isLast: entry.key == journeyItems.length - 1,
+                      ),
+                    );
+                  }).toList(),
+                )
+              : Stack(
+                  children: [
+                    // Vertical Timeline Line
+                    Positioned(
+                      left: 20,
+                      top: 0,
+                      bottom: 0,
+                      child: ScrollReveal(
+                        type: ScrollRevealType.fadeSlideUp,
+                        child: Container(
+                          width: 2,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                AppColors.primary,
+                                AppColors.secondary.withValues(alpha: 0.5),
+                                Colors.transparent,
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Column(
                       children: journeyItems.asMap().entries.map((entry) {
                         return ScrollReveal(
                           type: ScrollRevealType.fadeSlideUp,
-                          delay: Duration(milliseconds: 100 * entry.key),
+                          delay: Duration(milliseconds: 200 * entry.key),
                           child: _JourneyCard(
                             item: entry.value,
                             isFirst: entry.key == 0,
                             isLast: entry.key == journeyItems.length - 1,
-                            isMobile: true,
                           ),
                         );
                       }).toList(),
-                    )
-                  : Stack(
-                      children: [
-                        // Vertical Timeline Line
-                        Positioned(
-                          left: 20,
-                          top: 0,
-                          bottom: 0,
-                          child: ScrollReveal(
-                            type: ScrollRevealType.fadeSlideUp,
-                            child: Container(
-                              width: 2,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    AppColors.primary,
-                                    AppColors.secondary.withValues(alpha: 0.5),
-                                    Colors.transparent,
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Column(
-                          children: journeyItems.asMap().entries.map((entry) {
-                            return ScrollReveal(
-                              type: ScrollRevealType.fadeSlideUp,
-                              delay: Duration(milliseconds: 200 * entry.key),
-                              child: _JourneyCard(
-                                item: entry.value,
-                                isFirst: entry.key == 0,
-                                isLast: entry.key == journeyItems.length - 1,
-                                isMobile: false,
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ],
                     ),
-            ],
-          ),
-        );
-      },
+                  ],
+                ),
+        ],
+      ),
     );
   }
 }
@@ -145,13 +141,11 @@ class _JourneyCard extends StatefulWidget {
   final JourneyItem item;
   final bool isFirst;
   final bool isLast;
-  final bool isMobile;
 
   const _JourneyCard({
     required this.item,
     required this.isFirst,
     required this.isLast,
-    required this.isMobile,
   });
 
   @override
@@ -205,9 +199,12 @@ class _JourneyCardState extends State<_JourneyCard>
           scale: _scaleAnimation,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            margin: EdgeInsets.only(left: widget.isMobile ? 0 : 60, bottom: 40),
+            margin: EdgeInsets.only(
+              left: SizeConfig.isMobile ? 0 : 60,
+              bottom: 40,
+            ),
             padding: const EdgeInsets.all(30),
-            decoration: widget.isMobile
+            decoration: SizeConfig.isMobile
                 ? BoxDecoration(
                     color: AppColors.surfaceDark.withValues(alpha: 0.6),
                     borderRadius: BorderRadius.circular(24),
@@ -247,7 +244,7 @@ class _JourneyCardState extends State<_JourneyCard>
             child: Stack(
               children: [
                 // Timeline dot for wide screens
-                if (!widget.isMobile)
+                if (!SizeConfig.isMobile)
                   Positioned(
                     left: -70,
                     top: 0,
@@ -325,7 +322,7 @@ class _JourneyCardState extends State<_JourneyCard>
                             ],
                           ),
                         ),
-                        if (!widget.isMobile)
+                        if (!SizeConfig.isMobile)
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 16,
@@ -345,7 +342,7 @@ class _JourneyCardState extends State<_JourneyCard>
                           ),
                       ],
                     ),
-                    if (widget.isMobile) ...[
+                    if (SizeConfig.isMobile) ...[
                       const SizedBox(height: 12),
                       Text(
                         widget.item.period,

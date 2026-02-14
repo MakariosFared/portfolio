@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import '../../core/utils/responsive/size_config.dart';
 import '../../core/theme/colors.dart';
 import '../../core/theme/typography.dart';
 import 'scroll_reveal.dart';
 
 class SectionHeader extends StatelessWidget {
   final String title;
-  final bool isMobile;
 
-  const SectionHeader({super.key, required this.title, this.isMobile = false});
+  const SectionHeader({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
+    final bool isMobile = SizeConfig.isMobile;
+
     return ScrollReveal(
       type: ScrollRevealType.fadeSlideRight,
       child: Row(
