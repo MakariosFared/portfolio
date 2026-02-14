@@ -40,7 +40,7 @@ class CustomTextField extends StatelessWidget {
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: AppColors.textOnPrimary,
             ),
           ),
           const SizedBox(height: 8),
@@ -53,7 +53,7 @@ class CustomTextField extends StatelessWidget {
           maxLines: maxLines,
           enabled: enabled,
           onChanged: onChanged,
-          style: const TextStyle(fontSize: 16, color: AppColors.textPrimary),
+          style: const TextStyle(fontSize: 16, color: AppColors.textOnPrimary),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(

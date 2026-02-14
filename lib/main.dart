@@ -1,3 +1,5 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'core/routes/app_router.dart';
@@ -26,7 +28,10 @@ void main() async {
   await di.init();
 
   runApp(
-    const MyApp(),
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => const MyApp(),
+    ),
   );
 }
 
@@ -37,6 +42,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
         return MaterialApp(
           title: 'My Portfolio',
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
           debugShowCheckedModeBanner: false,
           theme: AppTheme.darkTheme,
           darkTheme: AppTheme.darkTheme,
