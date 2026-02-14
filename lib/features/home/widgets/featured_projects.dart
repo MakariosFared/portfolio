@@ -40,6 +40,7 @@ class FeaturedProjects extends StatelessWidget {
                   description: _fakeProjects[index]['description']!,
                   tags: _fakeProjects[index]['tags'] as List<String>,
                   imageUrl: _fakeProjects[index]['image']!,
+                  isMobile: isMobile,
                 ),
               );
             },
@@ -55,12 +56,14 @@ class _ProjectCard extends StatefulWidget {
   final String description;
   final List<String> tags;
   final String imageUrl;
+  final bool isMobile;
 
   const _ProjectCard({
     required this.title,
     required this.description,
     required this.tags,
     required this.imageUrl,
+    required this.isMobile,
   });
 
   @override
@@ -85,8 +88,8 @@ class _ProjectCardState extends State<_ProjectCard> {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withValues(alpha: isHovered ? 0.3 : 0.1),
-              blurRadius: isHovered ? 30 : 20,
+              color: widget.isMobile ? AppColors.primary.withValues(alpha: 0.15) : AppColors.primary.withValues(alpha: isHovered ? 0.3 : 0.1),
+              blurRadius: widget.isMobile ? 15 : isHovered ? 30 : 20,
               offset: const Offset(0, 10),
             ),
           ],
@@ -168,7 +171,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                     const SizedBox(height: 16),
                     AnimatedOpacity(
                       duration: const Duration(milliseconds: 300),
-                      opacity: isHovered ? 1.0 : 0.0,
+                      opacity: widget.isMobile ? 1.0 : isHovered ? 1.0 : 0.0,
                       child: Row(
                         children: [
                           Text(

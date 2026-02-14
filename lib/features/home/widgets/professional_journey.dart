@@ -207,27 +207,43 @@ class _JourneyCardState extends State<_JourneyCard>
             duration: const Duration(milliseconds: 300),
             margin: EdgeInsets.only(left: widget.isMobile ? 0 : 60, bottom: 40),
             padding: const EdgeInsets.all(30),
-            decoration: BoxDecoration(
-              color: isHovered
-                  ? AppColors.surfaceDark.withValues(alpha: 0.6)
-                  : AppColors.surfaceDark.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(24),
-              border: Border.all(
-                color: isHovered
-                    ? AppColors.primary.withValues(alpha: 0.5)
-                    : AppColors.border.withValues(alpha: 0.1),
-                width: 1.5,
-              ),
-              boxShadow: isHovered
-                  ? [
+            decoration: widget.isMobile
+                ? BoxDecoration(
+                    color: AppColors.surfaceDark.withValues(alpha: 0.6),
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(
+                      color: AppColors.primary.withValues(alpha: 0.5),
+                      width: 1.5,
+                    ),
+                    boxShadow: [
                       BoxShadow(
                         color: AppColors.primary.withValues(alpha: 0.15),
                         blurRadius: 30,
                         offset: const Offset(0, 10),
                       ),
-                    ]
-                  : [],
-            ),
+                    ],
+                  )
+                : BoxDecoration(
+                    color: isHovered
+                        ? AppColors.surfaceDark.withValues(alpha: 0.6)
+                        : AppColors.surfaceDark.withValues(alpha: 0.3),
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(
+                      color: isHovered
+                          ? AppColors.primary.withValues(alpha: 0.5)
+                          : AppColors.border.withValues(alpha: 0.1),
+                      width: 1.5,
+                    ),
+                    boxShadow: isHovered
+                        ? [
+                            BoxShadow(
+                              color: AppColors.primary.withValues(alpha: 0.15),
+                              blurRadius: 30,
+                              offset: const Offset(0, 10),
+                            ),
+                          ]
+                        : [],
+                  ),
             child: Stack(
               children: [
                 // Timeline dot for wide screens
