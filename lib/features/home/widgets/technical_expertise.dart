@@ -183,9 +183,9 @@ class _ExpertiseSection extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: isMobile ? 2 : (isTablet ? 3 : 4),
-            crossAxisSpacing: isMobile ? 15 : 25,
-            mainAxisSpacing: isMobile ? 15 : 25,
-            childAspectRatio: isMobile ? 1.5 : 1.6,
+            crossAxisSpacing: isMobile ? 12 : 25,
+            mainAxisSpacing: isMobile ? 12 : 25,
+            childAspectRatio: isMobile ? 1.1 : (isTablet ? 1.3 : 1.5),
           ),
           itemCount: items.length,
           itemBuilder: (context, index) {
@@ -295,12 +295,15 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 15,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           color: isHovered
                               ? widget.item.color.withValues(alpha: 0.2)
@@ -309,13 +312,13 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                         ),
                         child: Icon(
                           widget.item.icon,
-                          size: 32,
+                          size: 28,
                           color: isHovered
                               ? widget.item.color
                               : AppColors.textLight,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 12),
                       Text(
                         widget.item.title,
                         textAlign: TextAlign.center,

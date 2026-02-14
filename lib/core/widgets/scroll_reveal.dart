@@ -29,6 +29,7 @@ class _ScrollRevealState extends State<ScrollReveal> {
   final Key _visibilityKey = UniqueKey();
 
   void _onVisibilityChanged(VisibilityInfo info) {
+    if (!mounted) return;
     if (!_hasAnimate && info.visibleFraction > 0.1) {
       setState(() {
         _hasAnimate = true;

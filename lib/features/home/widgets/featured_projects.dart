@@ -122,11 +122,12 @@ class _ProjectCardState extends State<_ProjectCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Row(
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
                       children: widget.tags
                           .map(
                             (tag) => Container(
-                              margin: const EdgeInsets.only(right: 8),
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 10,
                                 vertical: 4,
