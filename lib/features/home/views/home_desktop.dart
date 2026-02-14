@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
@@ -23,14 +24,6 @@ class _HomeDesktopState extends State<HomeDesktop> {
   final GlobalKey _projectsKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
 
-  void _scrollToSection(GlobalKey key) {
-    Scrollable.ensureVisible(
-      key.currentContext!,
-      duration: const Duration(seconds: 1),
-      curve: Curves.easeInOutCubic,
-    );
-  }
-
   @override
   void dispose() {
     _scrollController.dispose();
@@ -43,11 +36,11 @@ class _HomeDesktopState extends State<HomeDesktop> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80),
         child: DesktopNavBar(
-          onHomeTap: () => _scrollToSection(_homeKey),
-          onSkillsTap: () => _scrollToSection(_skillsKey),
-          onJourneyTap: () => _scrollToSection(_journeyKey),
-          onProjectsTap: () => _scrollToSection(_projectsKey),
-          onContactTap: () => _scrollToSection(_contactKey),
+          onHomeTap: () => scrollToSection(context,_homeKey),
+          onSkillsTap: () => scrollToSection(context,_skillsKey),
+          onJourneyTap: () => scrollToSection(context,_journeyKey),
+          onProjectsTap: () => scrollToSection(context,_projectsKey),
+          onContactTap: () => scrollToSection(context,_contactKey),
         ),
       ),
       backgroundColor: AppColors.backgroundDark,
@@ -57,8 +50,8 @@ class _HomeDesktopState extends State<HomeDesktop> {
           children: [
             HomeHero(
               key: _homeKey,
-              onWorkTap: () => _scrollToSection(_projectsKey),
-              onContactTap: () => _scrollToSection(_contactKey),
+              onWorkTap: () => scrollToSection(context,_projectsKey),
+              onContactTap: () => scrollToSection(context,_contactKey),
             ),
             const SizedBox(height: 100),
             TechnicalExpertise(key: _skillsKey),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
@@ -21,14 +22,6 @@ class _HomeTabletState extends State<HomeTablet> {
   final GlobalKey _journeyKey = GlobalKey();
   final GlobalKey _projectsKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
-
-  void _scrollToSection(GlobalKey key) {
-    Scrollable.ensureVisible(
-      key.currentContext!,
-      duration: const Duration(seconds: 1),
-      curve: Curves.easeInOutCubic,
-    );
-  }
 
   @override
   void dispose() {
@@ -67,18 +60,21 @@ class _HomeTabletState extends State<HomeTablet> {
           ],
         ),
         actions: [
-          _NavButton(title: 'Home', onTap: () => _scrollToSection(_homeKey)),
+          _NavButton(
+            title: 'Home',
+            onTap: () => scrollToSection(context, _homeKey),
+          ),
           _NavButton(
             title: 'Skills',
-            onTap: () => _scrollToSection(_skillsKey),
+            onTap: () => scrollToSection(context, _skillsKey),
           ),
           _NavButton(
             title: 'Projects',
-            onTap: () => _scrollToSection(_projectsKey),
+            onTap: () => scrollToSection(context, _projectsKey),
           ),
           _NavButton(
             title: 'Contact',
-            onTap: () => _scrollToSection(_contactKey),
+            onTap: () => scrollToSection(context, _contactKey),
           ),
           const SizedBox(width: 20),
         ],
@@ -89,8 +85,8 @@ class _HomeTabletState extends State<HomeTablet> {
           children: [
             HomeHero(
               key: _homeKey,
-              onWorkTap: () => _scrollToSection(_projectsKey),
-              onContactTap: () => _scrollToSection(_contactKey),
+              onWorkTap: () => scrollToSection(context, _projectsKey),
+              onContactTap: () => scrollToSection(context, _contactKey),
             ),
             const SizedBox(height: 80),
             TechnicalExpertise(key: _skillsKey),

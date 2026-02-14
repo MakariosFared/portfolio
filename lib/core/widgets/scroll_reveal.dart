@@ -26,14 +26,27 @@ class ScrollReveal extends StatefulWidget {
 
 class _ScrollRevealState extends State<ScrollReveal> {
   bool _hasAnimate = false;
-  final Key _visibilityKey = UniqueKey();
+  late final Key _visibilityKey;
+
+  @override
+  void initState() {
+    super.initState();
+    // Use a stable key that won't confuse JS interop on Web
+    _visibilityKey = ValueKey('scroll_reveal_${identityHashCode(this)}');
+  }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    if (!mounted) return;
-    if (!_hasAnimate && info.visibleFraction > 0.1) {
-      setState(() {
-        _hasAnimate = true;
-      });
+    if (!mounted || _hasAnimate) return;
+
+    try {
+      if (info.visibleFraction > 0.1) {
+        setState(() {
+          _hasAnimate = true;
+        });
+      }
+    } catch (e) {
+      // Catch potential JS/Web specific interop errors
+      debugPrint('ScrollReveal: Visibility observation failed: $e');
     }
   }
 
@@ -51,7 +64,8 @@ class _ScrollRevealState extends State<ScrollReveal> {
       return Opacity(opacity: 0, child: widget.child);
     }
 
-    switch (widget.type) {
+    final type = widget.type;
+    switch (type) {
       case ScrollRevealType.fadeSlideUp:
         return FadeInUp(
           duration: widget.duration,
@@ -61,7 +75,6 @@ class _ScrollRevealState extends State<ScrollReveal> {
         );
       case ScrollRevealType.fadeSlideRight:
         return FadeInLeft(
-          // AnimateDo's FadeInLeft slides from left to right
           duration: widget.duration,
           delay: widget.delay,
           from: widget.offset,
@@ -69,7 +82,6 @@ class _ScrollRevealState extends State<ScrollReveal> {
         );
       case ScrollRevealType.zoomFade:
         return FadeInDown(
-          // Use ZoomIn from animate_do
           duration: widget.duration,
           delay: widget.delay,
           child: ZoomIn(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
@@ -22,14 +23,7 @@ class _HomeMobileState extends State<HomeMobile> {
   final GlobalKey _projectsKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
 
-  void _scrollToSection(GlobalKey key) {
-    Navigator.pop(context); // Close drawer
-    Scrollable.ensureVisible(
-      key.currentContext!,
-      duration: const Duration(seconds: 1),
-      curve: Curves.easeInOutCubic,
-    );
-  }
+
 
   @override
   void dispose() {
@@ -47,22 +41,22 @@ class _HomeMobileState extends State<HomeMobile> {
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 12,
           children: [
-            _DrawerItem(title: 'Home', onTap: () => _scrollToSection(_homeKey)),
+            _DrawerItem(title: 'Home', onTap: () => scrollToSection(context,_homeKey)),
             _DrawerItem(
               title: 'Skills',
-              onTap: () => _scrollToSection(_skillsKey),
+              onTap: () => scrollToSection(context,_skillsKey),
             ),
             _DrawerItem(
               title: 'Experience',
-              onTap: () => _scrollToSection(_journeyKey),
+              onTap: () => scrollToSection(context,_journeyKey),
             ),
             _DrawerItem(
               title: 'Projects',
-              onTap: () => _scrollToSection(_projectsKey),
+              onTap: () => scrollToSection(context,_projectsKey),
             ),
             _DrawerItem(
               title: 'Contact',
-              onTap: () => _scrollToSection(_contactKey),
+              onTap: () => scrollToSection(context,_contactKey),
             ),
           ],
         ),
@@ -102,8 +96,8 @@ class _HomeMobileState extends State<HomeMobile> {
           children: [
             HomeHero(
               key: _homeKey,
-              onWorkTap: () => _scrollToSection(_projectsKey),
-              onContactTap: () => _scrollToSection(_contactKey),
+              onWorkTap: () => scrollToSection(context,_projectsKey),
+              onContactTap: () => scrollToSection(context,_contactKey),
             ),
             const SizedBox(height: 60),
             TechnicalExpertise(key: _skillsKey),
