@@ -111,7 +111,7 @@ class TechnicalExpertise extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final bool isMobile = constraints.maxWidth < 600;
-        final bool isTablet = constraints.maxWidth < 1000;
+        final bool isTablet = constraints.maxWidth < 1025;
         final double horizontalPadding = isMobile ? 20 : 40;
 
         return Padding(
@@ -194,7 +194,7 @@ class _ExpertiseSection extends StatelessWidget {
               type: ScrollRevealType.fadeSlideUp,
               delay: Duration(milliseconds: 100 * index),
               offset: 30,
-              child: _ExpertiseCard(item: item),
+              child: _ExpertiseCard(item: item, isMobile: isMobile, isTablet: isTablet),
             );
           },
         ),
@@ -206,8 +206,10 @@ class _ExpertiseSection extends StatelessWidget {
 
 class _ExpertiseCard extends StatefulWidget {
   final ExpertiseItem item;
+  final bool isMobile;
+  final bool isTablet;
 
-  const _ExpertiseCard({required this.item});
+  const _ExpertiseCard({required this.item, required this.isMobile, required this.isTablet});
 
   @override
   State<_ExpertiseCard> createState() => _ExpertiseCardState();
@@ -253,28 +255,42 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
         scale: _scaleAnimation,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          decoration: BoxDecoration(
-            color: isHovered
-                ? widget.item.color.withValues(alpha: 0.15)
-                : AppColors.surfaceDark.withValues(alpha: 0.3),
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(
-              color: isHovered
-                  ? widget.item.color
-                  : AppColors.border.withValues(alpha: 0.1),
-              width: 1.5,
-            ),
-            boxShadow: isHovered
-                ? [
+          decoration: widget.isMobile || widget.isTablet
+              ? BoxDecoration(
+                  color: widget.item.color.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(color: widget.item.color, width: 1.5),
+                  boxShadow: [
                     BoxShadow(
                       color: widget.item.color.withValues(alpha: 0.2),
                       blurRadius: 25,
                       spreadRadius: -5,
                       offset: const Offset(0, 10),
                     ),
-                  ]
-                : [],
-          ),
+                  ],
+                )
+              : BoxDecoration(
+                  color: isHovered
+                      ? widget.item.color.withValues(alpha: 0.15)
+                      : AppColors.surfaceDark.withValues(alpha: 0.3),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(
+                    color: isHovered
+                        ? widget.item.color
+                        : AppColors.border.withValues(alpha: 0.1),
+                    width: 1.5,
+                  ),
+                  boxShadow: isHovered
+                      ? [
+                          BoxShadow(
+                            color: widget.item.color.withValues(alpha: 0.2),
+                            blurRadius: 25,
+                            spreadRadius: -5,
+                            offset: const Offset(0, 10),
+                          ),
+                        ]
+                      : [],
+                ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(24),
             child: Stack(
@@ -288,7 +304,9 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                     height: 100,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isHovered
+                      color: widget.isMobile || widget.isTablet
+                          ? widget.item.color.withValues(alpha: 0.2)
+                          : isHovered
                           ? widget.item.color.withValues(alpha: 0.2)
                           : Colors.transparent,
                     ),
