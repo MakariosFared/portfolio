@@ -20,10 +20,19 @@ class HomeHero extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(
-        vertical: verticalPadding,
-        horizontal: horizontalPadding,
-      ),
+          padding: EdgeInsets.symmetric(
+            vertical: verticalPadding,
+            horizontal: horizontalPadding,
+          ),
+          decoration: BoxDecoration(
+            color: AppColors.backgroundDark,
+            // Placeholder for background image
+            image: const DecorationImage(
+              image: AssetImage('assets/images/background_image.jpg'),
+              fit: BoxFit.cover,
+              opacity: 0.1,
+            ),
+          ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -104,7 +113,7 @@ class HomeHero extends StatelessWidget {
                   Text(
                     'Available for new projects',
                     style: AppTypography.bodySmall.copyWith(
-                      color: AppColors.textLight,
+                      color: AppColors.textOnPrimary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

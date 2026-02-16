@@ -25,8 +25,9 @@ class TechnicalExpertise extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
+
     final categories = <ExpertiseCategory>[
-      // ... existing categories (kept for brevity in replacement)
       ExpertiseCategory(
         title: 'Mobile Development',
         items: [
@@ -109,7 +110,6 @@ class TechnicalExpertise extends StatelessWidget {
       ),
     ];
 
-    SizeConfig.init(context);
     final bool isMobile = SizeConfig.isMobile;
     final double horizontalPadding = isMobile ? 20 : 40;
 
@@ -140,6 +140,7 @@ class _ExpertiseSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isMobile = SizeConfig.isMobile;
     final bool isTablet = SizeConfig.isTablet;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -149,7 +150,7 @@ class _ExpertiseSection extends StatelessWidget {
           child: Text(
             title,
             style: AppTypography.h4.copyWith(
-              color: AppColors.textLight.withValues(alpha: 0.7),
+              color: AppColors.textOnPrimary.withValues(alpha: 0.7),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -172,17 +173,12 @@ class _ExpertiseSection extends StatelessWidget {
             crossAxisCount: isMobile ? 2 : (isTablet ? 3 : 4),
             crossAxisSpacing: isMobile ? 12 : 25,
             mainAxisSpacing: isMobile ? 12 : 25,
-            childAspectRatio: isMobile ? 1.1 : (isTablet ? 1.3 : 1.5),
+            childAspectRatio: isMobile ? 1.1 : (isTablet ? 1.2 : 1.4),
           ),
           itemCount: items.length,
           itemBuilder: (context, index) {
             final item = items[index];
-            return ScrollReveal(
-              type: ScrollRevealType.fadeSlideUp,
-              delay: Duration(milliseconds: 100 * index),
-              offset: 30,
-              child: _ExpertiseCard(item: item),
-            );
+            return _ExpertiseCard(item: item);
           },
         ),
         const SizedBox(height: 60),
@@ -213,9 +209,10 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
       vsync: this,
       duration: const Duration(milliseconds: 200),
     );
+
     _scaleAnimation = Tween<double>(
       begin: 1.0,
-      end: 1.05,
+      end: 1.02, // 👈 subtle scale for desktop
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
@@ -227,120 +224,96 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = SizeConfig.isMobile;
+    final bool isTablet = SizeConfig.isTablet;
+    final bool isDesktop = !isMobile && !isTablet;
+
     return MouseRegion(
       onEnter: (_) {
-        setState(() => isHovered = true);
-        _controller.forward();
+        if (isDesktop) {
+          setState(() => isHovered = true);
+          _controller.forward();
+        }
       },
       onExit: (_) {
-        setState(() => isHovered = false);
-        _controller.reverse();
+        if (isDesktop) {
+          setState(() => isHovered = false);
+          _controller.reverse();
+        }
       },
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          decoration: SizeConfig.isMobile || SizeConfig.isTablet
-              ? BoxDecoration(
-                  color: widget.item.color.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: widget.item.color, width: 1.5),
-                  boxShadow: [
-                    BoxShadow(
-                      color: widget.item.color.withValues(alpha: 0.2),
-                      blurRadius: 25,
-                      spreadRadius: -5,
-                      offset: const Offset(0, 10),
+      child: ScrollReveal(
+        type: ScrollRevealType.fadeSlideUp,
+        offset: 20,
+        child: ScaleTransition(
+          scale: isDesktop ? _scaleAnimation : const AlwaysStoppedAnimation(1),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            decoration: isDesktop
+                ? BoxDecoration(
+                    color: AppColors.surfaceDark,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: isHovered
+                          ? widget.item.color
+                          : AppColors.border.withValues(alpha: 0.2),
+                      width: 1.5,
                     ),
-                  ],
-                )
-              : BoxDecoration(
-                  color: isHovered
-                      ? widget.item.color.withValues(alpha: 0.15)
-                      : AppColors.surfaceDark.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(
-                    color: isHovered
-                        ? widget.item.color
-                        : AppColors.border.withValues(alpha: 0.1),
-                    width: 1.5,
-                  ),
-                  boxShadow: isHovered
-                      ? [
-                          BoxShadow(
-                            color: widget.item.color.withValues(alpha: 0.2),
-                            blurRadius: 25,
-                            spreadRadius: -5,
-                            offset: const Offset(0, 10),
-                          ),
-                        ]
-                      : [],
-                ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(24),
-            child: Stack(
-              children: [
-                Positioned(
-                  top: -50,
-                  right: -50,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: SizeConfig.isMobile || SizeConfig.isTablet
-                          ? widget.item.color.withValues(alpha: 0.2)
-                          : isHovered
-                          ? widget.item.color.withValues(alpha: 0.2)
-                          : Colors.transparent,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 15,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: isHovered
-                              ? widget.item.color.withValues(alpha: 0.2)
-                              : widget.item.color.withValues(alpha: 0.1),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          widget.item.icon,
-                          size: 28,
-                          color: isHovered
-                              ? widget.item.color
-                              : AppColors.textLight,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        widget.item.title,
-                        textAlign: TextAlign.center,
-                        style: AppTypography.bodyLarge.copyWith(
-                          color: isHovered
-                              ? widget.item.color
-                              : AppColors.textLight,
-                          fontWeight: isHovered
-                              ? FontWeight.bold
-                              : FontWeight.w500,
-                          fontSize: 14,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                    boxShadow: [
+                      BoxShadow(
+                        color: isHovered
+                            ? widget.item.color.withValues(alpha: 0.25)
+                            : Colors.black.withValues(alpha: 0.2),
+                        blurRadius: isHovered ? 30 : 15,
+                        spreadRadius: -5,
+                        offset: const Offset(0, 12),
                       ),
                     ],
+                  )
+                : BoxDecoration(
+                    color: widget.item.color.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: widget.item.color, width: 1.5),
                   ),
-                ),
-              ],
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 12 : 20,
+                vertical: isMobile ? 15 : 25,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: widget.item.color.withValues(alpha: 0.15),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      widget.item.icon,
+                      size: isMobile
+                          ? 24
+                          : (isTablet ? 28 : 36), // 👈 bigger on desktop
+                      color: isHovered && isDesktop
+                          ? widget.item.color
+                          : AppColors.textOnPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    widget.item.title,
+                    textAlign: TextAlign.center,
+                    style: AppTypography.bodyLarge.copyWith(
+                      fontSize: isMobile ? 14 : 18,
+                      fontWeight: isHovered && isDesktop
+                          ? FontWeight.bold
+                          : FontWeight.w500,
+                      color: isHovered && isDesktop
+                          ? widget.item.color
+                          : AppColors.textOnPrimary,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

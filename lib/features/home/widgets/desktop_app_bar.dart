@@ -25,13 +25,8 @@ class DesktopNavBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
       decoration: BoxDecoration(
-        color: AppColors.backgroundDark.withValues(alpha: 0.8),
-        border: Border(
-          bottom: BorderSide(
-            color: AppColors.primary.withValues(alpha: 0.1),
-            width: 1,
-          ),
-        ),
+        color: AppColors.surfaceDark.withValues(alpha: 0.5),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,7 +54,7 @@ class DesktopNavBar extends StatelessWidget {
                 const SizedBox(width: 12),
                 Text(
                   'Makarios Fared',
-                  style: AppTypography.h4.copyWith(color: AppColors.textLight),
+                  style: AppTypography.h4.copyWith(color: AppColors.textOnPrimary),
                 ),
               ],
             ),

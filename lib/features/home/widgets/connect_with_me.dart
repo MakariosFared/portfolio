@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:my_portfolio/core/widgets/scroll_reveal.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
-import '../../../../core/widgets/scroll_reveal.dart';
-import '../../../../core/widgets/section_header.dart';
 import '../../../../core/utils/responsive/size_config.dart';
 
-class ConnectWithMe extends StatelessWidget {
+class ConnectWithMe extends StatefulWidget {
   const ConnectWithMe({super.key});
+
+  @override
+  State<ConnectWithMe> createState() => _ConnectWithMeState();
+}
+
+class _ConnectWithMeState extends State<ConnectWithMe> {
+  // ================== EDIT YOUR DATA HERE ==================
+  final String email = "your_email@example.com";
+  final String whatsappNumber = "201000000000";
+  final String linkedInUrl = "https://linkedin.com/in/your-profile";
+  final String githubUrl = "https://github.com/your-username";
+  // =========================================================
 
   @override
   Widget build(BuildContext context) {
@@ -15,236 +26,144 @@ class ConnectWithMe extends StatelessWidget {
     bool isMobile = SizeConfig.isMobile;
 
     return Container(
+      width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 40,
-        vertical: 80,
+        horizontal: isMobile ? 20 : 30,
+        vertical: isMobile ? 12 : 20,
       ),
-      color: AppColors.surfaceDark.withValues(alpha: 0.3),
+      color: AppColors.primaryDark,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SectionHeader(title: 'Get In Touch'),
-          const SizedBox(height: 15),
+          SizedBox(height: 12),
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
-            delay: const Duration(milliseconds: 200),
+            delay: const Duration(milliseconds: 300),
             child: Text(
-              "Let's build something amazing together.",
-              style: AppTypography.bodyLarge.copyWith(
-                color: AppColors.textSecondary,
+              "Let's Connect",
+              style: AppTypography.h2.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: 50),
-          isMobile
-              ? Column(
-                  children: [
-                    ScrollReveal(
-                      type: ScrollRevealType.fadeSlideUp,
-                      delay: const Duration(milliseconds: 300),
-                      child: _buildContactInfo(),
-                    ),
-                    const SizedBox(height: 40),
-                    ScrollReveal(
-                      type: ScrollRevealType.zoomFade,
-                      delay: const Duration(milliseconds: 400),
-                      child: _buildSocialLinks(),
-                    ),
-                  ],
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: ScrollReveal(
-                        type: ScrollRevealType.fadeSlideUp,
-                        delay: const Duration(milliseconds: 300),
-                        child: _buildContactInfo(),
-                      ),
-                    ),
-                    Expanded(
-                      child: ScrollReveal(
-                        type: ScrollRevealType.zoomFade,
-                        delay: const Duration(milliseconds: 400),
-                        child: _buildSocialLinks(),
-                      ),
-                    ),
-                  ],
+          const SizedBox(height: 20),
+          ScrollReveal(
+            type: ScrollRevealType.fadeSlideUp,
+            delay: const Duration(milliseconds: 300),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 600),
+              child: Text(
+                "Interested in working together or have a project in mind? Feel free to reach out.",
+                style: AppTypography.bodyLarge.copyWith(
+                  color: AppColors.textOnPrimary,
                 ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+
+          /// SOCIAL ICONS ROW
+          ScrollReveal(
+            type: ScrollRevealType.fadeSlideUp,
+            delay: const Duration(milliseconds: 300),
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 25,
+              runSpacing: 25,
+              children: [
+                _SocialButton(
+                  icon: Icons.email_outlined,
+                  onTap: () => _launch("mailto:$email"),
+                ),
+                _SocialButton(
+                  icon: Icons.phone,
+                  onTap: () =>
+                      _launch("https://wa.me/$whatsappNumber"),
+                ),
+                _SocialButton(
+                  icon: Icons.business_center_outlined,
+                  onTap: () => _launch(linkedInUrl),
+                ),
+                _SocialButton(
+                  icon: Icons.code,
+                  onTap: () => _launch(githubUrl),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 30),
+
+          /// FOOTER TEXT
+          Text(
+            "© ${DateTime.now().year} Makarios Fared. All rights reserved.",
+            style: AppTypography.bodySmall.copyWith(
+              color: AppColors.textOnPrimary,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildContactInfo() {
-    return Column(
-      children: [
-        _ContactItem(
-          icon: Icons.email_outlined,
-          title: 'Email',
-          value: 'makarios.fared7@gmail.com',
-          onTap: () => launchUrl(Uri.parse('mailto:makarios.fared7@gmail.com')),
-        ),
-        const SizedBox(height: 20),
-        _ContactItem(
-          icon: Icons.location_on_outlined,
-          title: 'Location',
-          value: 'Cairo, Egypt',
-          onTap: () {},
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSocialLinks() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _SocialIcon(
-          icon:
-              'assets/icons/linkedin.png', // Placeholder, use icon if png not available
-          label: 'LinkedIn',
-          onTap: () {},
-        ),
-        const SizedBox(width: 25),
-        _SocialIcon(
-          icon: 'assets/icons/github.png',
-          label: 'GitHub',
-          onTap: () {},
-        ),
-        const SizedBox(width: 25),
-        _SocialIcon(
-          icon: 'assets/icons/twitter.png',
-          label: 'Twitter',
-          onTap: () {},
-        ),
-      ],
-    );
+  Future<void> _launch(String url) async {
+    final Uri uri = Uri.parse(url);
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 }
 
-class _ContactItem extends StatelessWidget {
+class _SocialButton extends StatefulWidget {
   final IconData icon;
-  final String title;
-  final String value;
   final VoidCallback onTap;
 
-  const _ContactItem({
+  const _SocialButton({
     required this.icon,
-    required this.title,
-    required this.value,
     required this.onTap,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(15),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: AppColors.backgroundDark,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, color: AppColors.primaryLight, size: 24),
-            ),
-            const SizedBox(width: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTypography.caption.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-                Text(
-                  value,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  State<_SocialButton> createState() => _SocialButtonState();
 }
 
-class _SocialIcon extends StatefulWidget {
-  final String icon;
-  final String label;
-  final VoidCallback onTap;
-
-  const _SocialIcon({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  @override
-  State<_SocialIcon> createState() => _SocialIconState();
-}
-
-class _SocialIconState extends State<_SocialIcon> {
+class _SocialButtonState extends State<_SocialButton> {
   bool isHovered = false;
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = SizeConfig.isMobile;
+
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
-      child: InkWell(
+      child: GestureDetector(
         onTap: widget.onTap,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.all(16),
+          duration: const Duration(milliseconds: 250),
+          width: isMobile ? 55 : 65,
+          height: isMobile ? 55 : 65,
           decoration: BoxDecoration(
-            color: isHovered ? AppColors.primary : AppColors.surfaceDark,
             shape: BoxShape.circle,
-            boxShadow: [
-              if (isHovered)
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.4),
-                  blurRadius: 15,
-                  spreadRadius: 2,
-                ),
-            ],
+            border: Border.all(
+              color: isHovered
+                  ? AppColors.primary
+                  : AppColors.primary.withValues(alpha: 0.4),
+            ),
+            color: isHovered
+                ? AppColors.primary
+                : Colors.transparent,
           ),
           child: Icon(
-            _getIconForLabel(widget.label),
-            color: isHovered ? Colors.white : AppColors.textLight,
-            size: 28,
+            widget.icon,
+            color: isHovered
+                ? Colors.white
+                : AppColors.primaryLight,
+            size: isMobile ? 24 : 28,
           ),
         ),
       ),
     );
-  }
-
-  IconData _getIconForLabel(String label) {
-    switch (label.toLowerCase()) {
-      case 'linkedin':
-        return Icons.link;
-      case 'github':
-        return Icons.code;
-      case 'twitter':
-        return Icons.alternate_email;
-      default:
-        return Icons.share;
-    }
   }
 }

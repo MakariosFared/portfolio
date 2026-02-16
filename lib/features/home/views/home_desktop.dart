@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
-import '../../../../core/theme/typography.dart';
 import '../widgets/connect_with_me.dart';
 import '../widgets/desktop_app_bar.dart';
 import '../widgets/featured_projects.dart';
@@ -61,36 +60,6 @@ class _HomeDesktopState extends State<HomeDesktop> {
             FeaturedProjects(key: _projectsKey),
             const SizedBox(height: 100),
             ConnectWithMe(key: _contactKey),
-            const SizedBox(height: 60),
-            // Footer
-            _buildFooter(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFooter() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 40),
-      width: double.infinity,
-      color: AppColors.surfaceDark.withValues(alpha: 0.5),
-      child: Center(
-        child: Column(
-          children: [
-            Text(
-              '© 2026 Makarios Fared Naeem. All rights reserved.',
-              style: AppTypography.caption.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Built with Flutter for Web',
-              style: AppTypography.overline.copyWith(
-                color: AppColors.primaryLight.withValues(alpha: 0.5),
-              ),
-            ),
           ],
         ),
       ),

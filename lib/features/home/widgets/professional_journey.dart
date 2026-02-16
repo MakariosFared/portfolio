@@ -303,8 +303,8 @@ class _JourneyCardState extends State<_JourneyCard>
                                 widget.item.role,
                                 style: AppTypography.h4.copyWith(
                                   color: isHovered
-                                      ? AppColors.textLight
-                                      : AppColors.textLight.withValues(
+                                      ? AppColors.textOnPrimary
+                                      : AppColors.textOnPrimary.withValues(
                                           alpha: 0.9,
                                         ),
                                   fontWeight: FontWeight.bold,

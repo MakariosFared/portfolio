@@ -197,7 +197,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                     Text(
                       widget.description,
                       style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.textLight,
+                        color: AppColors.textOnPrimary,
                         fontSize: isMobile ? 12 : 14,
                       ),
                       maxLines: isMobile
@@ -209,7 +209,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                     SizedBox(height: isMobile ? 16 : 24),
 
                     Divider(
-                      color: AppColors.textLight,
+                      color: AppColors.textOnPrimary,
                       thickness: 1,
                     ),
 

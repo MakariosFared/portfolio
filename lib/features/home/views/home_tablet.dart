@@ -132,7 +132,9 @@ class _NavButton extends StatelessWidget {
       onPressed: onTap,
       child: Text(
         title,
-        style: AppTypography.bodyMedium.copyWith(color: AppColors.textLight),
+        style: AppTypography.bodyMedium.copyWith(
+          color: AppColors.textOnPrimary,
+        ),
       ),
     );
   }
