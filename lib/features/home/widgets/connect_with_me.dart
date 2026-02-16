@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_portfolio/core/widgets/scroll_reveal.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/theme/colors.dart';
@@ -75,20 +76,19 @@ class _ConnectWithMeState extends State<ConnectWithMe> {
               runSpacing: 25,
               children: [
                 _SocialButton(
-                  icon: Icons.email_outlined,
+                  icon: FontAwesomeIcons.envelope,
                   onTap: () => _launch("mailto:$email"),
                 ),
                 _SocialButton(
-                  icon: Icons.phone,
-                  onTap: () =>
-                      _launch("https://wa.me/$whatsappNumber"),
+                  icon: FontAwesomeIcons.whatsapp,
+                  onTap: () => _launch("https://wa.me/$whatsappNumber"),
                 ),
                 _SocialButton(
-                  icon: Icons.business_center_outlined,
+                  icon: FontAwesomeIcons.linkedin,
                   onTap: () => _launch(linkedInUrl),
                 ),
                 _SocialButton(
-                  icon: Icons.code,
+                  icon: FontAwesomeIcons.github,
                   onTap: () => _launch(githubUrl),
                 ),
               ],
@@ -119,10 +119,7 @@ class _SocialButton extends StatefulWidget {
   final IconData icon;
   final VoidCallback onTap;
 
-  const _SocialButton({
-    required this.icon,
-    required this.onTap,
-  });
+  const _SocialButton({required this.icon, required this.onTap});
 
   @override
   State<_SocialButton> createState() => _SocialButtonState();
@@ -146,20 +143,22 @@ class _SocialButtonState extends State<_SocialButton> {
           height: isMobile ? 55 : 65,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(
-              color: isHovered
-                  ? AppColors.primary
-                  : AppColors.primary.withValues(alpha: 0.4),
-            ),
-            color: isHovered
+            border: isMobile
+                ? Border.all(color: AppColors.primary)
+                : Border.all(
+                    color: isHovered
+                        ? AppColors.primary
+                        : AppColors.primary.withValues(alpha: 0.4),
+                  ),
+            color: isMobile
+                ? AppColors.primary
+                : isHovered
                 ? AppColors.primary
                 : Colors.transparent,
           ),
           child: Icon(
             widget.icon,
-            color: isHovered
-                ? Colors.white
-                : AppColors.primaryLight,
+            color: Colors.white,
             size: isMobile ? 24 : 28,
           ),
         ),
