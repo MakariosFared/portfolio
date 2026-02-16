@@ -23,8 +23,6 @@ class _HomeMobileState extends State<HomeMobile> {
   final GlobalKey _projectsKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
 
-
-
   @override
   void dispose() {
     _scrollController.dispose();
@@ -37,28 +35,33 @@ class _HomeMobileState extends State<HomeMobile> {
       backgroundColor: AppColors.backgroundDark,
       drawer: Drawer(
         backgroundColor: AppColors.surfaceDark,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          spacing: 12,
-          children: [
-            _DrawerItem(title: 'Home', onTap: () => scrollToSection(context,_homeKey)),
-            _DrawerItem(
-              title: 'Skills',
-              onTap: () => scrollToSection(context,_skillsKey),
-            ),
-            _DrawerItem(
-              title: 'Experience',
-              onTap: () => scrollToSection(context,_journeyKey),
-            ),
-            _DrawerItem(
-              title: 'Projects',
-              onTap: () => scrollToSection(context,_projectsKey),
-            ),
-            _DrawerItem(
-              title: 'Contact',
-              onTap: () => scrollToSection(context,_contactKey),
-            ),
-          ],
+        child: Builder(
+          builder: (drawerContext) => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 12,
+            children: [
+              _DrawerItem(
+                title: 'Home',
+                onTap: () => scrollToSection(drawerContext, _homeKey),
+              ),
+              _DrawerItem(
+                title: 'Skills',
+                onTap: () => scrollToSection(drawerContext, _skillsKey),
+              ),
+              _DrawerItem(
+                title: 'Experience',
+                onTap: () => scrollToSection(drawerContext, _journeyKey),
+              ),
+              _DrawerItem(
+                title: 'Projects',
+                onTap: () => scrollToSection(drawerContext, _projectsKey),
+              ),
+              _DrawerItem(
+                title: 'Contact',
+                onTap: () => scrollToSection(drawerContext, _contactKey),
+              ),
+            ],
+          ),
         ),
       ),
       appBar: AppBar(
@@ -96,8 +99,8 @@ class _HomeMobileState extends State<HomeMobile> {
           children: [
             HomeHero(
               key: _homeKey,
-              onWorkTap: () => scrollToSection(context,_projectsKey),
-              onContactTap: () => scrollToSection(context,_contactKey),
+              onWorkTap: () => scrollToSection(context, _projectsKey),
+              onContactTap: () => scrollToSection(context, _contactKey),
             ),
             const SizedBox(height: 60),
             TechnicalExpertise(key: _skillsKey),

@@ -4,7 +4,7 @@ void scrollToSection(BuildContext context, GlobalKey key) {
   // Only pop if we are actually in a drawer (which is a route)
   final scaffold = Scaffold.maybeOf(context);
   if (scaffold != null && scaffold.isDrawerOpen) {
-    Navigator.pop(context);
+    scaffold.closeDrawer();
   }
 
   final targetContext = key.currentContext;

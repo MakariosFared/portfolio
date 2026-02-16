@@ -23,31 +23,70 @@ class FeaturedProjects extends StatelessWidget {
         children: [
           SectionHeader(title: 'Featured Projects'),
           const SizedBox(height: 50),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: isMobile ? 1 : 2,
-              crossAxisSpacing: 30,
-              mainAxisSpacing: 30,
-              childAspectRatio: isMobile ? 1.2 : 1.5,
-            ),
-            itemCount: 4,
-            itemBuilder: (context, index) {
-              return ScrollReveal(
-                type: ScrollRevealType.fadeSlideUp,
-                delay: Duration(milliseconds: 200 * index),
-                child: _ProjectCard(
-                  title: _fakeProjects[index]['title']!,
-                  description: _fakeProjects[index]['description']!,
-                  tags: _fakeProjects[index]['tags'] as List<String>,
-                  imageUrl: _fakeProjects[index]['image']!,
-                ),
-              );
+
+          Builder(
+            builder: (context) {
+              if (isMobile) {
+                return Column(
+                  children: List.generate(_fakeProjects.length, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 25),
+                      child: ScrollReveal(
+                        type: ScrollRevealType.fadeSlideUp,
+                        delay: Duration(milliseconds: 200 * index),
+                        child: _buildProjectCard(index),
+                      ),
+                    );
+                  }),
+                );
+              }
+
+              // Desktop/Tablet: 2 columns using Rows
+              final List<Widget> rows = [];
+              for (int i = 0; i < _fakeProjects.length; i += 2) {
+                rows.add(
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 35),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ScrollReveal(
+                            type: ScrollRevealType.fadeSlideUp,
+                            delay: const Duration(milliseconds: 200),
+                            child: _buildProjectCard(i),
+                          ),
+                        ),
+                        const SizedBox(width: 35),
+                        if (i + 1 < _fakeProjects.length)
+                          Expanded(
+                            child: ScrollReveal(
+                              type: ScrollRevealType.fadeSlideUp,
+                              delay: const Duration(milliseconds: 400),
+                              child: _buildProjectCard(i + 1),
+                            ),
+                          )
+                        else
+                          const Expanded(child: SizedBox()),
+                      ],
+                    ),
+                  ),
+                );
+              }
+              return Column(children: rows);
             },
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildProjectCard(int index) {
+    return _ProjectCard(
+      title: _fakeProjects[index]['title']!,
+      description: _fakeProjects[index]['description']!,
+      tags: _fakeProjects[index]['tags'] as List<String>,
+      imageUrl: _fakeProjects[index]['image']!,
     );
   }
 }
@@ -74,12 +113,14 @@ class _ProjectCardState extends State<_ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = SizeConfig.isMobile;
+
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        transform: isHovered
+        transform: !isMobile && isHovered
             ? (Matrix4.identity()..translate(0, -10, 0))
             : Matrix4.identity(),
         decoration: BoxDecoration(
@@ -87,109 +128,106 @@ class _ProjectCardState extends State<_ProjectCard> {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: SizeConfig.isMobile
-                  ? AppColors.primary.withValues(alpha: 0.15)
-                  : AppColors.primary.withValues(alpha: isHovered ? 0.3 : 0.1),
-              blurRadius: SizeConfig.isMobile
-                  ? 15
-                  : isHovered
-                  ? 30
-                  : 20,
+              color: AppColors.primary.withValues(
+                alpha: !isMobile && isHovered ? 0.3 : 0.15,
+              ),
+              blurRadius: !isMobile && isHovered ? 30 : 20,
               offset: const Offset(0, 10),
             ),
           ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Stack(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Project Image Placeholder with Gradient
-              Positioned.fill(
-                child: ScrollReveal(
-                  type: ScrollRevealType.zoomFade,
-                  delay: const Duration(milliseconds: 300),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.transparent,
-                          AppColors.backgroundDark.withValues(alpha: 0.8),
-                          AppColors.backgroundDark,
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+              /// 🖼 Image
+              SizedBox(
+                height: isMobile ? 180 : 360,
+                width: double.infinity,
+                child: Image.asset(widget.imageUrl, fit: BoxFit.cover),
               ),
-              // Content
+
+              /// 📄 Content
               Padding(
-                padding: const EdgeInsets.all(24.0),
+                padding: EdgeInsets.all(isMobile ? 14 : 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
-                      children: widget.tags
-                          .map(
-                            (tag) => Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.primary.withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.3,
-                                  ),
-                                ),
-                              ),
-                              child: Text(
-                                tag,
-                                style: AppTypography.caption.copyWith(
-                                  color: AppColors.primaryLight,
-                                ),
-                              ),
+                      children: widget.tags.map((tag) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: AppColors.primary.withValues(alpha: 0.3),
                             ),
-                          )
-                          .toList(),
+                          ),
+                          child: Text(
+                            tag,
+                            style: AppTypography.caption.copyWith(
+                              color: AppColors.primaryLight,
+                              fontSize: isMobile ? 14 : 16,
+                            ),
+                          ),
+                        );
+                      }).toList(),
                     ),
-                    const SizedBox(height: 12),
+
+                    SizedBox(height: isMobile ? 12 : 16),
+
                     Text(
                       widget.title,
-                      style: AppTypography.h3.copyWith(color: Colors.white),
+                      style: AppTypography.h3.copyWith(
+                        color: Colors.white,
+                        fontSize: isMobile ? 18 : 22,
+                      ),
                     ),
+
                     const SizedBox(height: 8),
+
                     Text(
                       widget.description,
                       style: AppTypography.bodySmall.copyWith(
                         color: AppColors.textLight,
+                        fontSize: isMobile ? 12 : 14,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      maxLines: isMobile
+                          ? 4
+                          : 10, // Higher maxLines for natural flow
+                      overflow: TextOverflow.visible, // Allow it to show fully
                     ),
-                    const SizedBox(height: 16),
+
+                    SizedBox(height: isMobile ? 16 : 24),
+
+                    Divider(
+                      color: AppColors.textLight,
+                      thickness: 1,
+                    ),
+
+                    SizedBox(height: isMobile ? 16 : 24),
+
                     AnimatedOpacity(
                       duration: const Duration(milliseconds: 300),
-                      opacity: SizeConfig.isMobile
-                          ? 1.0
-                          : isHovered
-                          ? 1.0
-                          : 0.0,
+                      opacity: isMobile || isHovered ? 1.0 : 0.0,
                       child: Row(
                         children: [
                           Text(
                             'View Project',
                             style: AppTypography.button.copyWith(
                               color: AppColors.accent,
+                              fontSize: isMobile ? 14 : 16,
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: 6),
                           const Icon(
                             Icons.arrow_forward,
                             size: 16,
@@ -198,6 +236,8 @@ class _ProjectCardState extends State<_ProjectCard> {
                         ],
                       ),
                     ),
+
+                    SizedBox(height: isMobile ? 12 : 24),
                   ],
                 ),
               ),
@@ -211,31 +251,56 @@ class _ProjectCardState extends State<_ProjectCard> {
 
 final List<Map<String, dynamic>> _fakeProjects = [
   {
-    'title': 'E-Commerce Platform',
+    'title': 'Fego Driver – Ride-Hailing Driver App',
     'description':
-        'A full-featured mobile shopping app built with Flutter and Firebase, featuring real-time updates and secure payments.',
-    'image': '',
-    'tags': ['Flutter', 'Firebase', 'Stripe'],
+        'A driver-side mobile application for a ride-hailing platform, enabling real-time trip tracking, ride requests management, live location updates via Google Maps, and instant push notifications using Firebase. 🚗📍🔔',
+    'image': 'assets/images/fego_driver_app.png',
+    'tags': [
+      'Flutter',
+      'Google Maps',
+      'FCM',
+      'Cubit',
+      'MVVM Architecture',
+      'RESTful APIs',
+      'WebSockets',
+      'Real-time Location Tracking',
+    ],
   },
   {
-    'title': 'Task Management System',
+    'title': 'Fego – Ride-Hailing Passenger App',
+    'description':
+        'A passenger-side mobile application for a ride-hailing platform, enabling users to book rides, track drivers in real-time, manage payments, and receive instant notifications. 🚗📍🔔',
+    'image': 'assets/images/fego_user_app.png',
+    'tags': [
+      'Flutter',
+      'Google Maps',
+      'FCM',
+      'Cubit',
+      'MVVM Architecture',
+      'RESTful APIs',
+      'WebSockets',
+      'Real-time Location Tracking',
+    ],
+  },
+  {
+    'title': 'Dikkan – Multi-Vendor E-Commerce App',
+    'description':
+        'A mobile app that connects users with nearby stores, enabling product search, cart management, and smooth checkout with real-time order tracking. 🛒📍',
+    'image': 'assets/images/dikkan_app.png',
+    'tags': [
+      'Flutter',
+      'RESTful APIs',
+      'Cubit',
+      'MVVM Architecture',
+      'Google Maps',
+      'Hive',
+    ],
+  },
+  {
+    'title': 'Bookly App – Book Browsing & Reading',
     'description':
         'A collaborative project management tool for teams with drag-and-drop support and detailed analytics.',
-    'image': '',
-    'tags': ['Riverpod', 'Cloud Firestore', 'CI/CD'],
-  },
-  {
-    'title': 'Health & Fitness Tracker',
-    'description':
-        'Personalized workout planning and nutrition tracking app with Google Fit integration.',
-    'image': '',
-    'tags': ['Flutter', 'Local Auth', 'Sqflite'],
-  },
-  {
-    'title': 'AI Chat Companion',
-    'description':
-        'An intelligent conversational AI assistant powered by Google Gemini API with voice recognition.',
-    'image': '',
-    'tags': ['Gemini API', 'Speech-to-Text', 'Lottie'],
+    'image': 'assets/images/bookly_app.png',
+    'tags': ['Flutter', 'MVP', 'Cubit'],
   },
 ];

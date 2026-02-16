@@ -30,7 +30,11 @@ void main() async {
   await di.init();
 
   runApp(
-    DevicePreview(enabled: !kReleaseMode, builder: (context) => const MyApp()),
+    DevicePreview(
+      // enabled: !kReleaseMode,
+      enabled: false,
+      builder: (context) => const MyApp(),
+    ),
   );
 }
 
