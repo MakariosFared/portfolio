@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/utils/functions.dart';
+import 'package:my_portfolio/core/widgets/back_to_top_button.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
@@ -33,6 +34,7 @@ class _HomeTabletState extends State<HomeTablet> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
+      floatingActionButton: BackToTopButton(scrollController: _scrollController),
       appBar: AppBar(
         backgroundColor: AppColors.backgroundDark,
         elevation: 0,
@@ -69,6 +71,10 @@ class _HomeTabletState extends State<HomeTablet> {
             onTap: () => scrollToSection(context, _skillsKey),
           ),
           _NavButton(
+            title: 'Experience',
+            onTap: () => scrollToSection(context, _journeyKey),
+          ),
+          _NavButton(
             title: 'Projects',
             onTap: () => scrollToSection(context, _projectsKey),
           ),
@@ -96,24 +102,7 @@ class _HomeTabletState extends State<HomeTablet> {
             FeaturedProjects(key: _projectsKey),
             const SizedBox(height: 80),
             ConnectWithMe(key: _contactKey),
-            const SizedBox(height: 60),
-            // Footer
-            _buildFooter(),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFooter() {
-    return Container(
-      padding: const EdgeInsets.all(30),
-      width: double.infinity,
-      color: AppColors.surfaceDark.withValues(alpha: 0.5),
-      child: Center(
-        child: Text(
-          '© 2026 Makarios Fared Naeem',
-          style: AppTypography.caption.copyWith(color: AppColors.textSecondary),
         ),
       ),
     );

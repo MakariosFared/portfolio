@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../../../../core/widgets/scroll_reveal.dart';
@@ -7,7 +8,7 @@ import '../../../../core/utils/responsive/size_config.dart';
 
 class ExpertiseItem {
   final String title;
-  final IconData icon;
+  final dynamic icon;
   final Color color;
 
   ExpertiseItem({required this.title, required this.icon, required this.color});
@@ -41,6 +42,31 @@ class TechnicalExpertise extends StatelessWidget {
             icon: Icons.code,
             color: const Color(0xFF0175C2),
           ),
+          ExpertiseItem(
+            title: 'Cross-Platform',
+            icon: Icons.devices_rounded,
+            color: const Color(0xFF00B4D8),
+          ),
+        ],
+      ),
+      ExpertiseCategory(
+        title: 'Architecture & Clean Code',
+        items: [
+          ExpertiseItem(
+            title: 'Clean Architecture',
+            icon: Icons.account_tree_rounded,
+            color: const Color(0xFF10B981),
+          ),
+          ExpertiseItem(
+            title: 'MVVM Pattern',
+            icon: Icons.dashboard_customize_rounded,
+            color: const Color(0xFF6366F1),
+          ),
+          ExpertiseItem(
+            title: 'SOLID & OOP',
+            icon: Icons.verified_user_rounded,
+            color: const Color(0xFF8B5CF6),
+          ),
         ],
       ),
       ExpertiseCategory(
@@ -48,16 +74,16 @@ class TechnicalExpertise extends StatelessWidget {
         items: [
           ExpertiseItem(
             title: 'BLoC',
-            icon: Icons.layers,
+            icon: FontAwesomeIcons.cubes,
             color: const Color(0xFF5A67D8),
           ),
           ExpertiseItem(
             title: 'Cubit',
-            icon: Icons.architecture,
+            icon: FontAwesomeIcons.layerGroup,
             color: const Color(0xFF667EEA),
           ),
           ExpertiseItem(
-            title: 'GetX',
+            title: 'Provider / GetX',
             icon: Icons.dynamic_feed,
             color: const Color(0xFF764BA2),
           ),
@@ -67,18 +93,18 @@ class TechnicalExpertise extends StatelessWidget {
         title: 'Backend & Data',
         items: [
           ExpertiseItem(
-            title: 'Firebase',
-            icon: Icons.fireplace,
+            title: 'Firebase & FCM',
+            icon: FontAwesomeIcons.fire,
             color: const Color(0xFFFFCA28),
           ),
           ExpertiseItem(
             title: 'RESTful APIs',
-            icon: Icons.api,
+            icon: Icons.api_rounded,
             color: const Color(0xFF00B894),
           ),
           ExpertiseItem(
-            title: 'Real-time DB',
-            icon: Icons.storage,
+            title: 'Local Storage & DB',
+            icon: Icons.storage_rounded,
             color: const Color(0xFFFDAA5D),
           ),
         ],
@@ -87,24 +113,24 @@ class TechnicalExpertise extends StatelessWidget {
         title: 'Tools & UI/UX',
         items: [
           ExpertiseItem(
-            title: 'Responsive Design',
-            icon: Icons.devices,
-            color: const Color(0xFF74B9FF),
-          ),
-          ExpertiseItem(
-            title: 'Animation',
-            icon: Icons.animation,
-            color: const Color(0xFFF093FB),
-          ),
-          ExpertiseItem(
             title: 'Git',
-            icon: Icons.terminal,
+            icon: FontAwesomeIcons.gitAlt,
             color: const Color(0xFFF05032),
           ),
           ExpertiseItem(
             title: 'GitHub',
-            icon: Icons.code_off,
-            color: const Color(0xFF2D3436),
+            icon: FontAwesomeIcons.github,
+            color: const Color(0xFFB0BEC5),
+          ),
+          ExpertiseItem(
+            title: 'Responsive UI',
+            icon: Icons.stay_current_portrait_rounded,
+            color: const Color(0xFF74B9FF),
+          ),
+          ExpertiseItem(
+            title: 'Smooth Animations',
+            icon: Icons.animation_rounded,
+            color: const Color(0xFFF093FB),
           ),
         ],
       ),
@@ -288,15 +314,25 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                       color: widget.item.color.withValues(alpha: 0.15),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
-                      widget.item.icon,
-                      size: isMobile
-                          ? 24
-                          : (isTablet ? 28 : 36), // 👈 bigger on desktop
-                      color: isHovered && isDesktop
-                          ? widget.item.color
-                          : AppColors.textOnPrimary,
-                    ),
+                    child: widget.item.icon is IconData
+                        ? Icon(
+                            widget.item.icon as IconData,
+                            size: isMobile
+                                ? 24
+                                : (isTablet ? 28 : 36),
+                            color: isHovered && isDesktop
+                                ? widget.item.color
+                                : AppColors.textOnPrimary,
+                          )
+                        : FaIcon(
+                            widget.item.icon as FaIconData,
+                            size: isMobile
+                                ? 24
+                                : (isTablet ? 28 : 36),
+                            color: isHovered && isDesktop
+                                ? widget.item.color
+                                : AppColors.textOnPrimary,
+                          ),
                   ),
                   const SizedBox(height: 14),
                   Text(

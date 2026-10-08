@@ -12,12 +12,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
 
-    return Scaffold(
-      body: ResponsiveBuilder(
-        mobile: const HomeMobile(),
-        tablet: const HomeTablet(),
-        desktop: const HomeDesktop(),
-      ),
+    return ResponsiveBuilder(
+      mobile: const HomeMobile(),
+      tablet: const HomeTablet(),
+      desktop: const HomeDesktop(),
     );
   }
 }

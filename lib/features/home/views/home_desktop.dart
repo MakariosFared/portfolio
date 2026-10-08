@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/utils/functions.dart';
+import 'package:my_portfolio/core/widgets/back_to_top_button.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../widgets/connect_with_me.dart';
@@ -43,6 +44,7 @@ class _HomeDesktopState extends State<HomeDesktop> {
         ),
       ),
       backgroundColor: AppColors.backgroundDark,
+      floatingActionButton: BackToTopButton(scrollController: _scrollController),
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Column(

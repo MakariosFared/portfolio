@@ -37,6 +37,34 @@ class HomeHero extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ScrollReveal(
+            type: ScrollRevealType.zoomFade,
+            duration: const Duration(milliseconds: 600),
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 28),
+              width: isMobile ? 110 : 140,
+              height: isMobile ? 110 : 140,
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: AppColors.primaryGradient,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.45),
+                    blurRadius: 35,
+                    spreadRadius: 3,
+                  ),
+                ],
+              ),
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/profile.jpg',
+                  fit: BoxFit.cover,
+                  alignment: const Alignment(0, -0.65),
+                ),
+              ),
+            ),
+          ),
+          ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
             duration: const Duration(milliseconds: 800),
             child: Text(
@@ -215,7 +243,7 @@ class _ButtonState extends State<_Button> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         transform: isHovered
-            ? (Matrix4.identity()..scale(1.05))
+            ? Matrix4.diagonal3Values(1.05, 1.05, 1.0)
             : Matrix4.identity(),
         child: InkWell(
           onTap: widget.onPressed,

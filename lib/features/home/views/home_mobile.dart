@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/utils/functions.dart';
+import 'package:my_portfolio/core/widgets/back_to_top_button.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
@@ -33,6 +34,7 @@ class _HomeMobileState extends State<HomeMobile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
+      floatingActionButton: BackToTopButton(scrollController: _scrollController),
       drawer: Drawer(
         backgroundColor: AppColors.surfaceDark,
         child: Builder(

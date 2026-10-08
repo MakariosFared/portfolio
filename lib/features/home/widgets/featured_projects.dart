@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_portfolio/core/utils/functions.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../../../../core/widgets/scroll_reveal.dart';
@@ -82,11 +84,14 @@ class FeaturedProjects extends StatelessWidget {
   }
 
   Widget _buildProjectCard(int index) {
+    final project = _fakeProjects[index];
     return _ProjectCard(
-      title: _fakeProjects[index]['title']!,
-      description: _fakeProjects[index]['description']!,
-      tags: _fakeProjects[index]['tags'] as List<String>,
-      imageUrl: _fakeProjects[index]['image']!,
+      title: project['title']!,
+      description: project['description']!,
+      tags: project['tags'] as List<String>,
+      imageUrl: project['image']!,
+      githubUrl: project['githubUrl'] as String?,
+      liveUrl: project['liveUrl'] as String?,
     );
   }
 }
@@ -96,12 +101,16 @@ class _ProjectCard extends StatefulWidget {
   final String description;
   final List<String> tags;
   final String imageUrl;
+  final String? githubUrl;
+  final String? liveUrl;
 
   const _ProjectCard({
     required this.title,
     required this.description,
     required this.tags,
     required this.imageUrl,
+    this.githubUrl,
+    this.liveUrl,
   });
 
   @override
@@ -121,11 +130,17 @@ class _ProjectCardState extends State<_ProjectCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         transform: !isMobile && isHovered
-            ? (Matrix4.identity()..translate(0, -10, 0))
+            ? Matrix4.translationValues(0.0, -10.0, 0.0)
             : Matrix4.identity(),
         decoration: BoxDecoration(
           color: AppColors.surfaceDark,
           borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isHovered
+                ? AppColors.primary.withValues(alpha: 0.5)
+                : AppColors.border.withValues(alpha: 0.08),
+            width: 1.5,
+          ),
           boxShadow: [
             BoxShadow(
               color: AppColors.primary.withValues(
@@ -143,14 +158,14 @@ class _ProjectCardState extends State<_ProjectCard> {
             children: [
               /// 🖼 Image
               SizedBox(
-                height: isMobile ? 180 : 360,
+                height: isMobile ? 180 : 340,
                 width: double.infinity,
                 child: Image.asset(widget.imageUrl, fit: BoxFit.cover),
               ),
 
               /// 📄 Content
               Padding(
-                padding: EdgeInsets.all(isMobile ? 14 : 20),
+                padding: EdgeInsets.all(isMobile ? 14 : 22),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -165,7 +180,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.2),
+                            color: AppColors.primary.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                               color: AppColors.primary.withValues(alpha: 0.3),
@@ -175,7 +190,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                             tag,
                             style: AppTypography.caption.copyWith(
                               color: AppColors.primaryLight,
-                              fontSize: isMobile ? 14 : 16,
+                              fontSize: isMobile ? 12 : 14,
                             ),
                           ),
                         );
@@ -197,47 +212,88 @@ class _ProjectCardState extends State<_ProjectCard> {
                     Text(
                       widget.description,
                       style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.textOnPrimary,
+                        color: AppColors.textOnPrimary.withValues(alpha: 0.85),
                         fontSize: isMobile ? 12 : 14,
+                        height: 1.5,
                       ),
-                      maxLines: isMobile
-                          ? 4
-                          : 10, // Higher maxLines for natural flow
-                      overflow: TextOverflow.visible, // Allow it to show fully
+                      maxLines: isMobile ? 4 : 10,
+                      overflow: TextOverflow.visible,
                     ),
 
-                    // SizedBox(height: isMobile ? 16 : 24),
+                    const SizedBox(height: 20),
 
-                    // Divider(
-                    //   color: AppColors.textOnPrimary,
-                    //   thickness: 1,
-                    // ),
+                    Divider(
+                      color: AppColors.border.withValues(alpha: 0.1),
+                      thickness: 1,
+                    ),
 
-                    // SizedBox(height: isMobile ? 16 : 24),
+                    const SizedBox(height: 12),
 
-                    // AnimatedOpacity(
-                    //   duration: const Duration(milliseconds: 300),
-                    //   opacity: isMobile || isHovered ? 1.0 : 0.0,
-                    //   child: Row(
-                    //     children: [
-                    //       Text(
-                    //         'View Project',
-                    //         style: AppTypography.button.copyWith(
-                    //           color: AppColors.accent,
-                    //           fontSize: isMobile ? 14 : 16,
-                    //         ),
-                    //       ),
-                    //       const SizedBox(width: 6),
-                    //       const Icon(
-                    //         Icons.arrow_forward,
-                    //         size: 16,
-                    //         color: AppColors.accent,
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-
-                    SizedBox(height: isMobile ? 12 : 24),
+                    /// Action Buttons
+                    Row(
+                      children: [
+                        if (widget.githubUrl != null)
+                          ElevatedButton.icon(
+                            onPressed: () => launchLink(widget.githubUrl!),
+                            icon: const FaIcon(
+                              FontAwesomeIcons.github,
+                              size: 16,
+                              color: Colors.white,
+                            ),
+                            label: Text(
+                              'GitHub',
+                              style: AppTypography.button.copyWith(
+                                color: Colors.white,
+                                fontSize: isMobile ? 13 : 14,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  AppColors.primary.withValues(alpha: 0.25),
+                              foregroundColor: Colors.white,
+                              elevation: 0,
+                              side: BorderSide(
+                                color: AppColors.primary.withValues(alpha: 0.4),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isMobile ? 12 : 16,
+                                vertical: isMobile ? 10 : 12,
+                              ),
+                            ),
+                          ),
+                        if (widget.githubUrl != null && widget.liveUrl != null)
+                          const SizedBox(width: 12),
+                        if (widget.liveUrl != null)
+                          OutlinedButton.icon(
+                            onPressed: () => launchLink(widget.liveUrl!),
+                            icon: const Icon(
+                              Icons.open_in_new,
+                              size: 16,
+                              color: AppColors.accent,
+                            ),
+                            label: Text(
+                              'Preview',
+                              style: AppTypography.button.copyWith(
+                                color: AppColors.accent,
+                                fontSize: isMobile ? 13 : 14,
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(color: AppColors.accent),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isMobile ? 12 : 16,
+                                vertical: isMobile ? 10 : 12,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -263,8 +319,10 @@ final List<Map<String, dynamic>> _fakeProjects = [
       'MVVM Architecture',
       'RESTful APIs',
       'WebSockets',
-      'Real-time Location Tracking',
+      'Real-time Tracking',
     ],
+    'githubUrl': 'https://github.com/MakariosFared',
+    'liveUrl': null,
   },
   {
     'title': 'Fego – Ride-Hailing Passenger App',
@@ -279,8 +337,10 @@ final List<Map<String, dynamic>> _fakeProjects = [
       'MVVM Architecture',
       'RESTful APIs',
       'WebSockets',
-      'Real-time Location Tracking',
+      'Real-time Tracking',
     ],
+    'githubUrl': 'https://github.com/MakariosFared',
+    'liveUrl': null,
   },
   {
     'title': 'Dikkan – Multi-Vendor E-Commerce App',
@@ -295,12 +355,23 @@ final List<Map<String, dynamic>> _fakeProjects = [
       'Google Maps',
       'Hive',
     ],
+    'githubUrl': 'https://github.com/MakariosFared',
+    'liveUrl': null,
   },
   {
     'title': 'Bookly App – Book Browsing & Reading',
     'description':
-        'A collaborative project management tool for teams with drag-and-drop support and detailed analytics.',
+        'A modern book browsing and reading application built with Flutter, integrating the Google Books API. Features book search, previewing, rating, and clean UI animations built with MVVM and Cubit. 📚✨',
     'image': 'assets/images/bookly_app.png',
-    'tags': ['Flutter', 'MVP', 'Cubit'],
+    'tags': [
+      'Flutter',
+      'Google Books API',
+      'Clean Architecture',
+      'Cubit',
+      'MVVM',
+    ],
+    'githubUrl': 'https://github.com/MakariosFared',
+    'liveUrl': null,
   },
 ];
+

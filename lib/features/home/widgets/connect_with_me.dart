@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/core/widgets/scroll_reveal.dart';
@@ -70,18 +71,78 @@ class _ConnectWithMeState extends State<ConnectWithMe> {
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
             delay: const Duration(milliseconds: 300),
-            child: ElevatedButton(
-              onPressed: downloadCV,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.backgroundDark,
-                foregroundColor: Colors.white,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 16,
+              runSpacing: 16,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: downloadCV,
+                  icon: const Icon(Icons.download_rounded, size: 20),
+                  label: Text('Download CV', style: AppTypography.button),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.backgroundDark,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 18,
+                    ),
+                  ),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-              ),
-              child: Text('Resume', style: AppTypography.button),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: email));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Row(
+                          children: [
+                            const Icon(
+                              Icons.check_circle_rounded,
+                              color: AppColors.success,
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                'Email copied to clipboard! ($email)',
+                                style: const TextStyle(color: Colors.white),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                        backgroundColor: AppColors.surfaceDark,
+                        behavior: SnackBarBehavior.floating,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(
+                            color: AppColors.primary.withValues(alpha: 0.5),
+                          ),
+                        ),
+                        duration: const Duration(seconds: 3),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.copy_rounded, size: 18, color: Colors.white),
+                  label: Text(
+                    'Copy Email',
+                    style: AppTypography.button.copyWith(color: Colors.white),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Colors.white24),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 18,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 30),

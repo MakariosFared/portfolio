@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'core/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
-import 'core/di/injection_container.dart' as di;
 import 'features/home/views/home_screen.dart';
 
 void main() async {
@@ -26,13 +25,9 @@ void main() async {
     ),
   );
 
-  // Initialize dependency injection
-  await di.init();
-
   runApp(
     DevicePreview(
-      enabled: !kReleaseMode,
-      // enabled: false,
+      enabled: false, // Set to true only when testing responsive devices
       builder: (context) => const MyApp(),
     ),
   );
@@ -44,13 +39,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Portfolio',
+      title: 'Makarios Fared | Flutter Developer',
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       home: const HomeScreen(),
       onGenerateRoute: AppRouter.generateRoute,
     );
