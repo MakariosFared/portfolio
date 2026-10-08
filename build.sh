@@ -14,5 +14,6 @@ flutter --version
 echo "=== Building Flutter Web Application ==="
 flutter config --enable-web
 flutter build web --release
+cp -r web/demos build/web/demos 2>/dev/null || true
 
 echo "=== Build Finished Successfully ==="

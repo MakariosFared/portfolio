@@ -19,7 +19,10 @@ Future<void> downloadCV() async {
 
 Future<void> launchLink(String url) async {
   try {
-    final Uri uri = Uri.parse(url);
+    Uri uri = Uri.parse(url);
+    if (!uri.hasScheme && uri.path.isNotEmpty) {
+      uri = Uri.base.resolve(url);
+    }
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {

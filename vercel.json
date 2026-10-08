@@ -4,7 +4,11 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/demos/:path*",
+      "destination": "/demos/:path*"
+    },
+    {
+      "source": "/((?!demos/).*)",
       "destination": "/index.html"
     }
   ]

@@ -132,6 +132,7 @@ class FeaturedProjects extends StatelessWidget {
       imageUrl: project['image']!,
       githubUrl: project['githubUrl'] as String?,
       liveUrl: project['liveUrl'] as String?,
+      demoUrl: project['demoUrl'] as String?,
     );
   }
 }
@@ -143,6 +144,7 @@ class _ProjectCard extends StatefulWidget {
   final String imageUrl;
   final String? githubUrl;
   final String? liveUrl;
+  final String? demoUrl;
 
   const _ProjectCard({
     required this.title,
@@ -151,6 +153,7 @@ class _ProjectCard extends StatefulWidget {
     required this.imageUrl,
     this.githubUrl,
     this.liveUrl,
+    this.demoUrl,
   });
 
   @override
@@ -332,8 +335,54 @@ class _ProjectCardState extends State<_ProjectCard> {
                     const SizedBox(height: 12),
 
                     /// Action Buttons
-                    Row(
+                    Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
                       children: [
+                        if (widget.demoUrl != null)
+                          ElevatedButton.icon(
+                            onPressed: () => launchLink(widget.demoUrl!),
+                            icon: const Icon(
+                              Icons.phone_iphone_rounded,
+                              size: 16,
+                              color: Colors.white,
+                            ),
+                            label: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Live Demo',
+                                  style: AppTypography.button.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: isMobile ? 13 : 14,
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                Container(
+                                  width: 7,
+                                  height: 7,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFF10B981),
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              foregroundColor: Colors.white,
+                              elevation: 3,
+                              shadowColor: AppColors.primary.withValues(alpha: 0.4),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isMobile ? 12 : 16,
+                                vertical: isMobile ? 10 : 12,
+                              ),
+                            ),
+                          ),
                         if (widget.githubUrl != null)
                           ElevatedButton.icon(
                             onPressed: () => launchLink(widget.githubUrl!),
@@ -366,8 +415,6 @@ class _ProjectCardState extends State<_ProjectCard> {
                               ),
                             ),
                           ),
-                        if (widget.githubUrl != null && widget.liveUrl != null)
-                          const SizedBox(width: 12),
                         if (widget.liveUrl != null)
                           OutlinedButton.icon(
                             onPressed: () => launchLink(widget.liveUrl!),
@@ -384,7 +431,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                               widget.liveUrl!.contains('drive.google') ||
                                       widget.liveUrl!.contains('youtube') ||
                                       widget.liveUrl!.contains('video')
-                                  ? 'Watch Demo'
+                                  ? 'Video Preview'
                                   : 'Preview',
                               style: AppTypography.button.copyWith(
                                 color: AppColors.accent,
@@ -900,6 +947,7 @@ final List<Map<String, dynamic>> _otherProjects = [
     'githubUrl': 'https://github.com/MakariosFared/Thaheen-lms',
     'liveUrl':
         'https://drive.google.com/file/d/17twhMcbKQgraERMW404tjhtY7gd05f_w/view?usp=drive_link',
+    'demoUrl': 'demos/thaheen_lms/index.html',
   },
   {
     'title': 'Dikkan – Multi-Vendor Retail Platform',
