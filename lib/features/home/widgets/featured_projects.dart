@@ -156,11 +156,73 @@ class _ProjectCardState extends State<_ProjectCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// 🖼 Image
-              SizedBox(
-                height: isMobile ? 180 : 340,
-                width: double.infinity,
-                child: Image.asset(widget.imageUrl, fit: BoxFit.cover),
+              /// 🖼 Interactive Image with Fullscreen Preview
+              InkWell(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (dialogCtx) => Dialog(
+                      backgroundColor: Colors.transparent,
+                      insetPadding: const EdgeInsets.all(16),
+                      child: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: InteractiveViewer(
+                              child: Image.asset(
+                                widget.imageUrl,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: IconButton(
+                              onPressed: () => Navigator.pop(dialogCtx),
+                              icon: const Icon(Icons.close_rounded, color: Colors.white, size: 26),
+                              style: IconButton.styleFrom(
+                                backgroundColor: Colors.black87,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                child: Stack(
+                  children: [
+                    SizedBox(
+                      height: isMobile ? 190 : 340,
+                      width: double.infinity,
+                      child: Image.asset(widget.imageUrl, fit: BoxFit.cover),
+                    ),
+                    Positioned(
+                      right: 12,
+                      bottom: 12,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.65),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.white24),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.fullscreen_rounded, size: 16, color: Colors.white),
+                            const SizedBox(width: 4),
+                            Text(
+                              'Zoom',
+                              style: AppTypography.caption.copyWith(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               /// 📄 Content

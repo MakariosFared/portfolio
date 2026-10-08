@@ -32,13 +32,20 @@ class _ConnectWithMeState extends State<ConnectWithMe> {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : 30,
-        vertical: isMobile ? 12 : 20,
+        vertical: isMobile ? 40 : 60,
       ),
-      color: AppColors.primaryDark,
+      decoration: BoxDecoration(
+        color: AppColors.surfaceDark.withValues(alpha: 0.4),
+        border: Border(
+          top: BorderSide(
+            color: AppColors.primary.withValues(alpha: 0.15),
+            width: 1,
+          ),
+        ),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 12),
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
             delay: const Duration(milliseconds: 300),
@@ -47,26 +54,29 @@ class _ConnectWithMeState extends State<ConnectWithMe> {
               style: AppTypography.h2.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
+                fontSize: isMobile ? 26 : 34,
               ),
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
             delay: const Duration(milliseconds: 300),
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 600),
               child: Text(
-                "Interested in working together or have a project in mind? Feel free to reach out.",
+                "Interested in working together or have a project in mind? Feel free to reach out via WhatsApp, email, or explore my resume.",
                 style: AppTypography.bodyLarge.copyWith(
-                  color: AppColors.textOnPrimary,
+                  color: AppColors.textSecondary,
+                  fontSize: isMobile ? 14 : 16,
+                  height: 1.5,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 32),
 
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
@@ -76,12 +86,17 @@ class _ConnectWithMeState extends State<ConnectWithMe> {
               spacing: 16,
               runSpacing: 16,
               children: [
+                // Direct WhatsApp Chat CTA
                 ElevatedButton.icon(
-                  onPressed: downloadCV,
-                  icon: const Icon(Icons.download_rounded, size: 20),
-                  label: Text('Download CV', style: AppTypography.button),
+                  onPressed: () => launchLink("https://wa.me/$whatsappNumber"),
+                  icon: const FaIcon(
+                    FontAwesomeIcons.whatsapp,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                  label: Text('Chat on WhatsApp', style: AppTypography.button),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.backgroundDark,
+                    backgroundColor: const Color(0xFF25D366),
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
@@ -93,6 +108,27 @@ class _ConnectWithMeState extends State<ConnectWithMe> {
                     ),
                   ),
                 ),
+
+                // Download CV
+                ElevatedButton.icon(
+                  onPressed: downloadCV,
+                  icon: const Icon(Icons.download_rounded, size: 20),
+                  label: Text('Download CV', style: AppTypography.button),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 18,
+                    ),
+                  ),
+                ),
+
+                // Copy Email with Toast
                 OutlinedButton.icon(
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: email));
@@ -132,7 +168,9 @@ class _ConnectWithMeState extends State<ConnectWithMe> {
                     style: AppTypography.button.copyWith(color: Colors.white),
                   ),
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.white24),
+                    side: BorderSide(
+                      color: AppColors.primary.withValues(alpha: 0.4),
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -145,7 +183,7 @@ class _ConnectWithMeState extends State<ConnectWithMe> {
               ],
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 36),
 
           /// SOCIAL ICONS ROW
           ScrollReveal(

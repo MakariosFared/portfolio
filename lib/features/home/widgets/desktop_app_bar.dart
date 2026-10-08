@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/core/utils/responsive/size_config.dart';
@@ -23,15 +24,23 @@ class DesktopNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceDark.withValues(alpha: 0.5),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+          decoration: BoxDecoration(
+            color: AppColors.backgroundDark.withValues(alpha: 0.75),
+            border: Border(
+              bottom: BorderSide(
+                color: AppColors.primary.withValues(alpha: 0.15),
+                width: 1,
+              ),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
           // Logo Area
           InkWell(
             onTap: onHomeTap,
@@ -79,6 +88,8 @@ class DesktopNavBar extends StatelessWidget {
           ),
         ],
       ),
+    ),
+    ),
     );
   }
 }

@@ -8,10 +8,16 @@ import '../../../../core/utils/responsive/size_config.dart';
 
 class ExpertiseItem {
   final String title;
+  final String subtitle;
   final dynamic icon;
   final Color color;
 
-  ExpertiseItem({required this.title, required this.icon, required this.color});
+  ExpertiseItem({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.color,
+  });
 }
 
 class ExpertiseCategory {
@@ -34,16 +40,19 @@ class TechnicalExpertise extends StatelessWidget {
         items: [
           ExpertiseItem(
             title: 'Flutter',
+            subtitle: 'CanvasKit, UI & Web Engines',
             icon: Icons.flutter_dash,
             color: const Color(0xFF02569B),
           ),
           ExpertiseItem(
             title: 'Dart',
+            subtitle: 'OOP, Async & Sound Null-Safety',
             icon: Icons.code,
             color: const Color(0xFF0175C2),
           ),
           ExpertiseItem(
             title: 'Cross-Platform',
+            subtitle: 'iOS & Android Unified Architecture',
             icon: Icons.devices_rounded,
             color: const Color(0xFF00B4D8),
           ),
@@ -54,16 +63,19 @@ class TechnicalExpertise extends StatelessWidget {
         items: [
           ExpertiseItem(
             title: 'Clean Architecture',
+            subtitle: 'Data, Domain & UI Layer Separation',
             icon: Icons.account_tree_rounded,
             color: const Color(0xFF10B981),
           ),
           ExpertiseItem(
             title: 'MVVM Pattern',
+            subtitle: 'Decoupled, Testable Components',
             icon: Icons.dashboard_customize_rounded,
             color: const Color(0xFF6366F1),
           ),
           ExpertiseItem(
             title: 'SOLID & OOP',
+            subtitle: 'Design Patterns & Scalable Code',
             icon: Icons.verified_user_rounded,
             color: const Color(0xFF8B5CF6),
           ),
@@ -74,16 +86,19 @@ class TechnicalExpertise extends StatelessWidget {
         items: [
           ExpertiseItem(
             title: 'BLoC',
+            subtitle: 'Event-driven Reactive State',
             icon: FontAwesomeIcons.cubes,
             color: const Color(0xFF5A67D8),
           ),
           ExpertiseItem(
             title: 'Cubit',
+            subtitle: 'Predictable & Lightweight State',
             icon: FontAwesomeIcons.layerGroup,
             color: const Color(0xFF667EEA),
           ),
           ExpertiseItem(
             title: 'Provider / GetX',
+            subtitle: 'Dependency Injection & State',
             icon: Icons.dynamic_feed,
             color: const Color(0xFF764BA2),
           ),
@@ -94,16 +109,19 @@ class TechnicalExpertise extends StatelessWidget {
         items: [
           ExpertiseItem(
             title: 'Firebase & FCM',
+            subtitle: 'Auth, Firestore & Push Notifications',
             icon: FontAwesomeIcons.fire,
             color: const Color(0xFFFFCA28),
           ),
           ExpertiseItem(
             title: 'RESTful APIs',
+            subtitle: 'Dio, Interceptors & Caching',
             icon: Icons.api_rounded,
             color: const Color(0xFF00B894),
           ),
           ExpertiseItem(
             title: 'Local Storage & DB',
+            subtitle: 'Hive, SQLite & SharedPreferences',
             icon: Icons.storage_rounded,
             color: const Color(0xFFFDAA5D),
           ),
@@ -114,21 +132,25 @@ class TechnicalExpertise extends StatelessWidget {
         items: [
           ExpertiseItem(
             title: 'Git',
+            subtitle: 'Branching, Merge & Version Control',
             icon: FontAwesomeIcons.gitAlt,
             color: const Color(0xFFF05032),
           ),
           ExpertiseItem(
             title: 'GitHub',
+            subtitle: 'CI/CD Pipelines & Code Review',
             icon: FontAwesomeIcons.github,
             color: const Color(0xFFB0BEC5),
           ),
           ExpertiseItem(
             title: 'Responsive UI',
+            subtitle: 'Adaptive Across All Screen Sizes',
             icon: Icons.stay_current_portrait_rounded,
             color: const Color(0xFF74B9FF),
           ),
           ExpertiseItem(
             title: 'Smooth Animations',
+            subtitle: 'Micro-interactions & Implicit Physics',
             icon: Icons.animation_rounded,
             color: const Color(0xFFF093FB),
           ),
@@ -197,9 +219,9 @@ class _ExpertiseSection extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: isMobile ? 2 : (isTablet ? 3 : 4),
-            crossAxisSpacing: isMobile ? 12 : 25,
-            mainAxisSpacing: isMobile ? 12 : 25,
-            childAspectRatio: isMobile ? 1.1 : (isTablet ? 1.2 : 1.4),
+            crossAxisSpacing: isMobile ? 12 : 20,
+            mainAxisSpacing: isMobile ? 12 : 20,
+            childAspectRatio: isMobile ? 1.05 : (isTablet ? 1.25 : 1.35),
           ),
           itemCount: items.length,
           itemBuilder: (context, index) {
@@ -281,7 +303,7 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                     border: Border.all(
                       color: isHovered
                           ? widget.item.color
-                          : AppColors.border.withValues(alpha: 0.2),
+                          : AppColors.border.withValues(alpha: 0.15),
                       width: 1.5,
                     ),
                     boxShadow: [
@@ -296,20 +318,23 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                     ],
                   )
                 : BoxDecoration(
-                    color: widget.item.color.withValues(alpha: 0.15),
+                    color: widget.item.color.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: widget.item.color, width: 1.5),
+                    border: Border.all(
+                      color: widget.item.color.withValues(alpha: 0.5),
+                      width: 1.5,
+                    ),
                   ),
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 12 : 20,
-                vertical: isMobile ? 15 : 25,
+                horizontal: isMobile ? 10 : 16,
+                vertical: isMobile ? 12 : 18,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: widget.item.color.withValues(alpha: 0.15),
                       shape: BoxShape.circle,
@@ -318,8 +343,8 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                         ? Icon(
                             widget.item.icon as IconData,
                             size: isMobile
-                                ? 24
-                                : (isTablet ? 28 : 36),
+                                ? 22
+                                : (isTablet ? 26 : 32),
                             color: isHovered && isDesktop
                                 ? widget.item.color
                                 : AppColors.textOnPrimary,
@@ -327,25 +352,35 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                         : FaIcon(
                             widget.item.icon as FaIconData,
                             size: isMobile
-                                ? 24
-                                : (isTablet ? 28 : 36),
+                                ? 22
+                                : (isTablet ? 26 : 32),
                             color: isHovered && isDesktop
                                 ? widget.item.color
                                 : AppColors.textOnPrimary,
                           ),
                   ),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 10),
                   Text(
                     widget.item.title,
                     textAlign: TextAlign.center,
                     style: AppTypography.bodyLarge.copyWith(
-                      fontSize: isMobile ? 14 : 18,
-                      fontWeight: isHovered && isDesktop
-                          ? FontWeight.bold
-                          : FontWeight.w500,
+                      fontSize: isMobile ? 13 : 16,
+                      fontWeight: FontWeight.bold,
                       color: isHovered && isDesktop
                           ? widget.item.color
-                          : AppColors.textOnPrimary,
+                          : Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    widget.item.subtitle,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.caption.copyWith(
+                      fontSize: isMobile ? 11 : 12,
+                      color: AppColors.textSecondary,
+                      height: 1.3,
                     ),
                   ),
                 ],

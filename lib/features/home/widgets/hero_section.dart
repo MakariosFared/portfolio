@@ -15,43 +15,43 @@ class HomeHero extends StatelessWidget {
     SizeConfig.init(context);
     final bool isMobile = SizeConfig.isMobile;
     final double horizontalPadding = isMobile ? 20 : 40;
-    final double verticalPadding = isMobile ? 60 : 120;
-    final double titleFontSize = isMobile ? 36 : 64;
+    final double verticalPadding = isMobile ? 35 : 55;
+    final double titleFontSize = isMobile ? 32 : 54;
 
     return Container(
       width: double.infinity,
-          padding: EdgeInsets.symmetric(
-            vertical: verticalPadding,
-            horizontal: horizontalPadding,
-          ),
-          decoration: BoxDecoration(
-            color: AppColors.backgroundDark,
-            // Placeholder for background image
-            image: const DecorationImage(
-              image: AssetImage('assets/images/background_image.jpg'),
-              fit: BoxFit.cover,
-              opacity: 0.1,
-            ),
-          ),
+      padding: EdgeInsets.symmetric(
+        vertical: verticalPadding,
+        horizontal: horizontalPadding,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundDark,
+        image: const DecorationImage(
+          image: AssetImage('assets/images/background_image.jpg'),
+          fit: BoxFit.cover,
+          opacity: 0.08,
+        ),
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // Profile Avatar with Glowing Ring
           ScrollReveal(
             type: ScrollRevealType.zoomFade,
             duration: const Duration(milliseconds: 600),
             child: Container(
-              margin: const EdgeInsets.only(bottom: 28),
-              width: isMobile ? 110 : 140,
-              height: isMobile ? 110 : 140,
-              padding: const EdgeInsets.all(4),
+              margin: const EdgeInsets.only(bottom: 18),
+              width: isMobile ? 105 : 135,
+              height: isMobile ? 105 : 135,
+              padding: const EdgeInsets.all(3.5),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: AppColors.primaryGradient,
                 boxShadow: [
                   BoxShadow(
                     color: AppColors.primary.withValues(alpha: 0.45),
-                    blurRadius: 35,
-                    spreadRadius: 3,
+                    blurRadius: 30,
+                    spreadRadius: 2,
                   ),
                 ],
               ),
@@ -64,21 +64,65 @@ class HomeHero extends StatelessWidget {
               ),
             ),
           ),
+
+          // Direct Greeting & Identity
+          ScrollReveal(
+            type: ScrollRevealType.fadeSlideUp,
+            duration: const Duration(milliseconds: 700),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+              margin: const EdgeInsets.only(bottom: 12),
+              decoration: BoxDecoration(
+                color: AppColors.surfaceDark.withValues(alpha: 0.6),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: AppColors.primary.withValues(alpha: 0.25),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Hi, I'm ",
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppColors.textSecondary,
+                      fontSize: isMobile ? 14 : 16,
+                    ),
+                  ),
+                  Text(
+                    "Makarios Fared",
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: isMobile ? 15 : 17,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  const Text("👋", style: TextStyle(fontSize: 16)),
+                ],
+              ),
+            ),
+          ),
+
+          // Main Headline
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
             duration: const Duration(milliseconds: 800),
             child: Text(
-              'Crafting Mobile Experiences',
+              'Crafting High-Performance\nMobile Experiences',
               textAlign: TextAlign.center,
               style: AppTypography.h1.copyWith(
                 color: AppColors.textOnPrimary,
                 fontSize: titleFontSize,
-                letterSpacing: -1.5,
-                height: 1.1,
+                letterSpacing: -1.2,
+                height: 1.15,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
+
+          // Framework Specialization
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
             delay: const Duration(milliseconds: 300),
@@ -86,44 +130,46 @@ class HomeHero extends StatelessWidget {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: 'With ',
-                style: AppTypography.h1.copyWith(
-                  color: AppColors.textOnPrimary,
-                  fontSize: titleFontSize,
-                  letterSpacing: -1.5,
+                style: AppTypography.h2.copyWith(
+                  color: AppColors.textSecondary,
+                  fontSize: isMobile ? 18 : 26,
+                  fontWeight: FontWeight.w500,
                 ),
                 children: [
                   TextSpan(
                     text: 'Flutter',
-                    style: AppTypography.h1.copyWith(
+                    style: AppTypography.h2.copyWith(
                       color: AppColors.primary,
-                      fontSize: titleFontSize,
-                      letterSpacing: -1.5,
+                      fontSize: isMobile ? 18 : 26,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const TextSpan(text: ' & '),
                   TextSpan(
                     text: 'Dart',
-                    style: AppTypography.h1.copyWith(
-                      color: AppColors.secondary,
-                      fontSize: titleFontSize,
-                      letterSpacing: -1.5,
+                    style: AppTypography.h2.copyWith(
+                      color: AppColors.secondaryLight,
+                      fontSize: isMobile ? 18 : 26,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 16),
+
+          // Available Status Badge
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
-            delay: const Duration(milliseconds: 600),
+            delay: const Duration(milliseconds: 500),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: AppColors.surfaceDark.withValues(alpha: 0.5),
-                borderRadius: BorderRadius.circular(120),
+                color: AppColors.surfaceDark.withValues(alpha: 0.6),
+                borderRadius: BorderRadius.circular(100),
                 border: Border.all(
-                  color: AppColors.primary.withValues(alpha: 0.2),
+                  color: AppColors.primary.withValues(alpha: 0.25),
                 ),
               ),
               child: Row(
@@ -137,48 +183,57 @@ class HomeHero extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 10),
                   Text(
                     'Available for new projects',
                     style: AppTypography.bodySmall.copyWith(
                       color: AppColors.textOnPrimary,
                       fontWeight: FontWeight.w500,
+                      fontSize: isMobile ? 12 : 13,
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 18),
+
+          // Value Proposition Subtitle
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
-            delay: const Duration(milliseconds: 800),
-            child: Text(
-              'Expert in building high-performance, beautiful mobile and\n web applications using Flutter framework and modern tech stack.',
-              textAlign: TextAlign.center,
-              style: AppTypography.bodyLarge.copyWith(
-                color: AppColors.textSecondary,
-                fontSize: isMobile ? 16 : 18,
+            delay: const Duration(milliseconds: 700),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 620),
+              child: Text(
+                'Mobile Application Developer specializing in robust, scalable cross-platform applications with clean architecture and modern state management.',
+                textAlign: TextAlign.center,
+                style: AppTypography.bodyLarge.copyWith(
+                  color: AppColors.textSecondary,
+                  fontSize: isMobile ? 14 : 16,
+                  height: 1.5,
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 50),
+          const SizedBox(height: 26),
+
+          // CTAs (Above the Fold)
           isMobile
               ? Column(
                   children: [
                     ScrollReveal(
                       type: ScrollRevealType.zoomFade,
-                      delay: const Duration(milliseconds: 1000),
+                      delay: const Duration(milliseconds: 900),
                       child: _Button(
                         text: 'View My Work',
                         onPressed: onWorkTap ?? () {},
                         isPrimary: true,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                     ScrollReveal(
                       type: ScrollRevealType.zoomFade,
-                      delay: const Duration(milliseconds: 1100),
+                      delay: const Duration(milliseconds: 1000),
                       child: _Button(
                         text: 'Contact Me',
                         onPressed: onContactTap ?? () {},
@@ -192,14 +247,14 @@ class HomeHero extends StatelessWidget {
                   children: [
                     ScrollReveal(
                       type: ScrollRevealType.zoomFade,
-                      delay: const Duration(milliseconds: 1000),
+                      delay: const Duration(milliseconds: 900),
                       child: _Button(
                         text: 'View My Work',
                         onPressed: onWorkTap ?? () {},
                         isPrimary: true,
                       ),
                     ),
-                    const SizedBox(width: 25),
+                    const SizedBox(width: 20),
                     ScrollReveal(
                       type: ScrollRevealType.zoomFade,
                       delay: const Duration(milliseconds: 1000),
