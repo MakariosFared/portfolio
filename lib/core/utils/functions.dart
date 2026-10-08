@@ -20,12 +20,8 @@ Future<void> downloadCV() async {
 Future<void> launchLink(String url) async {
   try {
     String formattedUrl = url.trim();
-    // Ensure relative demo directory points directly to index.html so dev servers and host rewrites don't fall back to SPA root
-    if (formattedUrl.contains('demos/') && !formattedUrl.endsWith('.html')) {
-      if (!formattedUrl.endsWith('/')) {
-        formattedUrl = '$formattedUrl/';
-      }
-      formattedUrl = '${formattedUrl}index.html';
+    if (formattedUrl.contains('demos/') && !formattedUrl.endsWith('/') && !formattedUrl.endsWith('.html')) {
+      formattedUrl = '$formattedUrl/';
     }
 
     Uri uri = Uri.parse(formattedUrl);

@@ -947,7 +947,7 @@ final List<Map<String, dynamic>> _otherProjects = [
     'githubUrl': 'https://github.com/MakariosFared/Thaheen-lms',
     'liveUrl':
         'https://drive.google.com/file/d/17twhMcbKQgraERMW404tjhtY7gd05f_w/view?usp=drive_link',
-    'demoUrl': 'demos/thaheen_lms/index.html',
+    'demoUrl': 'demos/thaheen_lms/',
   },
   {
     'title': 'Dikkan – Multi-Vendor Retail Platform',

@@ -1,7 +1,8 @@
 {
   "buildCommand": "bash build.sh",
   "outputDirectory": "build/web",
-  "cleanUrls": true,
+  "cleanUrls": false,
+  "trailingSlash": true,
   "rewrites": [
     {
       "source": "/demos/:path*",
