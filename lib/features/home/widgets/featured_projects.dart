@@ -875,7 +875,7 @@ final List<Map<String, dynamic>> _otherProjects = [
       'REST APIs',
       'Google Maps',
     ],
-    'githubUrl': 'https://github.com/MakariosFared',
+    'githubUrl': 'https://github.com/MakariosFared/new_dikkan',
     'liveUrl': null,
   },
   {
@@ -890,7 +890,7 @@ final List<Map<String, dynamic>> _otherProjects = [
       'Cubit',
       'MVVM Pattern',
     ],
-    'githubUrl': 'https://github.com/MakariosFared/Bookly-App',
+    'githubUrl': 'https://github.com/MakariosFared/bookly_app',
     'liveUrl': null,
   },
 ];
