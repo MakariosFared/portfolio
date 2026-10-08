@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/core/utils/responsive/size_config.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
@@ -132,7 +133,7 @@ class _ResumeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: downloadCV,
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,

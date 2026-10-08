@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/core/widgets/scroll_reveal.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../../../../core/utils/responsive/size_config.dart';
@@ -15,10 +15,11 @@ class ConnectWithMe extends StatefulWidget {
 
 class _ConnectWithMeState extends State<ConnectWithMe> {
   // ================== EDIT YOUR DATA HERE ==================
-  final String email = "your_email@example.com";
-  final String whatsappNumber = "201000000000";
-  final String linkedInUrl = "https://linkedin.com/in/your-profile";
-  final String githubUrl = "https://github.com/your-username";
+  final String email = "makarios.fared@gmail.com";
+  final String whatsappNumber = "201211544768";
+  final String linkedInUrl =
+      "https://www.linkedin.com/in/makarios-fared-20aa0a250/";
+  final String githubUrl = "https://github.com/MakariosFared";
   // =========================================================
 
   @override
@@ -66,6 +67,25 @@ class _ConnectWithMeState extends State<ConnectWithMe> {
           ),
           const SizedBox(height: 30),
 
+          ScrollReveal(
+            type: ScrollRevealType.fadeSlideUp,
+            delay: const Duration(milliseconds: 300),
+            child: ElevatedButton(
+              onPressed: downloadCV,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.backgroundDark,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+              ),
+              child: Text('Resume', style: AppTypography.button),
+            ),
+          ),
+          const SizedBox(height: 30),
+
           /// SOCIAL ICONS ROW
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
@@ -77,19 +97,19 @@ class _ConnectWithMeState extends State<ConnectWithMe> {
               children: [
                 _SocialButton(
                   icon: FontAwesomeIcons.envelope,
-                  onTap: () => _launch("mailto:$email"),
+                  onTap: () => launchLink("mailto:$email"),
                 ),
                 _SocialButton(
                   icon: FontAwesomeIcons.whatsapp,
-                  onTap: () => _launch("https://wa.me/$whatsappNumber"),
+                  onTap: () => launchLink("https://wa.me/$whatsappNumber"),
                 ),
                 _SocialButton(
                   icon: FontAwesomeIcons.linkedin,
-                  onTap: () => _launch(linkedInUrl),
+                  onTap: () => launchLink(linkedInUrl),
                 ),
                 _SocialButton(
                   icon: FontAwesomeIcons.github,
-                  onTap: () => _launch(githubUrl),
+                  onTap: () => launchLink(githubUrl),
                 ),
               ],
             ),
@@ -108,15 +128,10 @@ class _ConnectWithMeState extends State<ConnectWithMe> {
       ),
     );
   }
-
-  Future<void> _launch(String url) async {
-    final Uri uri = Uri.parse(url);
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
-  }
 }
 
 class _SocialButton extends StatefulWidget {
-  final IconData icon;
+  final FaIconData icon;
   final VoidCallback onTap;
 
   const _SocialButton({required this.icon, required this.onTap});
@@ -156,10 +171,12 @@ class _SocialButtonState extends State<_SocialButton> {
                 ? AppColors.primary
                 : Colors.transparent,
           ),
-          child: Icon(
-            widget.icon,
-            color: Colors.white,
-            size: isMobile ? 24 : 28,
+          child: Center(
+            child: FaIcon(
+              widget.icon,
+              color: Colors.white,
+              size: isMobile ? 24 : 28,
+            ),
           ),
         ),
       ),

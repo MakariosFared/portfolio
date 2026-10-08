@@ -110,28 +110,11 @@ class _HomeMobileState extends State<HomeMobile> {
             FeaturedProjects(key: _projectsKey),
             const SizedBox(height: 60),
             ConnectWithMe(key: _contactKey),
-            // const SizedBox(height: 60),
-            // Footer
-            // _buildFooter(),
           ],
         ),
       ),
     );
   }
-
-  // Widget _buildFooter() {
-  //   return Container(
-  //     padding: const EdgeInsets.all(20),
-  //     width: double.infinity,
-  //     color: AppColors.surfaceDark.withValues(alpha: 0.5),
-  //     child: Center(
-  //       child: Text(
-  //         '© 2026 Makarios Fared Naeem',
-  //         style: AppTypography.caption.copyWith(color: AppColors.textSecondary),
-  //       ),
-  //     ),
-  //   );
-  // }
 }
 
 class _DrawerItem extends StatelessWidget {

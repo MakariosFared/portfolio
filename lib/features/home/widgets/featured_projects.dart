@@ -206,36 +206,36 @@ class _ProjectCardState extends State<_ProjectCard> {
                       overflow: TextOverflow.visible, // Allow it to show fully
                     ),
 
-                    SizedBox(height: isMobile ? 16 : 24),
+                    // SizedBox(height: isMobile ? 16 : 24),
 
-                    Divider(
-                      color: AppColors.textOnPrimary,
-                      thickness: 1,
-                    ),
+                    // Divider(
+                    //   color: AppColors.textOnPrimary,
+                    //   thickness: 1,
+                    // ),
 
-                    SizedBox(height: isMobile ? 16 : 24),
+                    // SizedBox(height: isMobile ? 16 : 24),
 
-                    AnimatedOpacity(
-                      duration: const Duration(milliseconds: 300),
-                      opacity: isMobile || isHovered ? 1.0 : 0.0,
-                      child: Row(
-                        children: [
-                          Text(
-                            'View Project',
-                            style: AppTypography.button.copyWith(
-                              color: AppColors.accent,
-                              fontSize: isMobile ? 14 : 16,
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          const Icon(
-                            Icons.arrow_forward,
-                            size: 16,
-                            color: AppColors.accent,
-                          ),
-                        ],
-                      ),
-                    ),
+                    // AnimatedOpacity(
+                    //   duration: const Duration(milliseconds: 300),
+                    //   opacity: isMobile || isHovered ? 1.0 : 0.0,
+                    //   child: Row(
+                    //     children: [
+                    //       Text(
+                    //         'View Project',
+                    //         style: AppTypography.button.copyWith(
+                    //           color: AppColors.accent,
+                    //           fontSize: isMobile ? 14 : 16,
+                    //         ),
+                    //       ),
+                    //       const SizedBox(width: 6),
+                    //       const Icon(
+                    //         Icons.arrow_forward,
+                    //         size: 16,
+                    //         color: AppColors.accent,
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
 
                     SizedBox(height: isMobile ? 12 : 24),
                   ],
