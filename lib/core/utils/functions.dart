@@ -19,14 +19,27 @@ Future<void> downloadCV() async {
 
 Future<void> launchLink(String url) async {
   try {
-    Uri uri = Uri.parse(url);
-    if (!uri.hasScheme && uri.path.isNotEmpty) {
-      uri = Uri.base.resolve(url);
+    String formattedUrl = url.trim();
+    // Ensure relative demo directory points directly to index.html so dev servers and host rewrites don't fall back to SPA root
+    if (formattedUrl.contains('demos/') && !formattedUrl.endsWith('.html')) {
+      if (!formattedUrl.endsWith('/')) {
+        formattedUrl = '$formattedUrl/';
+      }
+      formattedUrl = '${formattedUrl}index.html';
     }
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      debugPrint('Cannot launch URL: $url');
+
+    Uri uri = Uri.parse(formattedUrl);
+    if (!uri.hasScheme && uri.path.isNotEmpty) {
+      uri = Uri.base.resolve(formattedUrl);
+    }
+
+    final bool launched = await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+      webOnlyWindowName: '_blank',
+    );
+    if (!launched) {
+      await launchUrl(uri, mode: LaunchMode.platformDefault);
     }
   } catch (e) {
     debugPrint('Error launching URL $url: $e');
