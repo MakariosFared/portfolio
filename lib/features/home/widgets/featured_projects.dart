@@ -79,30 +79,43 @@ class FeaturedProjects extends StatelessWidget {
                 );
               }
 
-              // Desktop/Tablet: 2 columns
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: ScrollReveal(
-                      type: ScrollRevealType.fadeSlideUp,
-                      delay: const Duration(milliseconds: 200),
-                      child: _buildProjectCard(0),
+              // Desktop/Tablet: Dynamic responsive 2-column grid
+              final List<Widget> rows = [];
+              for (int i = 0; i < _otherProjects.length; i += 2) {
+                final hasSecond = i + 1 < _otherProjects.length;
+                rows.add(
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: i + 2 < _otherProjects.length ? 35 : 0,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ScrollReveal(
+                            type: ScrollRevealType.fadeSlideUp,
+                            delay: Duration(milliseconds: 150 * (i % 4)),
+                            child: _buildProjectCard(i),
+                          ),
+                        ),
+                        const SizedBox(width: 35),
+                        Expanded(
+                          child: hasSecond
+                              ? ScrollReveal(
+                                  type: ScrollRevealType.fadeSlideUp,
+                                  delay: Duration(
+                                    milliseconds: 150 * ((i + 1) % 4),
+                                  ),
+                                  child: _buildProjectCard(i + 1),
+                                )
+                              : const SizedBox(),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(width: 35),
-                  if (_otherProjects.length > 1)
-                    Expanded(
-                      child: ScrollReveal(
-                        type: ScrollRevealType.fadeSlideUp,
-                        delay: const Duration(milliseconds: 400),
-                        child: _buildProjectCard(1),
-                      ),
-                    )
-                  else
-                    const Expanded(child: SizedBox()),
-                ],
-              );
+                );
+              }
+              return Column(children: rows);
             },
           ),
         ],
@@ -358,13 +371,21 @@ class _ProjectCardState extends State<_ProjectCard> {
                         if (widget.liveUrl != null)
                           OutlinedButton.icon(
                             onPressed: () => launchLink(widget.liveUrl!),
-                            icon: const Icon(
-                              Icons.open_in_new,
+                            icon: Icon(
+                              widget.liveUrl!.contains('drive.google') ||
+                                      widget.liveUrl!.contains('youtube') ||
+                                      widget.liveUrl!.contains('video')
+                                  ? Icons.play_circle_outline_rounded
+                                  : Icons.open_in_new,
                               size: 16,
                               color: AppColors.accent,
                             ),
                             label: Text(
-                              'Preview',
+                              widget.liveUrl!.contains('drive.google') ||
+                                      widget.liveUrl!.contains('youtube') ||
+                                      widget.liveUrl!.contains('video')
+                                  ? 'Watch Demo'
+                                  : 'Preview',
                               style: AppTypography.button.copyWith(
                                 color: AppColors.accent,
                                 fontSize: isMobile ? 13 : 14,
@@ -862,6 +883,24 @@ class _FeGoFlagshipCardState extends State<_FeGoFlagshipCard> {
 }
 
 final List<Map<String, dynamic>> _otherProjects = [
+  {
+    'title': 'Mini Offline LMS – Educational Platform',
+    'description':
+        'A production-minded offline Learning Management System engineered with Clean Architecture & Cubit. Features local JSON curriculum parsing, sequential lesson unlocking (90% video completion threshold), background-resuming video playback controls, Hive local persistence, full Arabic RTL layout, and comprehensive unit tests for core domain rules.',
+    'image': 'assets/images/thaheen_lms.jpg',
+    'tags': [
+      'Flutter SDK',
+      'Clean Architecture',
+      'Cubit / BLoC',
+      'Hive (Local-First)',
+      'video_player',
+      'Unit Testing',
+      'Arabic RTL',
+    ],
+    'githubUrl': 'https://github.com/MakariosFared/Thaheen-lms',
+    'liveUrl':
+        'https://drive.google.com/file/d/17twhMcbKQgraERMW404tjhtY7gd05f_w/view?usp=drive_link',
+  },
   {
     'title': 'Dikkan – Multi-Vendor Retail Platform',
     'description':

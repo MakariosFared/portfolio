@@ -85,17 +85,19 @@ class ProfessionalJourney extends StatelessWidget {
         description:
             'Designed, developed, and deployed high-performance mobile applications for clients, emphasizing Clean Architecture and clean code principles.',
         bulletPoints: [
+          'Thaheen LMS: Built a local-first offline learning platform with sequential lesson unlocking, video playback state persistence via Hive, and unit-tested domain rules.',
           'Dikkan: Engineered a multi-vendor marketplace featuring OTP authentication, Google Maps vendor discovery, shopping carts, and live order tracking.',
           'Bookly: Built a clean e-reading application integrating the Google Books REST API with responsive search and reader views.',
-          'Maintained strict Clean Architecture standards, separation of concerns, dependency injection (GetIt), and reproducible builds.',
+          'Maintained strict Clean Architecture standards, separation of concerns, dependency injection (GetIt), and testable business logic.',
         ],
         technologies: [
           'Flutter',
           'Dart',
           'Clean Architecture',
+          'Hive',
+          'Unit Testing',
           'GetIt',
           'REST APIs',
-          'Git & CI/CD',
         ],
         icon: Icons.code_rounded,
       ),
