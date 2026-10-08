@@ -1,23 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Makarios Fared - Flutter & Mobile Application Developer Portfolio">
   <meta name="theme-color" content="#1A1A2E">
 
@@ -28,12 +16,235 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="icon" type="image/png" href="favicon.png"/>
 
   <title>Makarios Fared | Flutter Developer</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: #1A1A2E;
+      color: #FFFFFF;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    #loading-container {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 50% 45%, rgba(102, 126, 234, 0.12) 0%, #1A1A2E 70%);
+      background-color: #1A1A2E;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999999;
+      transition: opacity 0.45s ease-out, visibility 0.45s ease-out;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    #loading-container.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .brand-logo-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-glow {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, #667EEA, #764BA2);
+      filter: blur(24px);
+      opacity: 0.55;
+      animation: pulseGlow 2.5s ease-in-out infinite alternate;
+    }
+
+    .brand-logo {
+      position: relative;
+      width: 76px;
+      height: 76px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      animation: floatLogo 3s ease-in-out infinite alternate;
+    }
+
+    .brand-logo span {
+      font-size: 34px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .brand-name {
+      margin-top: 24px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: 0.3px;
+    }
+
+    .brand-subtitle {
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #7C8FFF;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .progress-bar-container {
+      margin-top: 28px;
+      width: 170px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 99px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar-indicator {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -50%;
+      width: 50%;
+      background: linear-gradient(90deg, transparent, #667EEA, #F093FB, transparent);
+      border-radius: 99px;
+      animation: progressSlide 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        transform: scale(0.92);
+        opacity: 0.4;
+      }
+      100% {
+        transform: scale(1.15);
+        opacity: 0.75;
+      }
+    }
+
+    @keyframes floatLogo {
+      0% {
+        transform: translateY(0px);
+      }
+      100% {
+        transform: translateY(-4px);
+      }
+    }
+
+    @keyframes progressSlide {
+      0% {
+        left: -50%;
+        width: 40%;
+      }
+      50% {
+        width: 60%;
+      }
+      100% {
+        left: 110%;
+        width: 40%;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- Elegant Loading Screen -->
+  <div id="loading-container">
+    <div class="brand-logo-wrapper">
+      <div class="brand-glow"></div>
+      <div class="brand-logo">
+        <span>M</span>
+      </div>
+    </div>
+    <div class="brand-name">Makarios Fared</div>
+    <div class="brand-subtitle">Flutter Developer</div>
+    <div class="progress-bar-container">
+      <div class="progress-bar-indicator"></div>
+    </div>
+  </div>
+
+  <script>
+    // Remove loading screen when Flutter is ready
+    function removeLoader() {
+      const loader = document.getElementById('loading-container');
+      if (loader && !loader.classList.contains('fade-out')) {
+        loader.classList.add('fade-out');
+        setTimeout(() => {
+          if (loader.parentNode) {
+            loader.parentNode.removeChild(loader);
+          }
+        }, 500);
+      }
+    }
+
+    // Detect when Flutter renders into the DOM
+    const observer = new MutationObserver((mutationsList, obs) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          for (const node of mutation.addedNodes) {
+            if (
+              node.tagName === 'FLUTTER-VIEW' ||
+              node.tagName === 'FLT-GLASS-PANE' ||
+              node.nodeName === 'FLUTTER-VIEW' ||
+              node.nodeName === 'FLT-GLASS-PANE'
+            ) {
+              obs.disconnect();
+              removeLoader();
+              return;
+            }
+          }
+        }
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Safety fallback: if app takes more than 10 seconds or already mounted
+    window.addEventListener('flutter-first-frame', removeLoader);
+    window.addEventListener('load', () => {
+      // Periodic check in case mutation observer missed due to timing
+      const checkInterval = setInterval(() => {
+        if (document.querySelector('flutter-view, flt-glass-pane')) {
+          clearInterval(checkInterval);
+          removeLoader();
+        }
+      }, 100);
+
+      // Maximum 8s fallback timeout
+      setTimeout(() => {
+        clearInterval(checkInterval);
+        removeLoader();
+      }, 8000);
+    });
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
