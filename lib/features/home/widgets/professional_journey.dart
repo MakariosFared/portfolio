@@ -6,13 +6,12 @@ import '../../../../core/widgets/section_header.dart';
 import '../../../../core/utils/responsive/size_config.dart';
 
 class JourneyItem {
-  // ... existing JourneyItem (kept for brevity)
   final String role;
   final String company;
   final String period;
   final String description;
-  final String? description2;
-  final String? description3;
+  final List<String> bulletPoints;
+  final List<String> technologies;
   final IconData icon;
 
   JourneyItem({
@@ -20,8 +19,8 @@ class JourneyItem {
     required this.company,
     required this.period,
     required this.description,
-    this.description2,
-    this.description3,
+    required this.bulletPoints,
+    required this.technologies,
     required this.icon,
   });
 }
@@ -32,34 +31,72 @@ class ProfessionalJourney extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final journeyItems = <JourneyItem>[
-      // ... existing items
       JourneyItem(
         role: 'Flutter Developer',
         company: 'Flieger Tech',
         period: 'Aug 2025 - Present',
-        description: 'Built feature-rich ride-booking',
-        description2:
-            'Fego App: Ride-booking app with Google Maps, WebSockets, and FCM.',
-        description3:
-            'Fego Driver App: Driver-focused app with real-time request handling.',
+        description:
+            'Architected and delivered two flagship production-grade mobile platforms from scratch: FeGo Passenger and FeGo Driver ride-hailing applications.',
+        bulletPoints: [
+          'Engineered full duplex WebSocket pipelines for zero-latency ride requests, driver dispatching, trip state transitions, and fare updates.',
+          'Implemented real-time vehicle movement tracking on Google Maps using spherical coordinate interpolation (lerp) for smooth 60fps animations.',
+          'Built deterministic state machines using BLoC & Cubit to maintain strict synchronization across complex trip lifecycles (requested, accepted, ongoing, completed).',
+          'Integrated Firebase Cloud Messaging (FCM) with background/foreground priority channels ensuring reliable mission-critical notifications.',
+        ],
+        technologies: [
+          'Flutter',
+          'Dart',
+          'BLoC / Cubit',
+          'WebSockets',
+          'Google Maps API',
+          'FCM',
+          'Clean Architecture',
+          'Dio',
+        ],
         icon: Icons.rocket_launch_rounded,
       ),
       JourneyItem(
         role: 'Flutter Developer',
         company: 'Shrka',
         period: 'Apr 2025 - Aug 2025',
-        description: 'CRM Mobile Application',
-        description2:
-            'A full-featured CRM mobile application developed with Flutter to empower sales teams with real-time access to leads, customer data, and sales pipelines. The app improves productivity by enabling fast updates, seamless API integration, and a responsive UI optimized for field usage. The solution was designed for scalability, performance, and maintainability in a production environment.',
+        description:
+            'Engineered an enterprise CRM mobile solution within an agile engineering team, empowering sales forces with real-time lead pipelines and operational insights.',
+        bulletPoints: [
+          'Architected an offline-first data synchronization engine: persists sales leads locally when offline and automatically syncs with backend upon network reconnection.',
+          'Developed complex state-driven features using BLoC & Cubit to manage multi-stage sales funnels and dynamic lead qualification pipelines.',
+          'Constructed robust REST API integrations using Dio with interceptors for JWT token auto-refresh and centralized error handling.',
+          'Collaborated closely with backend engineers and UI/UX designers to implement pixel-perfect, responsive field agent workflows.',
+        ],
+        technologies: [
+          'Flutter',
+          'Dart',
+          'BLoC / Cubit',
+          'Offline-First Sync',
+          'Hive / Local DB',
+          'Dio Interceptors',
+          'RESTful APIs',
+        ],
         icon: Icons.devices_other_rounded,
       ),
       JourneyItem(
         role: 'Freelance Mobile Developer',
-        company: 'Global Clients',
+        company: 'Client Projects & Products',
         period: '2023 - Present',
-        description: 'Dikkan – Multi-Vendor E-Commerce Platform',
-        description2:
-            'Built a scalable multi-vendor e-commerce mobile application using Flutter that connects customers with multiple local shops in one platform. The app allows users to authenticate via OTP, discover nearby stores using Google Maps, browse products by category, manage a shopping cart, and track orders in real time. The solution integrates with RESTful APIs, follows a clean architecture approach with state management, and focuses on performance, reliability, and a smooth user experience for daily shopping needs.',
+        description:
+            'Designed, developed, and deployed high-performance mobile applications for clients, emphasizing Clean Architecture and clean code principles.',
+        bulletPoints: [
+          'Dikkan: Engineered a multi-vendor marketplace featuring OTP authentication, Google Maps vendor discovery, shopping carts, and live order tracking.',
+          'Bookly: Built a clean e-reading application integrating the Google Books REST API with responsive search and reader views.',
+          'Maintained strict Clean Architecture standards, separation of concerns, dependency injection (GetIt), and reproducible builds.',
+        ],
+        technologies: [
+          'Flutter',
+          'Dart',
+          'Clean Architecture',
+          'GetIt',
+          'REST APIs',
+          'Git & CI/CD',
+        ],
         icon: Icons.code_rounded,
       ),
     ];
@@ -361,62 +398,76 @@ class _JourneyCardState extends State<_JourneyCard>
                         fontSize: 16,
                       ),
                     ),
-                    if (widget.item.description2 != null) ...[
-                      const SizedBox(height: 12),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 4),
-                            child: Icon(
-                              Icons.arrow_right,
-                              color: AppColors.primary,
-                              size: 16,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              widget.item.description2!,
-                              style: AppTypography.bodyMedium.copyWith(
-                                color: AppColors.textOnPrimary.withValues(
-                                  alpha: 0.8,
+                    if (widget.item.bulletPoints.isNotEmpty) ...[
+                      const SizedBox(height: 16),
+                      ...widget.item.bulletPoints.map(
+                        (bullet) => Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(top: 6),
+                                width: 6,
+                                height: 6,
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.primary.withValues(alpha: 0.5),
+                                      blurRadius: 4,
+                                    ),
+                                  ],
                                 ),
-                                height: 1.6,
-                                fontSize: 16,
                               ),
-                            ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  bullet,
+                                  style: AppTypography.bodyMedium.copyWith(
+                                    color: AppColors.textOnPrimary.withValues(
+                                      alpha: 0.85,
+                                    ),
+                                    height: 1.55,
+                                    fontSize: 14.5,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ],
-                    if (widget.item.description3 != null) ...[
-                      const SizedBox(height: 12),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 4),
-                            child: Icon(
-                              Icons.arrow_right,
-                              color: AppColors.primary,
-                              size: 16,
+                    if (widget.item.technologies.isNotEmpty) ...[
+                      const SizedBox(height: 16),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: widget.item.technologies.map((tech) {
+                          return Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
                             ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              widget.item.description3!,
-                              style: AppTypography.bodyMedium.copyWith(
-                                color: AppColors.textOnPrimary.withValues(
-                                  alpha: 0.8,
-                                ),
-                                height: 1.6,
-                                fontSize: 16,
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: 0.08),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: AppColors.primary.withValues(alpha: 0.22),
+                                width: 1,
                               ),
                             ),
-                          ),
-                        ],
+                            child: Text(
+                              tech,
+                              style: AppTypography.caption.copyWith(
+                                color: AppColors.primaryLight,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                              ),
+                            ),
+                          );
+                        }).toList(),
                       ),
                     ],
                   ],

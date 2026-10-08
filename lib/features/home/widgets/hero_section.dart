@@ -70,35 +70,44 @@ class HomeHero extends StatelessWidget {
             type: ScrollRevealType.fadeSlideUp,
             duration: const Duration(milliseconds: 700),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-              margin: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 7),
+              margin: const EdgeInsets.only(bottom: 14),
               decoration: BoxDecoration(
-                color: AppColors.surfaceDark.withValues(alpha: 0.6),
-                borderRadius: BorderRadius.circular(20),
+                color: AppColors.surfaceDark.withValues(alpha: 0.65),
+                borderRadius: BorderRadius.circular(24),
                 border: Border.all(
-                  color: AppColors.primary.withValues(alpha: 0.25),
+                  color: AppColors.primary.withValues(alpha: 0.3),
                 ),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Hi, I'm ",
-                    style: AppTypography.bodyLarge.copyWith(
-                      color: AppColors.textSecondary,
-                      fontSize: isMobile ? 14 : 16,
-                    ),
-                  ),
-                  Text(
                     "Makarios Fared",
                     style: AppTypography.bodyLarge.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: isMobile ? 15 : 17,
+                      fontSize: isMobile ? 14 : 16,
                     ),
                   ),
-                  const SizedBox(width: 6),
-                  const Text("👋", style: TextStyle(fontSize: 16)),
+                  const SizedBox(width: 8),
+                  Container(
+                    width: 4,
+                    height: 4,
+                    decoration: const BoxDecoration(
+                      color: AppColors.primaryLight,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    "Flutter Developer",
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppColors.primaryLight,
+                      fontWeight: FontWeight.w600,
+                      fontSize: isMobile ? 13 : 15,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -109,7 +118,7 @@ class HomeHero extends StatelessWidget {
             type: ScrollRevealType.fadeSlideUp,
             duration: const Duration(milliseconds: 800),
             child: Text(
-              'Crafting High-Performance\nMobile Experiences',
+              'Engineering Reliable,\nProduction-Grade Mobile Apps',
               textAlign: TextAlign.center,
               style: AppTypography.h1.copyWith(
                 color: AppColors.textOnPrimary,
@@ -120,7 +129,7 @@ class HomeHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
 
           // Framework Specialization
           ScrollReveal(
@@ -129,27 +138,27 @@ class HomeHero extends StatelessWidget {
             child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-                text: 'With ',
-                style: AppTypography.h2.copyWith(
+                text: 'Specializing in ',
+                style: AppTypography.h3.copyWith(
                   color: AppColors.textSecondary,
-                  fontSize: isMobile ? 18 : 26,
+                  fontSize: isMobile ? 16 : 22,
                   fontWeight: FontWeight.w500,
                 ),
                 children: [
                   TextSpan(
-                    text: 'Flutter',
-                    style: AppTypography.h2.copyWith(
-                      color: AppColors.primary,
-                      fontSize: isMobile ? 18 : 26,
+                    text: 'Clean Architecture (BLoC/Cubit)',
+                    style: AppTypography.h3.copyWith(
+                      color: AppColors.primaryLight,
+                      fontSize: isMobile ? 16 : 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const TextSpan(text: ' & '),
                   TextSpan(
-                    text: 'Dart',
-                    style: AppTypography.h2.copyWith(
+                    text: 'Real-Time APIs',
+                    style: AppTypography.h3.copyWith(
                       color: AppColors.secondaryLight,
-                      fontSize: isMobile ? 18 : 26,
+                      fontSize: isMobile ? 16 : 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -157,14 +166,14 @@ class HomeHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 14),
 
           // Available Status Badge
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
             delay: const Duration(milliseconds: 500),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
               decoration: BoxDecoration(
                 color: AppColors.surfaceDark.withValues(alpha: 0.6),
                 borderRadius: BorderRadius.circular(100),
@@ -185,7 +194,7 @@ class HomeHero extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    'Available for new projects',
+                    'Available for Full-Time & Contract Roles',
                     style: AppTypography.bodySmall.copyWith(
                       color: AppColors.textOnPrimary,
                       fontWeight: FontWeight.w500,
@@ -203,14 +212,14 @@ class HomeHero extends StatelessWidget {
             type: ScrollRevealType.fadeSlideUp,
             delay: const Duration(milliseconds: 700),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 620),
+              constraints: const BoxConstraints(maxWidth: 640),
               child: Text(
-                'Mobile Application Developer specializing in robust, scalable cross-platform applications with clean architecture and modern state management.',
+                'Flutter Developer with 2+ years of experience engineering production-grade mobile applications from scratch—including two-sided ride-hailing with real-time WebSockets, offline-first sync architectures, and Google Maps tracking.',
                 textAlign: TextAlign.center,
                 style: AppTypography.bodyLarge.copyWith(
                   color: AppColors.textSecondary,
                   fontSize: isMobile ? 14 : 16,
-                  height: 1.5,
+                  height: 1.55,
                 ),
               ),
             ),
