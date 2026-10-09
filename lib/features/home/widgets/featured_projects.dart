@@ -1022,6 +1022,7 @@ final List<Map<String, dynamic>> _otherProjects = [
     ],
     'githubUrl': 'https://github.com/MakariosFared/bookly_app',
     'liveUrl': null,
+    'demoUrl': 'demos/bookly/',
   },
 ];
 
