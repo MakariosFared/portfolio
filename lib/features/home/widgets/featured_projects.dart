@@ -964,6 +964,7 @@ final List<Map<String, dynamic>> _otherProjects = [
     ],
     'githubUrl': 'https://github.com/MakariosFared/new_dikkan',
     'liveUrl': null,
+    'demoUrl': 'demos/dikkan/',
   },
   {
     'title': 'Bookly – Catalog & Reader Client',
