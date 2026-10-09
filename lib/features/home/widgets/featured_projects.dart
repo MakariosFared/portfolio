@@ -750,6 +750,48 @@ class _FeGoFlagshipCardState extends State<_FeGoFlagshipCard> {
                   runSpacing: 12,
                   children: [
                     ElevatedButton.icon(
+                      onPressed: () => launchLink('demos/fego/'),
+                      icon: const Icon(
+                        Icons.phone_iphone_rounded,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                      label: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Live Interactive Demo',
+                            style: AppTypography.button.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: const BoxDecoration(
+                              color: Color(0xFF10B981),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ],
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF7259AA),
+                        foregroundColor: Colors.white,
+                        elevation: 4,
+                        shadowColor: const Color(0xFF7259AA).withValues(alpha: 0.5),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: isMobile ? 18 : 24,
+                          vertical: isMobile ? 12 : 16,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton.icon(
                       onPressed: () => launchLink('https://play.google.com/store/search?q=fego&c=apps'),
                       icon: const FaIcon(
                         FontAwesomeIcons.googlePlay,
