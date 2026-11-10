@@ -43,7 +43,7 @@ class _HomeDesktopState extends State<HomeDesktop> {
           onContactTap: () => scrollToSection(context,_contactKey),
         ),
       ),
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: AppColors.getBackground(context),
       floatingActionButton: BackToTopButton(scrollController: _scrollController),
       body: SingleChildScrollView(
         controller: _scrollController,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/core/widgets/back_to_top_button.dart';
+import 'package:my_portfolio/core/widgets/theme_toggle_button.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
@@ -32,11 +33,15 @@ class _HomeMobileState extends State<HomeMobile> {
 
   @override
   Widget build(BuildContext context) {
+    final bgColor = AppColors.getBackground(context);
+    final surfaceColor = AppColors.getSurface(context);
+    final textColor = AppColors.getTextPrimary(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: bgColor,
       floatingActionButton: BackToTopButton(scrollController: _scrollController),
       drawer: Drawer(
-        backgroundColor: AppColors.surfaceDark,
+        backgroundColor: surfaceColor,
         child: Builder(
           builder: (drawerContext) => Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -62,12 +67,14 @@ class _HomeMobileState extends State<HomeMobile> {
                 title: 'Contact',
                 onTap: () => scrollToSection(drawerContext, _contactKey),
               ),
+              const SizedBox(height: 16),
+              const ThemeToggleButton(),
             ],
           ),
         ),
       ),
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: bgColor,
         elevation: 0,
         centerTitle: true,
         title: Row(
@@ -90,10 +97,14 @@ class _HomeMobileState extends State<HomeMobile> {
             const SizedBox(width: 10),
             Text(
               'Makarios',
-              style: AppTypography.h4.copyWith(color: Colors.white),
+              style: AppTypography.h4.copyWith(color: textColor),
             ),
           ],
         ),
+        actions: const [
+          ThemeToggleButton(isCompact: true),
+          SizedBox(width: 12),
+        ],
       ),
       body: SingleChildScrollView(
         controller: _scrollController,
@@ -127,11 +138,13 @@ class _DrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textColor = AppColors.getTextPrimary(context);
+
     return TextButton(
       onPressed: onTap,
       child: Text(
         title,
-        style: AppTypography.h4.copyWith(color: AppColors.textOnPrimary),
+        style: AppTypography.h4.copyWith(color: textColor),
       ),
     );
   }

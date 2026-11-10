@@ -193,7 +193,7 @@ class _ExpertiseSection extends StatelessWidget {
           child: Text(
             title,
             style: AppTypography.h4.copyWith(
-              color: AppColors.textOnPrimary.withValues(alpha: 0.7),
+              color: AppColors.getTextPrimary(context),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -204,7 +204,7 @@ class _ExpertiseSection extends StatelessWidget {
           offset: 10,
           delay: const Duration(milliseconds: 100),
           child: Divider(
-            color: AppColors.border.withValues(alpha: 0.1),
+            color: AppColors.getBorder(context),
             thickness: 1,
           ),
         ),
@@ -270,6 +270,11 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
     final bool isMobile = SizeConfig.isMobile;
     final bool isTablet = SizeConfig.isTablet;
     final bool isDesktop = !isMobile && !isTablet;
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final surfaceColor = AppColors.getSurface(context);
+    final borderColor = AppColors.getBorder(context);
+    final textPrimary = AppColors.getTextPrimary(context);
+    final textSecondary = AppColors.getTextSecondary(context);
 
     return MouseRegion(
       onEnter: (_) {
@@ -293,19 +298,19 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
             duration: const Duration(milliseconds: 300),
             decoration: isDesktop
                 ? BoxDecoration(
-                    color: AppColors.surfaceDark,
+                    color: surfaceColor,
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: isHovered
                           ? widget.item.color
-                          : AppColors.border.withValues(alpha: 0.15),
+                          : borderColor,
                       width: 1.5,
                     ),
                     boxShadow: [
                       BoxShadow(
                         color: isHovered
                             ? widget.item.color.withValues(alpha: 0.25)
-                            : Colors.black.withValues(alpha: 0.2),
+                            : Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
                         blurRadius: isHovered ? 30 : 15,
                         spreadRadius: -5,
                         offset: const Offset(0, 12),
@@ -313,12 +318,23 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                     ],
                   )
                 : BoxDecoration(
-                    color: widget.item.color.withValues(alpha: 0.12),
+                    color: isDark
+                        ? widget.item.color.withValues(alpha: 0.12)
+                        : surfaceColor,
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: widget.item.color.withValues(alpha: 0.5),
+                      color: isDark
+                          ? widget.item.color.withValues(alpha: 0.5)
+                          : borderColor,
                       width: 1.5,
                     ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: isDark ? 0.1 : 0.04),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -342,7 +358,7 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                                 : (isTablet ? 26 : 32),
                             color: isHovered && isDesktop
                                 ? widget.item.color
-                                : AppColors.textOnPrimary,
+                                : (isDark ? AppColors.textOnPrimary : widget.item.color),
                           )
                         : FaIcon(
                             widget.item.icon as FaIconData,
@@ -351,7 +367,7 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                                 : (isTablet ? 26 : 32),
                             color: isHovered && isDesktop
                                 ? widget.item.color
-                                : AppColors.textOnPrimary,
+                                : (isDark ? AppColors.textOnPrimary : widget.item.color),
                           ),
                   ),
                   const SizedBox(height: 10),
@@ -363,7 +379,7 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                       fontWeight: FontWeight.bold,
                       color: isHovered && isDesktop
                           ? widget.item.color
-                          : Colors.white,
+                          : textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -374,7 +390,7 @@ class _ExpertiseCardState extends State<_ExpertiseCard>
                     overflow: TextOverflow.ellipsis,
                     style: AppTypography.caption.copyWith(
                       fontSize: isMobile ? 11 : 12,
-                      color: AppColors.textSecondary,
+                      color: textSecondary,
                       height: 1.3,
                     ),
                   ),

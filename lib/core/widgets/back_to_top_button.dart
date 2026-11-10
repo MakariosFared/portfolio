@@ -46,6 +46,8 @@ class _BackToTopButtonState extends State<BackToTopButton> {
 
   @override
   Widget build(BuildContext context) {
+    final surfaceColor = AppColors.getSurface(context);
+
     return AnimatedSlide(
       duration: const Duration(milliseconds: 300),
       offset: _isVisible ? Offset.zero : const Offset(0, 2),
@@ -60,7 +62,7 @@ class _BackToTopButtonState extends State<BackToTopButton> {
             scale: _isHovered ? 1.1 : 1.0,
             child: FloatingActionButton(
               onPressed: _isVisible ? _scrollToTop : null,
-              backgroundColor: AppColors.surfaceDark,
+              backgroundColor: surfaceColor,
               elevation: 8,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
@@ -78,9 +80,9 @@ class _BackToTopButtonState extends State<BackToTopButton> {
                   borderRadius: BorderRadius.circular(16),
                   gradient: _isHovered ? AppColors.primaryGradient : null,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.keyboard_arrow_up_rounded,
-                  color: Colors.white,
+                  color: _isHovered ? Colors.white : AppColors.primary,
                   size: 28,
                 ),
               ),

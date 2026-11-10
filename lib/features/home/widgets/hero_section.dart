@@ -14,9 +14,16 @@ class HomeHero extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     final bool isMobile = SizeConfig.isMobile;
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
     final double horizontalPadding = isMobile ? 20 : 40;
     final double verticalPadding = isMobile ? 35 : 55;
     final double titleFontSize = isMobile ? 32 : 54;
+
+    final bgColor = AppColors.getBackground(context);
+    final surfaceColor = AppColors.getSurface(context);
+    final textPrimary = AppColors.getTextPrimary(context);
+    final textSecondary = AppColors.getTextSecondary(context);
+    final borderColor = AppColors.getBorder(context);
 
     return Container(
       width: double.infinity,
@@ -25,11 +32,11 @@ class HomeHero extends StatelessWidget {
         horizontal: horizontalPadding,
       ),
       decoration: BoxDecoration(
-        color: AppColors.backgroundDark,
-        image: const DecorationImage(
-          image: AssetImage('assets/images/background_image.jpg'),
+        color: bgColor,
+        image: DecorationImage(
+          image: const AssetImage('assets/images/background_image.jpg'),
           fit: BoxFit.cover,
-          opacity: 0.08,
+          opacity: isDark ? 0.08 : 0.03,
         ),
       ),
       child: Column(
@@ -73,11 +80,17 @@ class HomeHero extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 7),
               margin: const EdgeInsets.only(bottom: 14),
               decoration: BoxDecoration(
-                color: AppColors.surfaceDark.withValues(alpha: 0.65),
+                color: surfaceColor.withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(24),
                 border: Border.all(
-                  color: AppColors.primary.withValues(alpha: 0.3),
+                  color: borderColor,
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
+                    blurRadius: 10,
+                  ),
+                ],
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -85,7 +98,7 @@ class HomeHero extends StatelessWidget {
                   Text(
                     "Makarios Fared",
                     style: AppTypography.bodyLarge.copyWith(
-                      color: Colors.white,
+                      color: textPrimary,
                       fontWeight: FontWeight.bold,
                       fontSize: isMobile ? 14 : 16,
                     ),
@@ -103,7 +116,7 @@ class HomeHero extends StatelessWidget {
                   Text(
                     "Flutter Developer",
                     style: AppTypography.bodyLarge.copyWith(
-                      color: AppColors.primaryLight,
+                      color: AppColors.primary,
                       fontWeight: FontWeight.w600,
                       fontSize: isMobile ? 13 : 15,
                     ),
@@ -121,7 +134,7 @@ class HomeHero extends StatelessWidget {
               'Engineering Reliable,\nProduction-Grade Mobile Apps',
               textAlign: TextAlign.center,
               style: AppTypography.h1.copyWith(
-                color: AppColors.textOnPrimary,
+                color: textPrimary,
                 fontSize: titleFontSize,
                 letterSpacing: -1.2,
                 height: 1.15,
@@ -140,7 +153,7 @@ class HomeHero extends StatelessWidget {
               text: TextSpan(
                 text: 'Specializing in ',
                 style: AppTypography.h3.copyWith(
-                  color: AppColors.textSecondary,
+                  color: textSecondary,
                   fontSize: isMobile ? 16 : 22,
                   fontWeight: FontWeight.w500,
                 ),
@@ -175,10 +188,10 @@ class HomeHero extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
               decoration: BoxDecoration(
-                color: AppColors.surfaceDark.withValues(alpha: 0.6),
+                color: surfaceColor.withValues(alpha: 0.7),
                 borderRadius: BorderRadius.circular(100),
                 border: Border.all(
-                  color: AppColors.primary.withValues(alpha: 0.25),
+                  color: borderColor,
                 ),
               ),
               child: Row(
@@ -196,7 +209,7 @@ class HomeHero extends StatelessWidget {
                   Text(
                     'Available for Full-Time & Contract Roles',
                     style: AppTypography.bodySmall.copyWith(
-                      color: AppColors.textOnPrimary,
+                      color: textPrimary,
                       fontWeight: FontWeight.w500,
                       fontSize: isMobile ? 12 : 13,
                     ),
@@ -217,7 +230,7 @@ class HomeHero extends StatelessWidget {
                 'Flutter Developer with 2+ years of experience engineering production-grade mobile applications from scratch—including two-sided ride-hailing with real-time WebSockets, offline-first sync architectures, and Google Maps tracking.',
                 textAlign: TextAlign.center,
                 style: AppTypography.bodyLarge.copyWith(
-                  color: AppColors.textSecondary,
+                  color: textSecondary,
                   fontSize: isMobile ? 14 : 16,
                   height: 1.55,
                 ),
@@ -275,8 +288,88 @@ class HomeHero extends StatelessWidget {
                     ),
                   ],
                 ),
+          const SizedBox(height: 36),
+
+          // 📊 Quick Stats Highlights
+          ScrollReveal(
+            type: ScrollRevealType.fadeSlideUp,
+            delay: const Duration(milliseconds: 1100),
+            child: Container(
+              margin: const EdgeInsets.only(top: 8),
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 16 : 28,
+                vertical: isMobile ? 14 : 18,
+              ),
+              decoration: BoxDecoration(
+                color: surfaceColor.withValues(alpha: 0.8),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: borderColor,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: isMobile ? 20 : 36,
+                runSpacing: 16,
+                children: [
+                  _buildStatItem('2+', 'Years Experience', isMobile, textSecondary),
+                  _buildStatDivider(isMobile, borderColor),
+                  _buildStatItem('5+', 'Production Apps', isMobile, textSecondary),
+                  _buildStatDivider(isMobile, borderColor),
+                  _buildStatItem('60fps', 'Real-Time Tracking', isMobile, textSecondary),
+                  _buildStatDivider(isMobile, borderColor),
+                  _buildStatItem('100%', 'Clean Architecture', isMobile, textSecondary),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildStatItem(String value, String label, bool isMobile, Color labelColor) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ShaderMask(
+          shaderCallback: (bounds) => AppColors.primaryGradient.createShader(bounds),
+          child: Text(
+            value,
+            style: AppTypography.h3.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.w800,
+              fontSize: isMobile ? 20 : 26,
+            ),
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: AppTypography.caption.copyWith(
+            color: labelColor,
+            fontSize: isMobile ? 11 : 12.5,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStatDivider(bool isMobile, Color borderColor) {
+    if (isMobile) return const SizedBox.shrink();
+    return Container(
+      width: 1,
+      height: 32,
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      color: borderColor,
     );
   }
 }

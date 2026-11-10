@@ -30,7 +30,7 @@ class SectionHeader extends StatelessWidget {
           Text(
             title,
             style: AppTypography.h2.copyWith(
-              color: AppColors.textOnPrimary,
+              color: AppColors.getTextPrimary(context),
               fontSize: isMobile ? 24 : 32,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.5,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/colors.dart';
 
 /// String Extensions
 extension StringExtension on String {
@@ -67,6 +68,14 @@ extension ContextExtension on BuildContext {
 
   /// Returns color scheme
   ColorScheme get colorScheme => theme.colorScheme;
+
+  /// Theme Helper Getters
+  bool get isDarkMode => theme.brightness == Brightness.dark;
+  Color get scaffoldBg => theme.scaffoldBackgroundColor;
+  Color get surfaceColor => AppColors.getSurface(this);
+  Color get textPrimaryColor => AppColors.getTextPrimary(this);
+  Color get textSecondaryColor => AppColors.getTextSecondary(this);
+  Color get borderColor => AppColors.getBorder(this);
 
   /// Returns if keyboard is visible
   bool get isKeyboardVisible => MediaQuery.of(this).viewInsets.bottom > 0;

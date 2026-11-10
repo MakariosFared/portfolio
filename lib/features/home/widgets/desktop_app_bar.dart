@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/core/utils/responsive/size_config.dart';
+import 'package:my_portfolio/core/widgets/theme_toggle_button.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 
@@ -24,16 +25,20 @@ class DesktopNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
+    final bgColor = AppColors.getBackground(context);
+    final borderColor = AppColors.getBorder(context);
+    final textColor = AppColors.getTextPrimary(context);
+
     return ClipRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
           decoration: BoxDecoration(
-            color: AppColors.backgroundDark.withValues(alpha: 0.75),
+            color: bgColor.withValues(alpha: 0.85),
             border: Border(
               bottom: BorderSide(
-                color: AppColors.primary.withValues(alpha: 0.15),
+                color: borderColor,
                 width: 1,
               ),
             ),
@@ -41,55 +46,57 @@ class DesktopNavBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-          // Logo Area
-          InkWell(
-            onTap: onHomeTap,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    gradient: AppColors.primaryGradient,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'M',
-                      style: AppTypography.h3.copyWith(color: Colors.white),
+              // Logo Area
+              InkWell(
+                onTap: onHomeTap,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        gradient: AppColors.primaryGradient,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'M',
+                          style: AppTypography.h3.copyWith(color: Colors.white),
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(width: 12),
+                    Text(
+                      'Makarios Fared',
+                      style: AppTypography.h4.copyWith(color: textColor),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 12),
-                Text(
-                  'Makarios Fared',
-                  style: AppTypography.h4.copyWith(color: AppColors.textOnPrimary),
-                ),
-              ],
-            ),
-          ),
+              ),
 
-          // Navigation Links
-          Row(
-            children: [
-              _NavBarItem(title: 'Home', onTap: onHomeTap),
-              const SizedBox(width: 30),
-              _NavBarItem(title: 'Skills', onTap: onSkillsTap),
-              const SizedBox(width: 30),
-              _NavBarItem(title: 'Experience', onTap: onJourneyTap),
-              const SizedBox(width: 30),
-              _NavBarItem(title: 'Projects', onTap: onProjectsTap),
-              const SizedBox(width: 30),
-              _NavBarItem(title: 'Contact', onTap: onContactTap),
-              const SizedBox(width: 40),
-              _ResumeButton(),
+              // Navigation Links & Theme Toggle
+              Row(
+                children: [
+                  _NavBarItem(title: 'Home', onTap: onHomeTap),
+                  const SizedBox(width: 30),
+                  _NavBarItem(title: 'Skills', onTap: onSkillsTap),
+                  const SizedBox(width: 30),
+                  _NavBarItem(title: 'Experience', onTap: onJourneyTap),
+                  const SizedBox(width: 30),
+                  _NavBarItem(title: 'Projects', onTap: onProjectsTap),
+                  const SizedBox(width: 30),
+                  _NavBarItem(title: 'Contact', onTap: onContactTap),
+                  const SizedBox(width: 30),
+                  _ResumeButton(),
+                  const SizedBox(width: 16),
+                  const ThemeToggleButton(),
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
-    ),
-    ),
     );
   }
 }
@@ -109,6 +116,8 @@ class _NavBarItemState extends State<_NavBarItem> {
 
   @override
   Widget build(BuildContext context) {
+    final textColor = AppColors.getTextPrimary(context);
+
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
@@ -122,7 +131,7 @@ class _NavBarItemState extends State<_NavBarItem> {
               style: AppTypography.bodyMedium.copyWith(
                 color: isHovered
                     ? AppColors.primaryLight
-                    : AppColors.textOnPrimary,
+                    : textColor,
                 fontWeight: FontWeight.w500,
               ),
             ),

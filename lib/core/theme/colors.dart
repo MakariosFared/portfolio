@@ -20,14 +20,14 @@ class AppColors {
   static const Color accentLight = Color(0xFFFFB3FF);
 
   // Background Colors
-  static const Color background = Color(0xFFF8F9FA);
+  static const Color background = Color(0xFFF8FAFC);
   static const Color backgroundDark = Color(0xFF1A1A2E);
   static const Color surface = Color(0xFFFFFFFF);
   static const Color surfaceDark = Color(0xFF16213E);
 
   // Text Colors
-  static const Color textPrimary = Color(0xFF2D3436);
-  static const Color textSecondary = Color(0xFF636E72);
+  static const Color textPrimary = Color(0xFF0F172A);
+  static const Color textSecondary = Color(0xFF475569);
   static const Color textLight = Color(0xFFB2BEC3);
   static const Color textOnPrimary = Color(0xFFFFFFFF);
 
@@ -40,6 +40,37 @@ class AppColors {
   // Border & Divider Colors
   static const Color border = Color(0xFFDFE6E9);
   static const Color divider = Color(0xFFECF0F1);
+
+  // Theme-aware dynamic getters
+  static Color getBackground(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? backgroundDark
+        : background;
+  }
+
+  static Color getSurface(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? surfaceDark
+        : surface;
+  }
+
+  static Color getTextPrimary(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? Colors.white
+        : textPrimary;
+  }
+
+  static Color getTextSecondary(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? textLight
+        : textSecondary;
+  }
+
+  static Color getBorder(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? Colors.white.withValues(alpha: 0.12)
+        : const Color(0xFFE2E8F0);
+  }
 
   // Gradients
   static const LinearGradient primaryGradient = LinearGradient(

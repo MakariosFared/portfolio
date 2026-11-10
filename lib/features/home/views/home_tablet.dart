@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/core/widgets/back_to_top_button.dart';
+import 'package:my_portfolio/core/widgets/theme_toggle_button.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
@@ -32,11 +33,14 @@ class _HomeTabletState extends State<HomeTablet> {
 
   @override
   Widget build(BuildContext context) {
+    final bgColor = AppColors.getBackground(context);
+    final textColor = AppColors.getTextPrimary(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: bgColor,
       floatingActionButton: BackToTopButton(scrollController: _scrollController),
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: bgColor,
         elevation: 0,
         title: Row(
           children: [
@@ -57,7 +61,7 @@ class _HomeTabletState extends State<HomeTablet> {
             const SizedBox(width: 10),
             Text(
               'Makarios Fared',
-              style: AppTypography.h4.copyWith(color: Colors.white),
+              style: AppTypography.h4.copyWith(color: textColor),
             ),
           ],
         ),
@@ -82,7 +86,9 @@ class _HomeTabletState extends State<HomeTablet> {
             title: 'Contact',
             onTap: () => scrollToSection(context, _contactKey),
           ),
-          const SizedBox(width: 20),
+          const SizedBox(width: 8),
+          const ThemeToggleButton(isCompact: true),
+          const SizedBox(width: 16),
         ],
       ),
       body: SingleChildScrollView(
@@ -117,12 +123,14 @@ class _NavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textColor = AppColors.getTextPrimary(context);
+
     return TextButton(
       onPressed: onTap,
       child: Text(
         title,
         style: AppTypography.bodyMedium.copyWith(
-          color: AppColors.textOnPrimary,
+          color: textColor,
         ),
       ),
     );

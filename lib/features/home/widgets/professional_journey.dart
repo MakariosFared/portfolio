@@ -223,6 +223,13 @@ class _JourneyCardState extends State<_JourneyCard>
 
   @override
   Widget build(BuildContext context) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final surfaceColor = AppColors.getSurface(context);
+    final bgColor = AppColors.getBackground(context);
+    final borderColor = AppColors.getBorder(context);
+    final textPrimary = AppColors.getTextPrimary(context);
+    final textSecondary = AppColors.getTextSecondary(context);
+
     return MouseRegion(
       onEnter: (_) {
         setState(() => isHovered = true);
@@ -243,43 +250,25 @@ class _JourneyCardState extends State<_JourneyCard>
               bottom: 40,
             ),
             padding: const EdgeInsets.all(30),
-            decoration: SizeConfig.isMobile
-                ? BoxDecoration(
-                    color: AppColors.surfaceDark.withValues(alpha: 0.6),
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(
-                      color: AppColors.primary.withValues(alpha: 0.5),
-                      width: 1.5,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primary.withValues(alpha: 0.15),
-                        blurRadius: 30,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  )
-                : BoxDecoration(
-                    color: isHovered
-                        ? AppColors.surfaceDark.withValues(alpha: 0.6)
-                        : AppColors.surfaceDark.withValues(alpha: 0.3),
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(
-                      color: isHovered
-                          ? AppColors.primary.withValues(alpha: 0.5)
-                          : AppColors.border.withValues(alpha: 0.1),
-                      width: 1.5,
-                    ),
-                    boxShadow: isHovered
-                        ? [
-                            BoxShadow(
-                              color: AppColors.primary.withValues(alpha: 0.15),
-                              blurRadius: 30,
-                              offset: const Offset(0, 10),
-                            ),
-                          ]
-                        : [],
-                  ),
+            decoration: BoxDecoration(
+              color: surfaceColor,
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(
+                color: isHovered
+                    ? AppColors.primary.withValues(alpha: 0.6)
+                    : borderColor,
+                width: 1.5,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: isHovered
+                      ? AppColors.primary.withValues(alpha: 0.2)
+                      : Colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
+                  blurRadius: isHovered ? 30 : 12,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
             child: Stack(
               children: [
                 // Timeline dot for wide screens
@@ -293,11 +282,11 @@ class _JourneyCardState extends State<_JourneyCard>
                       height: 20,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppColors.backgroundDark,
+                        color: bgColor,
                         border: Border.all(
                           color: isHovered
                               ? AppColors.primary
-                              : AppColors.border.withValues(alpha: 0.3),
+                              : borderColor,
                           width: 4,
                         ),
                         boxShadow: isHovered
@@ -322,7 +311,7 @@ class _JourneyCardState extends State<_JourneyCard>
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.1),
+                            color: AppColors.primary.withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
@@ -341,11 +330,7 @@ class _JourneyCardState extends State<_JourneyCard>
                               Text(
                                 widget.item.role,
                                 style: AppTypography.h4.copyWith(
-                                  color: isHovered
-                                      ? AppColors.textOnPrimary
-                                      : AppColors.textOnPrimary.withValues(
-                                          alpha: 0.9,
-                                        ),
+                                  color: textPrimary,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
                                 ),
@@ -368,7 +353,7 @@ class _JourneyCardState extends State<_JourneyCard>
                               vertical: 8,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.primary.withValues(alpha: 0.1),
+                              color: AppColors.primary.withValues(alpha: 0.12),
                               borderRadius: BorderRadius.circular(100),
                             ),
                             child: Text(
@@ -395,7 +380,7 @@ class _JourneyCardState extends State<_JourneyCard>
                     Text(
                       widget.item.description,
                       style: AppTypography.bodyMedium.copyWith(
-                        color: AppColors.textOnPrimary.withValues(alpha: 0.8),
+                        color: textSecondary,
                         height: 1.6,
                         fontSize: 16,
                       ),
@@ -428,9 +413,7 @@ class _JourneyCardState extends State<_JourneyCard>
                                 child: Text(
                                   bullet,
                                   style: AppTypography.bodyMedium.copyWith(
-                                    color: AppColors.textOnPrimary.withValues(
-                                      alpha: 0.85,
-                                    ),
+                                    color: textSecondary,
                                     height: 1.55,
                                     fontSize: 14.5,
                                   ),
@@ -453,17 +436,17 @@ class _JourneyCardState extends State<_JourneyCard>
                               vertical: 5,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.primary.withValues(alpha: 0.08),
+                              color: AppColors.primary.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: AppColors.primary.withValues(alpha: 0.22),
+                                color: AppColors.primary.withValues(alpha: 0.25),
                                 width: 1,
                               ),
                             ),
                             child: Text(
                               tech,
                               style: AppTypography.caption.copyWith(
-                                color: AppColors.primaryLight,
+                                color: AppColors.primary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
