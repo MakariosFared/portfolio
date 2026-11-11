@@ -6,6 +6,7 @@ import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../../../../core/utils/functions.dart';
 import '../../../../core/utils/responsive/size_config.dart';
+import '../../../../core/widgets/quick_meeting_modal.dart';
 import '../../../../core/widgets/scroll_reveal.dart';
 
 class ConnectWithMe extends StatefulWidget {
@@ -320,6 +321,26 @@ class _ConnectWithMeState extends State<ConnectWithMe> {
               spacing: 16,
               runSpacing: 16,
               children: [
+                // 📅 Book a 15-Min Intro Call (Standout CTA)
+                ElevatedButton.icon(
+                  onPressed: () => showQuickMeetingDialog(context),
+                  icon: const Icon(Icons.calendar_month_rounded, size: 20),
+                  label: Text('Book a 15-Min Call', style: AppTypography.button),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF6366F1),
+                    foregroundColor: Colors.white,
+                    elevation: 4,
+                    shadowColor: const Color(0xFF6366F1).withValues(alpha: 0.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 18,
+                    ),
+                  ),
+                ),
+
                 // Quick Message Form CTA
                 ElevatedButton.icon(
                   onPressed: () => _openContactDialog(context),

@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/core/utils/responsive/size_config.dart';
+import 'package:my_portfolio/core/widgets/quick_meeting_modal.dart';
 import 'package:my_portfolio/core/widgets/theme_toggle_button.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
@@ -87,7 +88,9 @@ class DesktopNavBar extends StatelessWidget {
                   _NavBarItem(title: 'Projects', onTap: onProjectsTap),
                   const SizedBox(width: 30),
                   _NavBarItem(title: 'Contact', onTap: onContactTap),
-                  const SizedBox(width: 30),
+                  const SizedBox(width: 24),
+                  _BookCallButton(),
+                  const SizedBox(width: 16),
                   _ResumeButton(),
                   const SizedBox(width: 16),
                   const ThemeToggleButton(),
@@ -144,6 +147,30 @@ class _NavBarItemState extends State<_NavBarItem> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _BookCallButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton.icon(
+      onPressed: () => showQuickMeetingDialog(context),
+      icon: const Icon(Icons.calendar_month_rounded, size: 16, color: AppColors.primary),
+      label: Text(
+        'Book 15m Call',
+        style: AppTypography.button.copyWith(
+          color: AppColors.primary,
+          fontSize: 13.5,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      style: OutlinedButton.styleFrom(
+        side: const BorderSide(color: AppColors.primary, width: 1.5),
+        backgroundColor: AppColors.primary.withValues(alpha: 0.08),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       ),
     );
   }

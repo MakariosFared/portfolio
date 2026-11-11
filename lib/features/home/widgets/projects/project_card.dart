@@ -4,6 +4,8 @@ import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../../../../core/utils/functions.dart';
 import '../../../../core/utils/responsive/size_config.dart';
+import 'architecture_model.dart';
+import 'architecture_modal.dart';
 import 'project_model.dart';
 
 class ProjectCard extends StatefulWidget {
@@ -106,6 +108,33 @@ class _ProjectCardState extends State<ProjectCard> {
                       width: double.infinity,
                       child: Image.asset(project.image, fit: BoxFit.cover),
                     ),
+                    if (project.badge != null)
+                      Positioned(
+                        top: 12,
+                        left: 12,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                            gradient: AppColors.primaryGradient,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primary.withValues(alpha: 0.4),
+                                blurRadius: 8,
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            project.badge!,
+                            style: AppTypography.caption.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.5,
+                              fontSize: isMobile ? 10.5 : 11.5,
+                            ),
+                          ),
+                        ),
+                      ),
                     Positioned(
                       right: 12,
                       bottom: 12,
@@ -241,6 +270,43 @@ class _ProjectCardState extends State<ProjectCard> {
                               foregroundColor: Colors.white,
                               elevation: 3,
                               shadowColor: AppColors.primary.withValues(alpha: 0.4),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isMobile ? 12 : 16,
+                                vertical: isMobile ? 10 : 12,
+                              ),
+                            ),
+                          ),
+                        if (project.architectureId != null &&
+                            projectArchitectures.containsKey(project.architectureId))
+                          OutlinedButton.icon(
+                            onPressed: () {
+                              final arch = projectArchitectures[project.architectureId];
+                              if (arch != null) {
+                                showArchitectureDialog(context, arch);
+                              }
+                            },
+                            icon: const Icon(
+                              Icons.account_tree_outlined,
+                              size: 16,
+                              color: AppColors.primary,
+                            ),
+                            label: Text(
+                              'Architecture',
+                              style: AppTypography.button.copyWith(
+                                color: AppColors.primary,
+                                fontSize: isMobile ? 13 : 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                color: AppColors.primary.withValues(alpha: 0.6),
+                                width: 1.2,
+                              ),
+                              backgroundColor: AppColors.primary.withValues(alpha: 0.08),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),

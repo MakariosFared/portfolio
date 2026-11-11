@@ -151,6 +151,35 @@ class TechnicalExpertise extends StatelessWidget {
           ),
         ],
       ),
+      ExpertiseCategory(
+        title: 'Hardware IoT & Full-Stack Web',
+        items: [
+          ExpertiseItem(
+            title: 'Bluetooth Serial & IoT',
+            subtitle: 'RFCOMM, Robot Telemetry & MJPEG',
+            icon: Icons.bluetooth_audio_rounded,
+            color: const Color(0xFF00CEC9),
+          ),
+          ExpertiseItem(
+            title: 'Next.js & Supabase',
+            subtitle: 'Full-Stack Web, PostgreSQL & RLS',
+            icon: Icons.language_rounded,
+            color: const Color(0xFF6C5CE7),
+          ),
+          ExpertiseItem(
+            title: 'AI SDKs & LLMs',
+            subtitle: 'Gemini, Groq & Smart Prompting',
+            icon: Icons.psychology_rounded,
+            color: const Color(0xFFFF7675),
+          ),
+          ExpertiseItem(
+            title: 'SQLite & Offline Sync',
+            subtitle: 'Local-First Cache & Embedded DBs',
+            icon: Icons.dns_rounded,
+            color: const Color(0xFFFDCB6E),
+          ),
+        ],
+      ),
     ];
 
     final bool isMobile = SizeConfig.isMobile;

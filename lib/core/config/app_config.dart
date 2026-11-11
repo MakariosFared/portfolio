@@ -15,6 +15,9 @@ class AppConfig {
   static const String developerEmail = 'makarios.fared@gmail.com';
   static const String developerWhatsApp = '201211544768';
   
+  // Quick 15-Minute Meeting / Call Scheduling URL (Cal.com or Calendly)
+  static const String developerMeetingUrl = 'https://calendly.com/makarios-fared/15min';
+
   // CV URL (Can be a Google Drive link, hosted PDF, or direct asset)
   static const String cvUrl = 'https://drive.google.com/file/d/1Ypm-TqAPCuWZiGYHDZHtPSR4tqLFp6zb/view?usp=sharing';
 
@@ -23,4 +26,3 @@ class AppConfig {
   static const bool enableLogging = false;
   static const String baseUrl = 'https://api.example.com';
 }
-

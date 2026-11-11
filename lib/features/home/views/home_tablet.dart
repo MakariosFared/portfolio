@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/core/widgets/back_to_top_button.dart';
+import 'package:my_portfolio/core/widgets/quick_meeting_modal.dart';
 import 'package:my_portfolio/core/widgets/theme_toggle_button.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
@@ -86,7 +87,13 @@ class _HomeTabletState extends State<HomeTablet> {
             title: 'Contact',
             onTap: () => scrollToSection(context, _contactKey),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 4),
+          IconButton(
+            onPressed: () => showQuickMeetingDialog(context),
+            icon: const Icon(Icons.calendar_month_rounded, color: AppColors.primary, size: 20),
+            tooltip: 'Book 15m Call',
+          ),
+          const SizedBox(width: 4),
           const ThemeToggleButton(isCompact: true),
           const SizedBox(width: 16),
         ],

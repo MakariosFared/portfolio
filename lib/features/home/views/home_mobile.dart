@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/utils/functions.dart';
 import 'package:my_portfolio/core/widgets/back_to_top_button.dart';
+import 'package:my_portfolio/core/widgets/quick_meeting_modal.dart';
 import 'package:my_portfolio/core/widgets/theme_toggle_button.dart';
 import 'package:my_portfolio/features/home/widgets/professional_journey.dart';
 import '../../../../core/theme/colors.dart';
@@ -67,7 +68,27 @@ class _HomeMobileState extends State<HomeMobile> {
                 title: 'Contact',
                 onTap: () => scrollToSection(drawerContext, _contactKey),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(drawerContext);
+                    showQuickMeetingDialog(context);
+                  },
+                  icon: const Icon(Icons.calendar_month_rounded, size: 16),
+                  label: const Text('Book 15m Call'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
               const ThemeToggleButton(),
             ],
           ),

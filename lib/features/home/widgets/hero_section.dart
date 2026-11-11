@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
-import '../../../../core/widgets/scroll_reveal.dart';
 import '../../../../core/utils/responsive/size_config.dart';
+import '../../../../core/widgets/quick_meeting_modal.dart';
+import '../../../../core/widgets/scroll_reveal.dart';
 
 class HomeHero extends StatelessWidget {
   final VoidCallback? onWorkTap;
@@ -181,40 +182,51 @@ class HomeHero extends StatelessWidget {
           ),
           const SizedBox(height: 14),
 
-          // Available Status Badge
+          // Available Status Badge & Quick Meeting Trigger
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
             delay: const Duration(milliseconds: 500),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-              decoration: BoxDecoration(
-                color: surfaceColor.withValues(alpha: 0.7),
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(
-                  color: borderColor,
+            child: InkWell(
+              onTap: () => showQuickMeetingDialog(context),
+              borderRadius: BorderRadius.circular(100),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+                decoration: BoxDecoration(
+                  color: surfaceColor.withValues(alpha: 0.8),
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(
+                    color: AppColors.success.withValues(alpha: 0.5),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.success.withValues(alpha: 0.15),
+                      blurRadius: 10,
+                    ),
+                  ],
                 ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: const BoxDecoration(
-                      color: AppColors.success,
-                      shape: BoxShape.circle,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 8,
+                      height: 8,
+                      decoration: const BoxDecoration(
+                        color: AppColors.success,
+                        shape: BoxShape.circle,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    'Available for Full-Time & Contract Roles',
-                    style: AppTypography.bodySmall.copyWith(
-                      color: textPrimary,
-                      fontWeight: FontWeight.w500,
-                      fontSize: isMobile ? 12 : 13,
+                    const SizedBox(width: 10),
+                    Text(
+                      'Available for Roles • Book 15m Call ⚡',
+                      style: AppTypography.bodySmall.copyWith(
+                        color: textPrimary,
+                        fontWeight: FontWeight.w600,
+                        fontSize: isMobile ? 12 : 13,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -290,7 +302,7 @@ class HomeHero extends StatelessWidget {
                 ),
           const SizedBox(height: 36),
 
-          // 📊 Quick Stats Highlights
+          // 📊 Quick Stats Highlights (Interactive & Animated)
           ScrollReveal(
             type: ScrollRevealType.fadeSlideUp,
             delay: const Duration(milliseconds: 1100),
@@ -316,50 +328,54 @@ class HomeHero extends StatelessWidget {
               ),
               child: Wrap(
                 alignment: WrapAlignment.center,
-                spacing: isMobile ? 20 : 36,
+                spacing: isMobile ? 16 : 28,
                 runSpacing: 16,
                 children: [
-                  _buildStatItem('2+', 'Years Experience', isMobile, textSecondary),
+                  _InteractiveStatItem(
+                    targetNumber: 2,
+                    suffix: '+',
+                    label: 'Years Experience',
+                    icon: Icons.trending_up_rounded,
+                    tooltip: '2+ years engineering production Flutter & full-stack apps',
+                    isMobile: isMobile,
+                    labelColor: textSecondary,
+                  ),
                   _buildStatDivider(isMobile, borderColor),
-                  _buildStatItem('5+', 'Production Apps', isMobile, textSecondary),
+                  _InteractiveStatItem(
+                    targetNumber: 5,
+                    suffix: '+',
+                    label: 'Production Apps',
+                    icon: Icons.rocket_launch_rounded,
+                    tooltip: 'FeGo, Dikkan, LMS, Medical Robot & Prolio SaaS',
+                    isMobile: isMobile,
+                    labelColor: textSecondary,
+                  ),
                   _buildStatDivider(isMobile, borderColor),
-                  _buildStatItem('60fps', 'Real-Time Tracking', isMobile, textSecondary),
+                  _InteractiveStatItem(
+                    targetNumber: 60,
+                    suffix: 'fps',
+                    label: 'Real-Time Tracking',
+                    icon: Icons.speed_rounded,
+                    tooltip: 'Spherical lerp map animation without frame drops',
+                    isMobile: isMobile,
+                    labelColor: textSecondary,
+                  ),
                   _buildStatDivider(isMobile, borderColor),
-                  _buildStatItem('100%', 'Clean Architecture', isMobile, textSecondary),
+                  _InteractiveStatItem(
+                    targetNumber: 100,
+                    suffix: '%',
+                    label: 'Clean Architecture',
+                    icon: Icons.architecture_rounded,
+                    tooltip: 'Decoupled presentation, domain & data layers with BLoC',
+                    isMobile: isMobile,
+                    labelColor: textSecondary,
+                  ),
                 ],
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildStatItem(String value, String label, bool isMobile, Color labelColor) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ShaderMask(
-          shaderCallback: (bounds) => AppColors.primaryGradient.createShader(bounds),
-          child: Text(
-            value,
-            style: AppTypography.h3.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w800,
-              fontSize: isMobile ? 20 : 26,
-            ),
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: AppTypography.caption.copyWith(
-            color: labelColor,
-            fontSize: isMobile ? 11 : 12.5,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
     );
   }
 
@@ -370,6 +386,100 @@ class HomeHero extends StatelessWidget {
       height: 32,
       margin: const EdgeInsets.symmetric(horizontal: 4),
       color: borderColor,
+    );
+  }
+}
+
+class _InteractiveStatItem extends StatefulWidget {
+  final int targetNumber;
+  final String suffix;
+  final String label;
+  final IconData icon;
+  final String tooltip;
+  final bool isMobile;
+  final Color labelColor;
+
+  const _InteractiveStatItem({
+    required this.targetNumber,
+    required this.suffix,
+    required this.label,
+    required this.icon,
+    required this.tooltip,
+    required this.isMobile,
+    required this.labelColor,
+  });
+
+  @override
+  State<_InteractiveStatItem> createState() => _InteractiveStatItemState();
+}
+
+class _InteractiveStatItemState extends State<_InteractiveStatItem> {
+  bool isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: widget.tooltip,
+      preferBelow: false,
+      decoration: BoxDecoration(
+        color: Colors.black87,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      textStyle: const TextStyle(color: Colors.white, fontSize: 12),
+      child: MouseRegion(
+        onEnter: (_) => setState(() => isHovered = true),
+        onExit: (_) => setState(() => isHovered = false),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          transform: isHovered
+              ? Matrix4.diagonal3Values(1.05, 1.05, 1.0)
+              : Matrix4.identity(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    widget.icon,
+                    size: widget.isMobile ? 15 : 18,
+                    color: isHovered ? AppColors.primaryLight : AppColors.primary,
+                  ),
+                  const SizedBox(width: 5),
+                  TweenAnimationBuilder<double>(
+                    tween: Tween<double>(begin: 0, end: widget.targetNumber.toDouble()),
+                    duration: const Duration(milliseconds: 1400),
+                    curve: Curves.easeOutCubic,
+                    builder: (context, val, child) {
+                      return ShaderMask(
+                        shaderCallback: (bounds) =>
+                            AppColors.primaryGradient.createShader(bounds),
+                        child: Text(
+                          '${val.toInt()}${widget.suffix}',
+                          style: AppTypography.h3.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
+                            fontSize: widget.isMobile ? 19 : 25,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                widget.label,
+                style: AppTypography.caption.copyWith(
+                  color: isHovered ? AppColors.primary : widget.labelColor,
+                  fontSize: widget.isMobile ? 11 : 12.5,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

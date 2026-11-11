@@ -4,6 +4,8 @@ import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/typography.dart';
 import '../../../../core/utils/functions.dart';
 import '../../../../core/utils/responsive/size_config.dart';
+import 'architecture_model.dart';
+import 'architecture_modal.dart';
 
 class FeGoFlagshipCard extends StatefulWidget {
   const FeGoFlagshipCard({super.key});
@@ -234,12 +236,14 @@ class _FeGoFlagshipCardState extends State<FeGoFlagshipCard> {
                             size: 20,
                           ),
                           const SizedBox(width: 8),
-                          Text(
-                            'Key Engineering Highlights & Problem Solving',
-                            style: AppTypography.h4.copyWith(
-                              color: textPrimary,
-                              fontSize: isMobile ? 15 : 17,
-                              fontWeight: FontWeight.bold,
+                          Expanded(
+                            child: Text(
+                              'Key Engineering Highlights & Problem Solving',
+                              style: AppTypography.h4.copyWith(
+                                color: textPrimary,
+                                fontSize: isMobile ? 15 : 17,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
@@ -359,6 +363,37 @@ class _FeGoFlagshipCardState extends State<FeGoFlagshipCard> {
                         ),
                       ),
                     ),
+                    OutlinedButton.icon(
+                      onPressed: () {
+                        final arch = projectArchitectures['fego'];
+                        if (arch != null) {
+                          showArchitectureDialog(context, arch);
+                        }
+                      },
+                      icon: const Icon(
+                        Icons.account_tree_outlined,
+                        size: 18,
+                        color: AppColors.primary,
+                      ),
+                      label: Text(
+                        'Architecture Deep-Dive',
+                        style: AppTypography.button.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(color: AppColors.primary, width: 1.5),
+                        backgroundColor: AppColors.primary.withValues(alpha: 0.08),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: isMobile ? 16 : 22,
+                          vertical: isMobile ? 12 : 16,
+                        ),
+                      ),
+                    ),
                     ElevatedButton.icon(
                       onPressed: () => launchLink('https://play.google.com/store/search?q=fego&c=apps'),
                       icon: const FaIcon(
@@ -472,13 +507,16 @@ class _FeGoFlagshipCardState extends State<FeGoFlagshipCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  title,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: textPrimary,
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Text(
+                    title,
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: textPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
+                const SizedBox(width: 8),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(

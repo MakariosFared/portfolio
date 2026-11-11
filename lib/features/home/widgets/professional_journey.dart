@@ -9,7 +9,9 @@ class JourneyItem {
   final String role;
   final String company;
   final String period;
+  final String employmentType;
   final String description;
+  final List<String> impactMetrics;
   final List<String> bulletPoints;
   final List<String> technologies;
   final IconData icon;
@@ -18,7 +20,9 @@ class JourneyItem {
     required this.role,
     required this.company,
     required this.period,
+    required this.employmentType,
     required this.description,
+    required this.impactMetrics,
     required this.bulletPoints,
     required this.technologies,
     required this.icon,
@@ -31,14 +35,22 @@ class ProfessionalJourney extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final journeyItems = <JourneyItem>[
+      // 🚀 1. Flieger Tech (Flagship Ride-Hailing)
       JourneyItem(
         role: 'Flutter Developer',
         company: 'Flieger Tech',
         period: 'Aug 2025 - Present',
+        employmentType: 'Full-Time',
         description:
             'Architected and delivered two flagship production-grade mobile platforms from scratch: FeGo Passenger and FeGo Driver ride-hailing applications.',
+        impactMetrics: [
+          '⚡ 60fps Map Tracking',
+          '📡 <50ms WebSockets',
+          '📱 2 Apps in Production',
+          '🎯 100% Clean Architecture',
+        ],
         bulletPoints: [
-          'Engineered full duplex WebSocket pipelines for zero-latency ride requests, driver dispatching, trip state transitions, and fare updates.',
+          'Engineered full-duplex WebSocket pipelines for zero-latency ride requests, driver dispatching, trip state transitions, and live fare updates.',
           'Implemented real-time vehicle movement tracking on Google Maps using spherical coordinate interpolation (lerp) for smooth 60fps animations.',
           'Built deterministic state machines using BLoC & Cubit to maintain strict synchronization across complex trip lifecycles (requested, accepted, ongoing, completed).',
           'Integrated Firebase Cloud Messaging (FCM) with background/foreground priority channels ensuring reliable mission-critical notifications.',
@@ -49,18 +61,26 @@ class ProfessionalJourney extends StatelessWidget {
           'BLoC / Cubit',
           'WebSockets',
           'Google Maps API',
-          'FCM',
+          'FCM High-Priority',
           'Clean Architecture',
-          'Dio',
+          'Dio Interceptors',
         ],
         icon: Icons.rocket_launch_rounded,
       ),
+
+      // 💼 2. Shrka (Enterprise CRM)
       JourneyItem(
         role: 'Flutter Developer',
         company: 'Shrka',
         period: 'Apr 2025 - Aug 2025',
+        employmentType: 'Agile Engineering Team',
         description:
             'Engineered an enterprise CRM mobile solution within an agile engineering team, empowering sales forces with real-time lead pipelines and operational insights.',
+        impactMetrics: [
+          '📦 Offline-First Hive Sync',
+          '🔄 Auto JWT Refresh Interceptor',
+          '💼 Enterprise Sales Pipeline',
+        ],
         bulletPoints: [
           'Architected an offline-first data synchronization engine: persists sales leads locally when offline and automatically syncs with backend upon network reconnection.',
           'Developed complex state-driven features using BLoC & Cubit to manage multi-stage sales funnels and dynamic lead qualification pipelines.',
@@ -72,34 +92,74 @@ class ProfessionalJourney extends StatelessWidget {
           'Dart',
           'BLoC / Cubit',
           'Offline-First Sync',
-          'Hive / Local DB',
+          'Hive Local DB',
           'Dio Interceptors',
           'RESTful APIs',
         ],
         icon: Icons.devices_other_rounded,
       ),
+
+      // 🌐 3. Freelance & Client Products
       JourneyItem(
-        role: 'Freelance Mobile Developer',
+        role: 'Freelance Mobile Developer & SaaS Builder',
         company: 'Client Projects & Products',
         period: '2023 - Present',
+        employmentType: 'Independent / Contracts',
         description:
-            'Designed, developed, and deployed high-performance mobile applications for clients, emphasizing Clean Architecture and clean code principles.',
+            'Designed, developed, and deployed high-performance mobile applications and SaaS platforms for clients, emphasizing Clean Architecture and clean code principles.',
+        impactMetrics: [
+          '⚡ Prolio Full-Stack SaaS',
+          '📚 Mini Offline LMS App',
+          '🛍️ Multi-Vendor Dikkan App',
+        ],
         bulletPoints: [
           'Thaheen LMS: Built a local-first offline learning platform with sequential lesson unlocking, video playback state persistence via Hive, and unit-tested domain rules.',
           'Dikkan: Engineered a multi-vendor marketplace featuring OTP authentication, Google Maps vendor discovery, shopping carts, and live order tracking.',
-          'Bookly: Built a clean e-reading application integrating the Google Books REST API with responsive search and reader views.',
+          'Prolio SaaS: Built a modern full-stack portfolio & resume SaaS builder with Next.js 16, Supabase RLS, and Gemini/Groq AI Copilot.',
           'Maintained strict Clean Architecture standards, separation of concerns, dependency injection (GetIt), and testable business logic.',
         ],
         technologies: [
           'Flutter',
           'Dart',
           'Clean Architecture',
+          'Next.js 16',
+          'Supabase RLS',
           'Hive',
           'Unit Testing',
           'GetIt',
-          'REST APIs',
         ],
         icon: Icons.code_rounded,
+      ),
+
+      // 🤖 4. Graduation Project – IoT & Robotics Lead
+      JourneyItem(
+        role: 'IoT & Mobile Systems Lead (Graduation Project)',
+        company: 'Faculty of Engineering – Graduation Project',
+        period: '2024 - 2025',
+        employmentType: 'Graduation Project 🎓',
+        description:
+            'Led the hardware-software integration engineering team to design, manufacture, and program an autonomous medical assistance robot with a companion Flutter remote controller.',
+        impactMetrics: [
+          '🏆 Ranked Top Tier / Excellent',
+          '🤖 Low-Latency RFCOMM Serial',
+          '📹 Live MJPEG Stream Feed',
+          '🛡️ Hardware Watchdog Fail-Safe',
+        ],
+        bulletPoints: [
+          'Pioneered bi-directional Bluetooth RFCOMM communication protocol with custom binary packet framing for continuous on-screen virtual joystick navigation.',
+          'Implemented emergency watchdog safety failsafes: if telemetry drops for >500ms, the robot microcontroller triggers an immediate emergency motor brake.',
+          'Built a custom low-latency MJPEG video streaming canvas and an offline SQLite prescription dispensing scheduler with exact local alarms.',
+          'Delivered a successful live physical hardware demonstration during university graduation project defense before the engineering faculty committee.',
+        ],
+        technologies: [
+          'Flutter SDK',
+          'Bluetooth Serial (RFCOMM)',
+          'ESP32 / Microcontrollers',
+          'MJPEG Streaming',
+          'SQLite Local-First',
+          'Hardware HAL',
+        ],
+        icon: Icons.smart_toy_rounded,
       ),
     ];
 
@@ -113,7 +173,7 @@ class ProfessionalJourney extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SectionHeader(title: 'Professional Journey'),
-          const SizedBox(height: 60),
+          const SizedBox(height: 50),
 
           // Timeline and Cards
           isMobile
@@ -135,8 +195,8 @@ class ProfessionalJourney extends StatelessWidget {
                     // Vertical Timeline Line
                     Positioned(
                       left: 20,
-                      top: 0,
-                      bottom: 0,
+                      top: 10,
+                      bottom: 40,
                       child: ScrollReveal(
                         type: ScrollRevealType.fadeSlideUp,
                         child: Container(
@@ -147,8 +207,8 @@ class ProfessionalJourney extends StatelessWidget {
                               end: Alignment.bottomCenter,
                               colors: [
                                 AppColors.primary,
-                                AppColors.secondary.withValues(alpha: 0.5),
-                                Colors.transparent,
+                                AppColors.accent.withValues(alpha: 0.6),
+                                AppColors.primary.withValues(alpha: 0.2),
                               ],
                             ),
                           ),
@@ -159,7 +219,7 @@ class ProfessionalJourney extends StatelessWidget {
                       children: journeyItems.asMap().entries.map((entry) {
                         return ScrollReveal(
                           type: ScrollRevealType.fadeSlideUp,
-                          delay: Duration(milliseconds: 200 * entry.key),
+                          delay: Duration(milliseconds: 150 * entry.key),
                           child: _JourneyCard(
                             item: entry.value,
                             isFirst: entry.key == 0,
@@ -207,11 +267,11 @@ class _JourneyCardState extends State<_JourneyCard>
     );
     _scaleAnimation = Tween<double>(
       begin: 1.0,
-      end: 1.02,
+      end: 1.015,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
     _slideAnimation = Tween<Offset>(
       begin: Offset.zero,
-      end: const Offset(0, -0.015),
+      end: const Offset(0, -0.01),
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
   }
 
@@ -247,12 +307,12 @@ class _JourneyCardState extends State<_JourneyCard>
             duration: const Duration(milliseconds: 300),
             margin: EdgeInsets.only(
               left: SizeConfig.isMobile ? 0 : 60,
-              bottom: 40,
+              bottom: 36,
             ),
-            padding: const EdgeInsets.all(30),
+            padding: EdgeInsets.all(SizeConfig.isMobile ? 20 : 30),
             decoration: BoxDecoration(
               color: surfaceColor,
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(22),
               border: Border.all(
                 color: isHovered
                     ? AppColors.primary.withValues(alpha: 0.6)
@@ -270,32 +330,32 @@ class _JourneyCardState extends State<_JourneyCard>
               ],
             ),
             child: Stack(
+              clipBehavior: Clip.none,
               children: [
                 // Timeline dot for wide screens
                 if (!SizeConfig.isMobile)
                   Positioned(
                     left: -70,
-                    top: 0,
+                    top: 14,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 300),
-                      width: 20,
-                      height: 20,
+                      width: 22,
+                      height: 22,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: bgColor,
                         border: Border.all(
                           color: isHovered
-                              ? AppColors.primary
-                              : borderColor,
-                          width: 4,
+                              ? AppColors.primaryLight
+                              : AppColors.primary,
+                          width: isHovered ? 5 : 4,
                         ),
                         boxShadow: isHovered
                             ? [
                                 BoxShadow(
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.5,
-                                  ),
-                                  blurRadius: 10,
+                                  color: AppColors.primary.withValues(alpha: 0.6),
+                                  blurRadius: 12,
+                                  spreadRadius: 2,
                                 ),
                               ]
                             : [],
@@ -306,23 +366,34 @@ class _JourneyCardState extends State<_JourneyCard>
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Header Row: Icon, Role, Company, Period & Type
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(12),
+                            gradient: isHovered ? AppColors.primaryGradient : null,
+                            color: isHovered
+                                ? null
+                                : AppColors.primary.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: isHovered
+                                ? [
+                                    BoxShadow(
+                                      color: AppColors.primary.withValues(alpha: 0.35),
+                                      blurRadius: 10,
+                                    ),
+                                  ]
+                                : [],
                           ),
                           child: Icon(
                             widget.item.icon,
-                            color: isHovered
-                                ? AppColors.primaryLight
-                                : AppColors.primary,
+                            color: isHovered ? Colors.white : AppColors.primary,
                             size: 24,
                           ),
                         ),
-                        const SizedBox(width: 20),
+                        const SizedBox(width: 16),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -332,7 +403,7 @@ class _JourneyCardState extends State<_JourneyCard>
                                 style: AppTypography.h4.copyWith(
                                   color: textPrimary,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                                  fontSize: SizeConfig.isMobile ? 18 : 20,
                                 ),
                               ),
                               const SizedBox(height: 4),
@@ -341,16 +412,70 @@ class _JourneyCardState extends State<_JourneyCard>
                                 style: AppTypography.bodyLarge.copyWith(
                                   color: AppColors.primary,
                                   fontWeight: FontWeight.w600,
+                                  fontSize: SizeConfig.isMobile ? 14 : 16,
                                 ),
                               ),
                             ],
                           ),
                         ),
                         if (!SizeConfig.isMobile)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                  vertical: 6,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary.withValues(alpha: 0.12),
+                                  borderRadius: BorderRadius.circular(100),
+                                  border: Border.all(
+                                    color: AppColors.primary.withValues(alpha: 0.25),
+                                  ),
+                                ),
+                                child: Text(
+                                  widget.item.period,
+                                  style: AppTypography.bodySmall.copyWith(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 3,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.accent.withValues(alpha: 0.12),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text(
+                                  widget.item.employmentType,
+                                  style: AppTypography.caption.copyWith(
+                                    color: AppColors.accent,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
+
+                    if (SizeConfig.isMobile) ...[
+                      const SizedBox(height: 12),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 6,
+                        children: [
                           Container(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
+                              horizontal: 10,
+                              vertical: 4,
                             ),
                             decoration: BoxDecoration(
                               color: AppColors.primary.withValues(alpha: 0.12),
@@ -358,33 +483,76 @@ class _JourneyCardState extends State<_JourneyCard>
                             ),
                             child: Text(
                               widget.item.period,
-                              style: AppTypography.bodySmall.copyWith(
+                              style: AppTypography.caption.copyWith(
                                 color: AppColors.primary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                      ],
-                    ),
-                    if (SizeConfig.isMobile) ...[
-                      const SizedBox(height: 12),
-                      Text(
-                        widget.item.period,
-                        style: AppTypography.bodySmall.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.accent.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              widget.item.employmentType,
+                              style: AppTypography.caption.copyWith(
+                                color: AppColors.accent,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
-                    const SizedBox(height: 20),
+
+                    // ⚡ High-Signal Impact Badges
+                    if (widget.item.impactMetrics.isNotEmpty) ...[
+                      const SizedBox(height: 16),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: widget.item.impactMetrics.map((metric) {
+                          return Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: isDark ? 0.08 : 0.05),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: AppColors.primary.withValues(alpha: 0.25),
+                              ),
+                            ),
+                            child: Text(
+                              metric,
+                              style: AppTypography.caption.copyWith(
+                                color: textPrimary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 11.5,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+
+                    const SizedBox(height: 16),
                     Text(
                       widget.item.description,
                       style: AppTypography.bodyMedium.copyWith(
                         color: textSecondary,
                         height: 1.6,
-                        fontSize: 16,
+                        fontSize: SizeConfig.isMobile ? 14 : 15.5,
                       ),
                     ),
+
                     if (widget.item.bulletPoints.isNotEmpty) ...[
                       const SizedBox(height: 16),
                       ...widget.item.bulletPoints.map(
@@ -415,7 +583,7 @@ class _JourneyCardState extends State<_JourneyCard>
                                   style: AppTypography.bodyMedium.copyWith(
                                     color: textSecondary,
                                     height: 1.55,
-                                    fontSize: 14.5,
+                                    fontSize: SizeConfig.isMobile ? 13.5 : 14.5,
                                   ),
                                 ),
                               ),
@@ -424,6 +592,7 @@ class _JourneyCardState extends State<_JourneyCard>
                         ),
                       ),
                     ],
+
                     if (widget.item.technologies.isNotEmpty) ...[
                       const SizedBox(height: 16),
                       Wrap(
